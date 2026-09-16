@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloudinary Media Gallery</title>
+  <style>
+    :root {
+      --bg: #0c0c0e;
+      --surface: #16161a;
+      --surface-hover: #1c1c21;
+      --border: #2a2a30;
+      --border-focus: #3b82f6;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #22c55e;
+      --error: #ef4444;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(12, 12, 14, 0.9);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+    }
+
+    .brand h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .brand span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .admin-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .admin-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .admin-btn.logged-in {
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+    }
+
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* Admin lock / Upload */
+    #adminPanel {
+      display: none;
+      margin-bottom: 48px;
+    }
+
+    #adminPanel.visible { display: block; }
+
+    .upload-box {
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .upload-box:hover,
+    .upload-box.dragover {
+      border-color: var(--border-focus);
+      background: var(--surface-hover);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+    }
+
+    .upload-box.dragover { border-style: solid; }
+
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      background: rgba(59, 130, 246, 0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .upload-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .upload-box .hint {
+      font-size: 0.8rem;
+      color: #71717a;
+      margin-bottom: 18px;
+    }
+
+    #fileInput { display: none; }
+
+    .upload-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 11px 26px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .upload-btn:hover:not(:disabled) { background: var(--accent-hover); }
+    .upload-btn:disabled {
+      background: #3f3f46;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    #status {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      min-height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .status-success { color: var(--success); }
+    .status-error { color: var(--error); }
+    .status-info { color: var(--text-muted); }
+
+    .progress-wrap {
+      width: 100%;
+      max-width: 280px;
+      height: 4px;
+      background: #27272a;
+      border-radius: 2px;
+      margin: 12px auto 0;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    /* Gallery sections */
+    .gallery-section {
+      margin-bottom: 48px;
+    }
+
+    .gallery-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .image-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .clear-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none; /* only visible when admin */
+    }
+
+    .clear-btn.visible { display: inline-block; }
+
+    .clear-btn:hover {
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      cursor: pointer;
+      aspect-ratio: 1;
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: #3f3f46;
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:hover video { transform: scale(1.05); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.25s;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+    }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay span {
+      font-size: 0.78rem;
+      color: #e4e4e7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-muted);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .empty-state p { font-size: 0.9rem; }
+
+    /* Lightbox / Viewer */
+    #viewer {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    #viewer.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .viewer-content {
+      position: relative;
+      max-width: 92vw;
+      max-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #viewerMedia {
+      max-width: 92vw;
+      max-height: 78vh;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    #viewerMedia video {
+      max-width: 92vw;
+      max-height: 78vh;
+      border-radius: 10px;
+    }
+
+    .viewer-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .viewer-nav:hover { background: rgba(255,255,255,0.2); }
+
+    .viewer-prev { left: -60px; }
+    .viewer-next { right: -60px; }
+
+    @media (max-width: 900px) {
+      .viewer-prev { left: 8px; }
+      .viewer-next { right: 8px; }
+    }
+
+    #viewerCaption {
+      margin-top: 16px;
+      color: #d4d4d8;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    #viewerCounter {
+      margin-top: 6px;
+      color: #71717a;
+      font-size: 0.8rem;
+    }
+
+    .viewer-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5rem;
+      color: #a1a1aa;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .viewer-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: white;
+    }
+
+    /* Login modal */
+    #loginModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+
+    #loginModal.open { display: flex; }
+
+    .login-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .login-box input:focus { border-color: var(--accent); }
+
+    .login-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .login-actions button {
+      flex: 1;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border) !important;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #3f3f46;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #52525b;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 16px 60px; }
+      .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">G</div>
+        <div>
+          <h1>Media Gallery</h1>
+          <span>Photos & Videos · Cloudinary</span>
+        </div>
+      </div>
+      <button class="admin-btn" id="adminToggle">Admin Login</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Admin-only upload panel -->
+    <div id="adminPanel">
+      <p class="section-title">Admin Upload</p>
+      <div class="upload-box" id="uploadBox">
+        <div class="upload-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M12 16V4m0 0l-4 4m4-4l4 4"/>
+            <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+          </svg>
+        </div>
+        <p>Drag & drop photos or videos</p>
+        <p class="hint">PNG, JPG, WEBP, GIF, MP4, MOV, WEBM</p>
+        <input type="file" id="fileInput" accept="image/*,video/*" multiple>
+        <button class="upload-btn" id="uploadBtn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 4v16m8-8H4"/>
+          </svg>
+          Choose Files
+        </button>
+        <div id="status" class="status-info"></div>
+        <div class="progress-wrap" id="progressWrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photos -->
+    <div class="gallery-section">
+      <div class="gallery-header">
+        <p class="section-title" style="margin:0">Photos</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="image-count" id="photoCount">0 photos</span>
+          <button class="clear-btn" id="clearPhotosBtn">Clear photos</button>
+        </div>
+      </div>
+      <div class="gallery" id="photoGallery">
+        <div class="empty-state" id="photoEmpty">
+          <p>No photos yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="gallery-section">
+      <div class="gallery-header">
+        <p class="section-title" style="margin:0">Videos</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="image-count" id="videoCount">0 videos</span>
+          <button class="clear-btn" id="clearVideosBtn">Clear videos</button>
+        </div>
+      </div>
+      <div class="gallery" id="videoGallery">
+        <div class="empty-state" id="videoEmpty">
+          <p>No videos yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-note">
+      Media stored permanently on Cloudinary · Gallery list saved in this browser · Only admin can upload
+    </p>
+  </div>
+
+  <!-- Full viewer -->
+  <div id="viewer">
+    <button class="viewer-close" id="viewerClose" aria-label="Close">&times;</button>
+    <div class="viewer-content">
+      <button class="viewer-nav viewer-prev" id="viewerPrev">‹</button>
+      <div id="viewerMedia"></div>
+      <button class="viewer-nav viewer-next" id="viewerNext">›</button>
+    </div>
+    <div id="viewerCaption"></div>
+    <div id="viewerCounter"></div>
+  </div>
+
+  <!-- Admin login modal -->
+  <div id="loginModal">
+    <div class="login-box">
+      <h2>Admin Access</h2>
+      <p>Enter the admin password to unlock uploading.</p>
+      <input type="password" id="adminPassword" placeholder="Password" autocomplete="off">
+      <div class="login-actions">
+        <button class="btn-secondary" id="loginCancel">Cancel</button>
+        <button class="btn-primary" id="loginSubmit">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+    // ========================================
+    // CONFIG – Viatrix Gallery
+    // ========================================
+    const CLOUD_NAME     = "ziudh5iv";
+    const UPLOAD_PRESET  = "viatrix_gallery";
+    const ADMIN_PASSWORD = "admin123";
+    const PHOTO_KEY      = "gallery_photos";
+    const VIDEO_KEY      = "gallery_videos";
+
+    // ========================================
+    // Elements
+    // ========================================
+    const adminToggle    = document.getElementById("adminToggle");
+    const adminPanel     = document.getElementById("adminPanel");
+    const loginModal     = document.getElementById("loginModal");
+    const adminPassword  = document.getElementById("adminPassword");
+    const loginSubmit    = document.getElementById("loginSubmit");
+    const loginCancel    = document.getElementById("loginCancel");
+
+    const fileInput      = document.getElementById("fileInput");
+    const uploadBtn      = document.getElementById("uploadBtn");
+    const uploadBox      = document.getElementById("uploadBox");
+    const statusEl       = document.getElementById("status");
+    const progressWrap   = document.getElementById("progressWrap");
+    const progressBar    = document.getElementById("progressBar");
+
+    const photoGallery   = document.getElementById("photoGallery");
+    const videoGallery   = document.getElementById("videoGallery");
+    const photoCountEl   = document.getElementById("photoCount");
+    const videoCountEl   = document.getElementById("videoCount");
+    const clearPhotosBtn = document.getElementById("clearPhotosBtn");
+    const clearVideosBtn = document.getElementById("clearVideosBtn");
+
+    const viewer         = document.getElementById("viewer");
+    const viewerMedia    = document.getElementById("viewerMedia");
+    const viewerCaption  = document.getElementById("viewerCaption");
+    const viewerCounter  = document.getElementById("viewerCounter");
+    const viewerClose    = document.getElementById("viewerClose");
+    const viewerPrev     = document.getElementById("viewerPrev");
+    const viewerNext     = document.getElementById("viewerNext");
+
+    let isAdmin = false;
+    let currentList = [];
+    let currentIndex = 0;
+    let currentType = "photo";
+
+    // ========================================
+    // Fetch from Cloudinary
+    // ========================================
+    async function fetchList(key, resourceType) {
+      const url =
+        `https://res.cloudinary.com/${CLOUD_NAME}/${resourceType}/list/${key}.json?_=${Date.now()}`;
+
+      try {
+        const res = await fetch(url);
+
+        if (res.status === 404) return [];
+
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+
+        const data = await res.json();
+
+        return (data.resources || [])
+          .map(r => {
+            const format =
+              r.format ||
+              (resourceType === "video" ? "mp4" : "jpg");
+
+            const version = r.version ? `v${r.version}/` : "";
+
+            return {
+              url:
+                `https://res.cloudinary.com/${CLOUD_NAME}/${resourceType}/upload/` +
+                `${version}${r.public_id}.${format}`,
+              title: r.public_id || "",
+              addedAt: new Date(r.created_at).getTime()
+            };
+          })
+          .sort((a, b) => b.addedAt - a.addedAt);
+
+      } catch (err) {
+        console.error("List fetch failed:", err);
+        return [];
+      }
+    }
+
+    // ========================================
+    // Admin
+    // ========================================
+    function setAdminState(loggedIn) {
+      isAdmin = loggedIn;
+
+      adminPanel.classList.toggle("visible", loggedIn);
+
+      adminToggle.textContent =
+        loggedIn ? "Logout Admin" : "Admin Login";
+
+      adminToggle.classList.toggle("logged-in", loggedIn);
+
+      clearPhotosBtn.classList.toggle("visible", loggedIn);
+      clearVideosBtn.classList.toggle("visible", loggedIn);
+    }
+
+    adminToggle.addEventListener("click", () => {
+      if (isAdmin) {
+        setAdminState(false);
+        setStatus("Admin logged out", "info");
+      } else {
+        loginModal.classList.add("open");
+        adminPassword.value = "";
+        adminPassword.focus();
+      }
+    });
+
+    loginCancel.addEventListener("click", () => {
+      loginModal.classList.remove("open");
+    });
+
+    loginSubmit.addEventListener("click", () => {
+      if (adminPassword.value === ADMIN_PASSWORD) {
+        setAdminState(true);
+        loginModal.classList.remove("open");
+        setStatus(
+          "Admin unlocked – you can now upload",
+          "success"
+        );
+      } else {
+        alert("Incorrect password");
+        adminPassword.focus();
+      }
+    });
+
+    adminPassword.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        loginSubmit.click();
+      }
+    });
+
+    function setStatus(msg, type = "info") {
+      statusEl.className = `status-${type}`;
+      statusEl.innerHTML = msg;
+    }
+
+    // ========================================
+    // Thumbnail URLs
+    // ========================================
+    function thumbUrl(url, isVideo) {
+      if (isVideo) {
+        return url
+          .replace(
+            "/video/upload/",
+            "/video/upload/so_0,w_420,h_420,c_fill,q_auto,f_jpg/"
+          )
+          .replace(
+            /\.(mp4|mov|webm|m4v|avi)$/i,
+            ""
+          );
+      }
+
+      return url.replace(
+        "/image/upload/",
+        "/image/upload/c_fill,w_420,h_420,q_auto,f_auto/"
+      );
+    }
+
+    // ========================================
+    // Create gallery item
+    // ========================================
+    function createItem(item, type) {
+      const el = document.createElement("div");
+      el.className = "gallery-item";
+
+      const isVideo = type === "video";
+
+      el.innerHTML = `
+        <img
+          src="${thumbUrl(item.url, isVideo)}"
+          alt="${item.title || ""}"
+          loading="lazy"
+        >
+
+        ${
+          isVideo
+            ? '<div class="video-badge">▶ Video</div>'
+            : ""
+        }
+
+        <div class="gallery-overlay">
+          <span>${item.title || "Untitled"}</span>
+        </div>
+      `;
+
+      el.addEventListener("click", () => {
+        openViewer(type, item.url);
+      });
+
+      return el;
+    }
+
+    // ========================================
+    // Render Photos
+    // ========================================
+    async function renderPhotos() {
+      const list = await fetchList(
+        PHOTO_KEY,
+        "image"
+      );
+
+      photoGallery.innerHTML = "";
+
+      photoCountEl.textContent =
+        list.length +
+        (list.length === 1 ? " photo" : " photos");
+
+      if (list.length === 0) {
+        photoGallery.innerHTML = `
+          <div class="empty-state">
+            <p>No photos yet. Admin can upload.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(item => {
+        photoGallery.appendChild(
+          createItem(item, "photo")
+        );
+      });
+    }
+
+    // ========================================
+    // Render Videos
+    // ========================================
+    async function renderVideos() {
+      const list = await fetchList(
+        VIDEO_KEY,
+        "video"
+      );
+
+      videoGallery.innerHTML = "";
+
+      videoCountEl.textContent =
+        list.length +
+        (list.length === 1 ? " video" : " videos");
+
+      if (list.length === 0) {
+        videoGallery.innerHTML = `
+          <div class="empty-state">
+            <p>No videos yet. Admin can upload.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(item => {
+        videoGallery.appendChild(
+          createItem(item, "video")
+        );
+      });
+    }
+
+    // ========================================
+    // Upload
+    // ========================================
+    async function uploadFile(file) {
+      const isVideo = file.type.startsWith("video/");
+      const isImage = file.type.startsWith("image/");
+
+      if (!isImage && !isVideo) {
+        setStatus(
+          "Only images and videos are allowed.",
+          "error"
+        );
+        return;
+      }
+
+      setStatus(
+        `<span class="spinner"></span> Uploading ${file.name}…`,
+        "info"
+      );
+
+      uploadBtn.disabled = true;
+
+      progressWrap.style.display = "block";
+      progressBar.style.width = "25%";
+
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append(
+        "upload_preset",
+        UPLOAD_PRESET
+      );
+
+      formData.append(
+        "tags",
+        isVideo ? VIDEO_KEY : PHOTO_KEY
+      );
+
+      // Optional folders
+      formData.append(
+        "folder",
+        isVideo
+          ? "viatrix/gallery/videos"
+          : "viatrix/gallery/photos"
+      );
+
+      const resourceType =
+        isVideo ? "video" : "image";
+
+      let timer;
+
+      try {
+        timer = setInterval(() => {
+          const cur =
+            parseFloat(progressBar.style.width);
+
+          if (cur < 80) {
+            progressBar.style.width =
+              (cur + 10) + "%";
+          }
+        }, 250);
+
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`,
+          {
+            method: "POST",
+            body: formData
+          }
+        );
+
+        clearInterval(timer);
+
+        progressBar.style.width = "100%";
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(
+            data.error?.message ||
+            "Upload failed"
+          );
+        }
+
+        // Refresh gallery
+        if (isVideo) {
+          await renderVideos();
+        } else {
+          await renderPhotos();
+        }
+
+        setStatus(
+          `✅ Uploaded successfully (${isVideo ? "video" : "photo"})`,
+          "success"
+        );
+
+      } catch (err) {
+        if (timer) clearInterval(timer);
+
+        console.error(err);
+
+        setStatus(
+          "Error: " + err.message,
+          "error"
+        );
+
+      } finally {
+        uploadBtn.disabled = false;
+        fileInput.value = "";
+
+        setTimeout(() => {
+          progressWrap.style.display = "none";
+          progressBar.style.width = "0%";
+        }, 600);
+      }
+    }
+
+    // ========================================
+    // Handle Multiple Files
+    // ========================================
+    async function handleFiles(files) {
+      const valid = Array.from(files).filter(
+        f =>
+          f.type.startsWith("image/") ||
+          f.type.startsWith("video/")
+      );
+
+      if (!valid.length) {
+        setStatus(
+          "No valid media files selected.",
+          "error"
+        );
+        return;
+      }
+
+      for (const file of valid) {
+        await uploadFile(file);
+      }
+    }
+
+    // ========================================
+    // Viewer
+    // ========================================
+    function openViewer(type, url) {
+      currentType = type;
+
+      const load =
+        type === "video"
+          ? fetchList(VIDEO_KEY, "video")
+          : fetchList(PHOTO_KEY, "image");
+
+      load.then(list => {
+        currentList = list;
+
+        currentIndex =
+          currentList.findIndex(
+            i => i.url === url
+          );
+
+        if (currentIndex < 0) {
+          currentIndex = 0;
+        }
+
+        showCurrent();
+
+        viewer.classList.add("open");
+        document.body.style.overflow = "hidden";
+      });
+    }
+
+    function showCurrent() {
+      if (!currentList.length) return;
+
+      const item =
+        currentList[currentIndex];
+
+      const isVideo =
+        currentType === "video";
+
+      viewerMedia.innerHTML = "";
+
+      if (isVideo) {
+        const video =
+          document.createElement("video");
+
+        video.src = item.url;
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+
+        video.style.maxWidth = "92vw";
+        video.style.maxHeight = "78vh";
+        video.style.borderRadius = "12px";
+
+        viewerMedia.appendChild(video);
+
+      } else {
+        const img =
+          document.createElement("img");
+
+        img.src = item.url;
+        img.alt = item.title || "";
+
+        viewerMedia.appendChild(img);
+      }
+
+      viewerCaption.textContent =
+        item.title || "";
+
+      viewerCounter.textContent =
+        `${currentIndex + 1} / ${currentList.length}`;
+    }
+
+    // ========================================
+    // Next / Previous
+    // ========================================
+    function nextItem() {
+      if (!currentList.length) return;
+
+      currentIndex =
+        (currentIndex + 1) %
+        currentList.length;
+
+      showCurrent();
+    }
+
+    function prevItem() {
+      if (!currentList.length) return;
+
+      currentIndex =
+        (currentIndex - 1 +
+          currentList.length) %
+        currentList.length;
+
+      showCurrent();
+    }
+
+    // ========================================
+    // Close Viewer
+    // ========================================
+    function closeViewer() {
+      viewer.classList.remove("open");
+
+      document.body.style.overflow = "";
+
+      const video =
+        viewerMedia.querySelector("video");
+
+      if (video) {
+        video.pause();
+        video.src = "";
+      }
+    }
+
+    viewerClose.addEventListener(
+      "click",
+      closeViewer
+    );
+
+    viewerNext.addEventListener(
+      "click",
+      nextItem
+    );
+
+    viewerPrev.addEventListener(
+      "click",
+      prevItem
+    );
+
+    viewer.addEventListener("click", e => {
+      if (e.target === viewer) {
+        closeViewer();
+      }
+    });
+
+    // ========================================
+    // Keyboard Navigation
+    // ========================================
+    document.addEventListener(
+      "keydown",
+      e => {
+        if (!viewer.classList.contains("open")) {
+          return;
+        }
+
+        if (e.key === "Escape") {
+          closeViewer();
+        }
+
+        if (e.key === "ArrowRight") {
+          nextItem();
+        }
+
+        if (e.key === "ArrowLeft") {
+          prevItem();
+        }
+      }
+    );
+
+    // ========================================
+    // Clear / Refresh Buttons
+    // ========================================
+    clearPhotosBtn.addEventListener(
+      "click",
+      () => {
+        if (
+          confirm(
+            "This only refreshes the view.\n" +
+            "To permanently delete files, use the Cloudinary Media Library."
+          )
+        ) {
+          renderPhotos();
+        }
+      }
+    );
+
+    clearVideosBtn.addEventListener(
+      "click",
+      () => {
+        if (
+          confirm(
+            "This only refreshes the view.\n" +
+            "To permanently delete files, use the Cloudinary Media Library."
+          )
+        ) {
+          renderVideos();
+        }
+      }
+    );
+
+    // ========================================
+    // Upload Events
+    // ========================================
+    uploadBtn.addEventListener(
+      "click",
+      () => fileInput.click()
+    );
+
+    fileInput.addEventListener(
+      "change",
+      () => {
+        if (fileInput.files.length) {
+          handleFiles(fileInput.files);
+        }
+      }
+    );
+
+    // ========================================
+    // Drag & Drop
+    // ========================================
+    [
+      "dragenter",
+      "dragover",
+      "dragleave",
+      "drop"
+    ].forEach(evt => {
+      uploadBox.addEventListener(
+        evt,
+        e => {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      );
+    });
+
+    uploadBox.addEventListener(
+      "dragover",
+      () => {
+        uploadBox.classList.add("dragover");
+      }
+    );
+
+    uploadBox.addEventListener(
+      "dragleave",
+      () => {
+        uploadBox.classList.remove("dragover");
+      }
+    );
+
+    uploadBox.addEventListener(
+      "drop",
+      e => {
+        uploadBox.classList.remove("dragover");
+
+        if (
+          e.dataTransfer.files.length
+        ) {
+          handleFiles(
+            e.dataTransfer.files
+          );
+        }
+      }
+    );
+
+    // ========================================
+    // Start
+    // ========================================
+    renderPhotos();
+    renderVideos();
+
+</script>
+</body>
+</html>
