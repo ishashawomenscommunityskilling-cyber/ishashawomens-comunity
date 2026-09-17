@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Ishasha Women\'s Organisation</title>
+  <style>
+/* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
+   Faithful recreation of layout, colors, and structure from the original React build.
+*/
+
+:root {
+  --background: #f7f3eb;
+  --sand: #f0e8d8;
+  --card: #ffffff;
+  --foreground: #1f2a1f;
+  --ink: #1f2a1f;
+  --ink-soft: #3d4a3d;
+  --muted-foreground: #5c6b5c;
+  --earth: #2d5a27;
+  --gold: #c4a35a;
+  --primary: #2d5a27;
+  --border: #d9cfc0;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-strong: 0 16px 40px rgba(31, 42, 31, 0.12);
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--gold) 12%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, var(--sand) 0%, var(--background) 30%, var(--sand) 100%);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Layout shell */
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, white 16%);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.35rem;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.site-brand-mark,
+.site-footer-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.site-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--earth);
+}
+
+.site-brand-tagline {
+  max-width: 18rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.site-nav-link {
+  color: var(--ink-soft);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.site-header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.site-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Hamburger / mobile nav */
+.hamburger-menu-btn {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.hamburger-menu-btn:hover {
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.mobile-nav-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.mobile-nav-drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 88vw);
+  height: 100%;
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.mobile-nav-drawer-overlay.is-open .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  transition: background 0.18s, color 0.18s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.mobile-nav-drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Buttons */
+.button-primary,
+.button-secondary,
+.button-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button-secondary {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--card) 78%, var(--gold) 8%);
+  border: 1.5px solid color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.button-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.button-light {
+  background: var(--sand);
+  color: var(--earth);
+}
+
+.text-action {
+  color: var(--earth);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link {
+  color: var(--earth);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Hero */
+.hero-section {
+  padding: 4.25rem 0 2rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.hero-title,
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.hero-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.hero-support,
+.supporting-copy,
+.prose-panel p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-media-stack {
+  position: relative;
+}
+
+.hero-image-card,
+.large-photo-frame,
+.tall-photo-frame,
+.photo-story-card,
+.image-panel {
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, var(--gold) 20%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  background: linear-gradient(145deg, #c8b89a, #8a9a7a);
+}
+
+.placeholder-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: linear-gradient(145deg, #c8b89a 0%, #8a9a7a 50%, #6b8a5a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.floating-stat-card {
+  position: absolute;
+  bottom: 1.25rem;
+  left: -1rem;
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--gold) 38%, white 62%);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 9.5rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--earth);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+/* Facts bar */
+.facts-bar {
+  padding: 1.75rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  border-bottom: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  background: color-mix(in srgb, var(--sand) 60%, transparent);
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.fact-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.fact-value {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* Content sections */
+.content-section {
+  padding: 3.5rem 0;
+}
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  color: var(--earth);
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.mission-vision-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.info-card,
+.bullet-card,
+.program-card,
+.leader-card,
+.dark-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.info-card h3,
+.bullet-card h3,
+.program-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  margin-bottom: 0.5rem;
+}
+
+.value-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.value-chip {
+  background: color-mix(in srgb, var(--sand) 80%, var(--gold) 10%);
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, white 72%);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.snapshot-list {
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.snapshot-list li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  color: var(--ink-soft);
+}
+
+.snapshot-list li::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--earth));
+  flex-shrink: 0;
+}
+
+/* Page hero band */
+.page-hero-band {
+  padding: 2.75rem 0 1.5rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--earth) 8%, var(--sand)), transparent);
+}
+
+.page-hero-inner {
+  max-width: 48rem;
+}
+
+.page-intro {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Programs grid */
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.program-card p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.gallery-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.gallery-card .placeholder-img {
+  aspect-ratio: 16/11;
+}
+
+.gallery-caption {
+  padding: 1rem 1.15rem;
+  background: color-mix(in srgb, var(--card) 90%, var(--sand));
+}
+
+.gallery-caption h3 {
+  font-size: 1.05rem;
+  color: var(--earth);
+  margin-bottom: 0.25rem;
+}
+
+.gallery-caption p {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+/* Donate / impact cards */
+.donate-grid,
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.donate-card,
+.impact-point {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.donate-card .amount,
+.impact-point .amount {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  color: var(--earth);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+/* Leadership */
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.leader-card {
+  background: var(--foreground);
+  color: #e8efe6;
+  border: none;
+}
+
+.leader-card p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* Contact form simple */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.contact-details p {
+  margin-bottom: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--gold) 50%, transparent);
+  border-color: var(--gold);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--sand) 50%, var(--card));
+  padding: 2.75rem 0 0;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.site-footer-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  line-height: 1.3;
+}
+
+.site-footer-tagline {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+.site-footer-copy {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.site-footer-link:hover {
+  color: var(--earth);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+/* Band deep (optional dark section) */
+.band-deep {
+  background: linear-gradient(180deg, var(--earth), color-mix(in srgb, var(--earth) 80%, #000));
+  color: #eef5ea;
+  padding: 3rem 0;
+}
+
+.band-deep .section-title,
+.band-deep .section-eyebrow {
+  color: #f5e9c8;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .site-nav,
+  .site-header-cta {
+    display: none;
+  }
+
+  .hamburger-menu-btn {
+    display: inline-flex;
+  }
+
+  .hero-grid,
+  .two-column-layout,
+  .contact-grid,
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .floating-stat-card {
+    left: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .hero-section {
+    padding-top: 2.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="index.html" class="site-brand" aria-label="IWSDP home">
+          <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+          <div class="site-brand-copy">
+            <span class="site-brand-name">Ishasha Women's Community</span>
+            <span class="site-brand-tagline">Women And Girls Empowered Communities Transformed</span>
+          </div>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="index.html" class="site-nav-link">Home</a>
+          <a href="about.html" class="site-nav-link">About</a>
+          <a href="programs.html" class="site-nav-link">Programs</a>
+          <a href="tourism.html" class="site-nav-link">Tourism</a>
+          <a href="impact.html" class="site-nav-link">Impact</a>
+          <a href="donate.html" class="site-nav-link">Donate</a>
+          <a href="get-involved.html" class="site-nav-link">Get Involved</a>
+          <a href="gallery.html" class="site-nav-link">Gallery</a>
+          <a href="contact.html" class="site-nav-link is-active">Contact</a>
+        </nav>
+        <a href="donate.html" class="site-header-cta">Donate</a>
+        <button class="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu" type="button">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav-drawer-overlay">
+        <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+          <div class="mobile-nav-drawer-header">
+            <div class="site-brand">
+              <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+              <span class="site-brand-name">Ishasha Women's Community</span>
+            </div>
+            <button class="hamburger-menu-btn" data-close-menu aria-label="Close menu" type="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <a href="programs.html" class="mobile-nav-link">Programs</a>
+            <a href="tourism.html" class="mobile-nav-link">Tourism</a>
+            <a href="impact.html" class="mobile-nav-link">Impact</a>
+            <a href="donate.html" class="mobile-nav-link">Donate</a>
+            <a href="get-involved.html" class="mobile-nav-link">Get Involved</a>
+            <a href="gallery.html" class="mobile-nav-link">Gallery</a>
+            <a href="contact.html" class="mobile-nav-link is-active">Contact</a>
+          </nav>
+          <div class="mobile-nav-drawer-footer"><a href="donate.html" class="button-primary w-full">Donate</a></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero-band">
+      <div class="site-shell page-hero-inner">
+        <p class="section-eyebrow">Get in touch</p>
+        <h1 class="page-title">Contact</h1>
+        <p class="page-intro">We welcome partners, supporters, and friends of the Ishasha community.</p>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-section">
+        <div class="site-shell contact-grid">
+          <div class="contact-details">
+            <h2 class="section-title">Reach us</h2>
+            <p><strong>Organisation:</strong><br />Ishasha Women's Community Skilling and Development Organisation Limited</p>
+            <p><strong>Location:</strong><br />Kyakatarangyi Cell, Ishasha Area, Rusoroza Parish, Kihihi Sub County, Kanungu District, Uganda</p>
+            <p><strong>Postal address:</strong><br />680051, Kihihi, Uganda</p>
+            <p><strong>Phone:</strong><br /><a href="tel:+256771440064" class="text-link">+256 771 440 064</a></p>
+            <p><strong>WhatsApp:</strong><br /><a href="https://wa.me/256787818133" class="text-link">+256 787 818 133</a></p>
+            <p><strong>Email:</strong><br /><a href="mailto:ishashawomenscommunity2023@gmail.com" class="text-link">ishashawomenscommunity2023@gmail.com</a></p>
+            <p><strong>TIN:</strong> 1056200690</p>
+          </div>
+          <div>
+            <h2 class="section-title">Send a message</h2>
+            <form class="contact-form" id="contactForm">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit" class="button-primary" id="submitBtn">Send message</button>
+              <p id="formStatus" style="margin-top:0.75rem;font-size:0.9rem;"></p>
+            </form>
+            <p style="margin-top:1.25rem;font-size:0.85rem;color:var(--muted-foreground,#5c6b5c);">
+              Messages are sent to <strong>ishashawomenscommunity2023@gmail.com</strong> via EmailJS and stored in Firebase when configured.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer-grid">
+        <div>
+          <div class="site-footer-brand">
+            <img src="images/logo.jpg" alt="" class="site-footer-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+            <div>
+              <h2 class="site-footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+              <p class="site-footer-tagline">Women And Girls Empowered Communities Transformed</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer-heading">Quick Links</h2>
+          <div class="site-footer-links">
+            <a href="about.html" class="site-footer-link">About</a>
+            <a href="programs.html" class="site-footer-link">Programs</a>
+            <a href="donate.html" class="site-footer-link">Donate</a>
+            <a href="contact.html" class="site-footer-link">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-shell site-footer-bottom">
+        <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+/* Mobile navigation toggle */
+(function () {
+  const btn = document.querySelector(".hamburger-menu-btn");
+  const overlay = document.querySelector(".mobile-nav-drawer-overlay");
+  const closeBtns = document.querySelectorAll("[data-close-menu]");
+
+  function openMenu() {
+    if (overlay) {
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      if (btn) btn.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function closeMenu() {
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (overlay && overlay.classList.contains("is-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeMenu();
+    });
+  }
+
+  closeBtns.forEach(function (el) {
+    el.addEventListener("click", closeMenu);
+  });
+
+  // Close menu when a mobile nav link is clicked
+  document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
+  });
+
+  // Highlight current page in nav
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const file = href.split("/").pop();
+    if (
+      file === path ||
+      (path === "" && file === "index.html") ||
+      (path === "index.html" && file === "index.html") ||
+      (path === "" && href === "/") ||
+      (path === "index.html" && (href === "/" || href === "index.html"))
+    ) {
+      link.classList.add("is-active");
+    }
+  });
+})();
+
+</script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+  <script>
+    // ========== CONFIGURE THESE (EmailJS + Firebase) ==========
+    // EmailJS: https://www.emailjs.com — create service + template, use public key
+    const EMAILJS_PUBLIC_KEY = "YOUR_EMAILJS_PUBLIC_KEY";
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    // Firebase: console.firebase.google.com — create project, enable Firestore
+    const FIREBASE_CONFIG = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // ==========================================================
+
+    let db = null;
+    try {
+      if (FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+      }
+    } catch (e) { console.warn("Firebase init:", e); }
+
+    try {
+      if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_EMAILJS_PUBLIC_KEY") {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+      }
+    } catch (e) { console.warn("EmailJS init:", e); }
+
+    const form = document.getElementById("contactForm");
+    if (form) {
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const status = document.getElementById("formStatus");
+        const btn = document.getElementById("submitBtn");
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        btn.disabled = true;
+        status.textContent = "Sending…";
+        status.style.color = "var(--muted-foreground, #5c6b5c)";
+
+        const payload = {
+          from_name: name,
+          from_email: email,
+          message: message,
+          to_email: "ishashawomenscommunity2023@gmail.com",
+          createdAt: new Date().toISOString()
+        };
+
+        let emailOk = false;
+        let fireOk = false;
+
+        // EmailJS
+        if (EMAILJS_PUBLIC_KEY !== "YOUR_EMAILJS_PUBLIC_KEY") {
+          try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              from_name: name,
+              from_email: email,
+              message: message,
+              reply_to: email
+            });
+            emailOk = true;
+          } catch (err) {
+            console.error("EmailJS error", err);
+          }
+        }
+
+        // Firebase Firestore
+        if (db) {
+          try {
+            await db.collection("contact_messages").add(payload);
+            fireOk = true;
+          } catch (err) {
+            console.error("Firebase error", err);
+          }
+        }
+
+        if (emailOk || fireOk) {
+          status.textContent = "Message sent successfully. Thank you.";
+          status.style.color = "var(--earth, #2d5a27)";
+          form.reset();
+        } else {
+          status.innerHTML = "Could not send automatically. Please email <a href=\"mailto:ishashawomenscommunity2023@gmail.com\" style=\"color:var(--earth)\">ishashawomenscommunity2023@gmail.com</a> directly, or configure EmailJS and Firebase in this page.";
+          status.style.color = "#8b2e2e";
+          // Fallback mailto
+          window.location.href = "mailto:ishashawomenscommunity2023@gmail.com?subject=" +
+            encodeURIComponent("Website message from " + name) +
+            "&body=" + encodeURIComponent(message + "\n\nFrom: " + email);
+        }
+        btn.disabled = false;
+      });
+    }
+  </script>
+
+</body>
+</html>

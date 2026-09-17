@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin · Manage slides — Ishasha Women's Organisation</title>
+  <style>
+    :root {
+      --bg: #f6f1e8; --sand: #efe6d6; --card: #fff; --ink: #1a2618;
+      --ink-soft: #3a4a36; --muted: #6b7a65; --earth: #254a22;
+      --earth-deep: #1a3518; --gold: #b8923e; --gold-light: #d4b56a;
+      --border: #ddd2c0; --radius: 14px;
+      --shadow: 0 10px 30px rgba(26,38,24,0.08);
+      --font: "Segoe UI", system-ui, sans-serif;
+      --display: Georgia, "Times New Roman", serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(900px, calc(100% - 2rem)); margin-inline: auto; }
+
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.94); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; min-height: 72px;
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-logo {
+      width: 48px; height: 48px; object-fit: cover; border-radius: 50%;
+      border: 2px solid var(--gold-light);
+    }
+    .brand-name {
+      font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--earth);
+    }
+    .back-link {
+      font-size: 0.92rem; color: var(--earth); font-weight: 600;
+    }
+
+    .page { padding: 2.5rem 0 4rem; }
+    h1 {
+      font-family: var(--display); font-size: 1.85rem; color: var(--earth); margin-bottom: 0.5rem;
+    }
+    .lead { color: var(--ink-soft); margin-bottom: 2rem; max-width: 40rem; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+    .card h2 {
+      font-family: var(--display); font-size: 1.2rem; color: var(--earth); margin-bottom: 1rem;
+    }
+    label {
+      display: block; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 0.35rem;
+    }
+    input, textarea {
+      width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--border);
+      border-radius: 10px; font: inherit; background: #fff; margin-bottom: 1rem;
+    }
+    input:focus, textarea:focus {
+      outline: 2px solid color-mix(in srgb, var(--gold) 45%, transparent);
+      border-color: var(--gold);
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.75rem 1.3rem; border-radius: 999px; border: none;
+      font-weight: 600; font-size: 0.95rem; cursor: pointer;
+      background: linear-gradient(135deg, var(--earth), var(--earth-deep));
+      color: #fff; box-shadow: var(--shadow);
+    }
+    .btn:hover { opacity: 0.95; }
+    .btn-secondary {
+      background: var(--sand); color: var(--earth); border: 1.5px solid var(--border);
+    }
+    .btn-danger {
+      background: #8b2e2e; color: #fff; padding: 0.45rem 0.9rem; font-size: 0.85rem;
+    }
+    .note {
+      font-size: 0.88rem; color: var(--muted); background: var(--sand);
+      padding: 0.9rem 1.1rem; border-radius: 10px; margin-bottom: 1.25rem;
+    }
+    .slides-list { display: grid; gap: 1rem; }
+    .slide-item {
+      display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem;
+      align-items: center; padding: 0.85rem; border: 1px solid var(--border);
+      border-radius: 12px; background: #faf8f4;
+    }
+    .slide-item img {
+      width: 100px; height: 70px; object-fit: cover; border-radius: 8px;
+    }
+    .slide-item h3 { font-size: 1rem; color: var(--earth); margin-bottom: 0.2rem; }
+    .slide-item p { font-size: 0.88rem; color: var(--muted); }
+    .empty { color: var(--muted); font-style: italic; padding: 1rem 0; }
+    .config-box {
+      font-family: ui-monospace, monospace; font-size: 0.85rem;
+      background: #1a2618; color: #e8f0e4; padding: 1rem; border-radius: 10px;
+      margin: 1rem 0; overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a href="index.html" class="brand">
+        <img src="images/logo.jpg" alt="" class="brand-logo" />
+        <span class="brand-name">Admin · Hero slides</span>
+      </a>
+      <a href="index.html" class="back-link">← Back to site</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="shell">
+      <h1>Manage homepage slides</h1>
+      <p class="lead">
+        Upload a photo, add the person’s name and a short description. New slides appear automatically in the homepage hero slider.
+        Photos are stored on Cloudinary; slide details are saved in this browser.
+      </p>
+
+      <div class="card">
+        <h2>Cloudinary setup (required once)</h2>
+        <p class="note">
+          1. Create a free account at <a href="https://cloudinary.com" target="_blank" rel="noopener" style="color:var(--earth);text-decoration:underline;">cloudinary.com</a><br>
+          2. Settings → Upload → Add upload preset → choose <strong>Unsigned</strong><br>
+          3. Paste your Cloud Name and Upload Preset below, then click Save.
+        </p>
+        <label for="cloudName">Cloud Name</label>
+        <input type="text" id="cloudName" placeholder="e.g. my-account" />
+        <label for="uploadPreset">Unsigned upload preset</label>
+        <input type="text" id="uploadPreset" placeholder="e.g. ishasha_gallery" />
+        <button type="button" class="btn" id="saveConfig">Save Cloudinary settings</button>
+        <p id="configStatus" style="margin-top:0.75rem;font-size:0.9rem;color:var(--muted);"></p>
+      </div>
+
+      <div class="card">
+        <h2>Add a new slide</h2>
+        <label for="personName">Name of person / title</label>
+        <input type="text" id="personName" placeholder="e.g. Atuheire Unity — Founding Director" />
+        <label for="personDetail">Short description</label>
+        <textarea id="personDetail" rows="2" placeholder="e.g. Leading skills training for women in Ishasha"></textarea>
+        <label>Photo</label>
+        <div style="margin-bottom:1rem;">
+          <button type="button" class="btn" id="uploadBtn">Choose &amp; upload photo to Cloudinary</button>
+          <p id="uploadStatus" style="margin-top:0.6rem;font-size:0.9rem;color:var(--muted);"></p>
+          <img id="preview" alt="" style="display:none;max-width:220px;margin-top:0.75rem;border-radius:10px;" />
+        </div>
+        <button type="button" class="btn" id="addSlide" disabled>Add to homepage slider</button>
+      </div>
+
+      <div class="card">
+        <h2>Current custom slides</h2>
+        <div class="slides-list" id="slidesList">
+          <p class="empty">No custom slides yet. Add one above.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" id="clearAll" style="margin-top:1rem;">Clear all custom slides</button>
+      </div>
+    </div>
+  </main>
+
+  
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+  <script>
+    // Optional: same Firebase config as contact page — stores slide metadata in Firestore
+    const FIREBASE_CONFIG = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    let db = null;
+    try {
+      if (FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.firestore();
+      }
+    } catch (e) {}
+  </script>
+
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <script>
+    const STORAGE_KEY = "ishasha_hero_slides";
+    const CONFIG_KEY = "ishasha_cloudinary";
+    let uploadedUrl = "";
+
+    function getConfig() {
+      try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || "{}"); } catch (e) { return {}; }
+    }
+    function saveConfig() {
+      const cloudName = document.getElementById("cloudName").value.trim();
+      const uploadPreset = document.getElementById("uploadPreset").value.trim();
+      localStorage.setItem(CONFIG_KEY, JSON.stringify({ cloudName, uploadPreset }));
+      document.getElementById("configStatus").textContent = "Saved. You can now upload photos.";
+      document.getElementById("configStatus").style.color = "var(--earth)";
+    }
+    function loadConfigForm() {
+      const c = getConfig();
+      if (c.cloudName) document.getElementById("cloudName").value = c.cloudName;
+      if (c.uploadPreset) document.getElementById("uploadPreset").value = c.uploadPreset;
+    }
+    document.getElementById("saveConfig").addEventListener("click", saveConfig);
+    loadConfigForm();
+
+    function getSlides() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch (e) { return []; }
+    }
+    function setSlides(arr) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+      renderList();
+      if (db) {
+        db.collection("hero_slides").doc("current").set({ slides: arr, updatedAt: new Date().toISOString() })
+          .catch(function (err) { console.warn("Firebase slides save:", err); });
+      }
+    }
+    function renderList() {
+      const list = document.getElementById("slidesList");
+      const slides = getSlides();
+      if (!slides.length) {
+        list.innerHTML = '<p class="empty">No custom slides yet. Add one above.</p>';
+        return;
+      }
+      list.innerHTML = slides.map(function (s, i) {
+        return '<div class="slide-item">' +
+          '<img src="' + s.url + '" alt="" />' +
+          '<div><h3>' + (s.name || "Untitled") + '</h3><p>' + (s.detail || "") + '</p></div>' +
+          '<button type="button" class="btn btn-danger" data-i="' + i + '">Remove</button>' +
+          '</div>';
+      }).join("");
+      list.querySelectorAll("[data-i]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const arr = getSlides();
+          arr.splice(Number(btn.getAttribute("data-i")), 1);
+          setSlides(arr);
+        });
+      });
+    }
+    renderList();
+
+    document.getElementById("clearAll").addEventListener("click", function () {
+      if (confirm("Remove all custom slides from the homepage slider?")) setSlides([]);
+    });
+
+    document.getElementById("uploadBtn").addEventListener("click", function () {
+      const c = getConfig();
+      if (!c.cloudName || !c.uploadPreset) {
+        alert("Please save your Cloudinary Cloud Name and unsigned Upload Preset first.");
+        return;
+      }
+      if (typeof cloudinary === "undefined") {
+        alert("Cloudinary widget failed to load. Check your internet connection.");
+        return;
+      }
+      const widget = cloudinary.createUploadWidget({
+        cloudName: c.cloudName,
+        uploadPreset: c.uploadPreset,
+        sources: ["local", "camera", "url"],
+        multiple: false,
+        maxFiles: 1,
+        clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+        maxFileSize: 10000000,
+        styles: {
+          palette: {
+            window: "#FFFFFF", windowBorder: "#ddd2c0", tabIcon: "#254a22",
+            menuIcons: "#6b7a65", textDark: "#1a2618", textLight: "#FFFFFF",
+            link: "#254a22", action: "#254a22", inactiveTabIcon: "#6b7a65",
+            error: "#F44235", inProgress: "#b8923e", complete: "#254a22", sourceBg: "#f6f1e8"
+          }
+        }
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          uploadedUrl = result.info.secure_url;
+          document.getElementById("uploadStatus").textContent = "Upload successful.";
+          document.getElementById("uploadStatus").style.color = "var(--earth)";
+          const prev = document.getElementById("preview");
+          prev.src = uploadedUrl;
+          prev.style.display = "block";
+          document.getElementById("addSlide").disabled = false;
+        }
+        if (error) {
+          document.getElementById("uploadStatus").textContent = "Upload failed. Check your Cloudinary settings.";
+          document.getElementById("uploadStatus").style.color = "#8b2e2e";
+        }
+      });
+      widget.open();
+    });
+
+    document.getElementById("addSlide").addEventListener("click", function () {
+      if (!uploadedUrl) {
+        alert("Please upload a photo first.");
+        return;
+      }
+      const name = document.getElementById("personName").value.trim();
+      const detail = document.getElementById("personDetail").value.trim();
+      const arr = getSlides();
+      arr.push({ url: uploadedUrl, name: name || "Community member", detail: detail });
+      setSlides(arr);
+      uploadedUrl = "";
+      document.getElementById("personName").value = "";
+      document.getElementById("personDetail").value = "";
+      document.getElementById("preview").style.display = "none";
+      document.getElementById("uploadStatus").textContent = "";
+      document.getElementById("addSlide").disabled = true;
+      alert("Slide added. Open the homepage to see it in the hero slider.");
+    });
+  </script>
+</body>
+</html>
