@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Newsletter — Ishasha Women's Organisation</title>
+  <style>
+/* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
+   Faithful recreation of layout, colors, and structure from the original React build.
+*/
+
+:root {
+  --background: #f7f3eb;
+  --sand: #f0e8d8;
+  --card: #ffffff;
+  --foreground: #1f2a1f;
+  --ink: #1f2a1f;
+  --ink-soft: #3d4a3d;
+  --muted-foreground: #5c6b5c;
+  --earth: #2d5a27;
+  --gold: #c4a35a;
+  --primary: #2d5a27;
+  --border: #d9cfc0;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-strong: 0 16px 40px rgba(31, 42, 31, 0.12);
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--gold) 12%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, var(--sand) 0%, var(--background) 30%, var(--sand) 100%);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Layout shell */
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, white 16%);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.35rem;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.site-brand-mark,
+.site-footer-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.site-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--earth);
+}
+
+.site-brand-tagline {
+  max-width: 18rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.site-nav-link {
+  color: var(--ink-soft);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.site-header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.site-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Hamburger / mobile nav */
+.hamburger-menu-btn {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.hamburger-menu-btn:hover {
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.mobile-nav-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.mobile-nav-drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 88vw);
+  height: 100%;
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.mobile-nav-drawer-overlay.is-open .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  transition: background 0.18s, color 0.18s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.mobile-nav-drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Buttons */
+.button-primary,
+.button-secondary,
+.button-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button-secondary {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--card) 78%, var(--gold) 8%);
+  border: 1.5px solid color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.button-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.button-light {
+  background: var(--sand);
+  color: var(--earth);
+}
+
+.text-action {
+  color: var(--earth);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link {
+  color: var(--earth);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.content-section {
+  padding: 3.5rem 0;
+}
+
+/* Page hero band */
+.page-hero-band {
+  padding: 2.75rem 0 1.5rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--earth) 8%, var(--sand)), transparent);
+}
+
+.page-hero-inner {
+  max-width: 48rem;
+}
+
+.page-intro {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Newsletter grid */
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.newsletter-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+}
+
+.newsletter-card img,
+.newsletter-card video {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+  background: #e8e0d0;
+}
+
+.newsletter-card video {
+  pointer-events: none;
+}
+
+.newsletter-media-wrap {
+  position: relative;
+}
+
+.newsletter-video-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.newsletter-date {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  background: color-mix(in srgb, var(--earth) 90%, transparent);
+  color: #f5e9c8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.newsletter-caption {
+  padding: 1.15rem 1.25rem 1.35rem;
+  background: color-mix(in srgb, var(--card) 90%, var(--sand));
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.newsletter-caption p {
+  font-size: 0.92rem;
+  color: var(--muted-foreground);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.newsletter-view-hint {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--earth);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--sand) 50%, white);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 1.75rem;
+}
+
+.empty-state p {
+  margin-bottom: 0.5rem;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--sand) 50%, var(--card));
+  padding: 2.75rem 0 0;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.site-footer-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  line-height: 1.3;
+}
+
+.site-footer-tagline {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+.site-footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.site-footer-link:hover {
+  color: var(--earth);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+/* Admin upload section */
+.upload-section {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.upload-section h2 {
+  font-family: var(--font-display);
+  color: var(--earth);
+  margin-bottom: 0.75rem;
+}
+
+.cloudinary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), #1e4a1a);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+  margin-top: 1.25rem;
+}
+
+.cloudinary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.upload-note {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin-top: 1rem;
+  max-width: 40rem;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+.admin-gate {
+  margin-top: 1.5rem;
+}
+
+.admin-gate input[type="password"] {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  width: min(260px, 100%);
+  margin-right: 0.5rem;
+}
+
+.admin-gate .button-secondary {
+  margin-top: 0.5rem;
+}
+
+.admin-panel {
+  display: none;
+  margin-top: 1.5rem;
+  text-align: left;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.admin-panel.is-visible {
+  display: block;
+}
+
+.admin-panel label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+  margin-top: 0.9rem;
+}
+
+.admin-panel input[type="text"],
+.admin-panel input[type="date"],
+.admin-panel textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.admin-panel textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.admin-logout {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 15, 0.92);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+  padding: 1rem;
+}
+
+.lightbox-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: min(920px, 96vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lightbox-media {
+  max-width: 100%;
+  max-height: 68vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  background: #000;
+}
+
+.lightbox-media img,
+.lightbox-media video {
+  max-width: 100%;
+  max-height: 68vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius);
+}
+
+.lightbox-caption {
+  text-align: center;
+  color: #e8efe6;
+  max-width: 36rem;
+}
+
+.lightbox-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #f5e9c8;
+  margin-bottom: 0.25rem;
+}
+
+.lightbox-caption p {
+  font-size: 0.95rem;
+  color: #c5d0c2;
+}
+
+.lightbox-caption .lightbox-date {
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background 0.18s;
+  z-index: 2;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox-prev {
+  left: -3.5rem;
+}
+
+.lightbox-next {
+  right: -3.5rem;
+}
+
+.lightbox-counter {
+  color: #a8b8a5;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .site-nav,
+  .site-header-cta {
+    display: none;
+  }
+
+  .hamburger-menu-btn {
+    display: inline-flex;
+  }
+
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-next {
+    right: 0.5rem;
+  }
+
+  .lightbox-close {
+    top: -2.2rem;
+    right: 0.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+
+  .admin-gate input[type="password"] {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="index.html" class="site-brand" aria-label="IWSDP home">
+          <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+          <div class="site-brand-copy">
+            <span class="site-brand-name">Ishasha Women's Community</span>
+            <span class="site-brand-tagline">Women And Girls Empowered Communities Transformed</span>
+          </div>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="index.html" class="site-nav-link">Home</a>
+          <a href="about.html" class="site-nav-link">About</a>
+          <a href="programs.html" class="site-nav-link">Programs</a>
+          <a href="impact.html" class="site-nav-link">Impact</a>
+          <a href="donate.html" class="site-nav-link">Donate</a>
+          <a href="get-involved.html" class="site-nav-link">Get Involved</a>
+          <a href="gallery.html" class="site-nav-link">Gallery</a>
+          <a href="newsletter.html" class="site-nav-link is-active">Newsletter</a>
+          <a href="contact.html" class="site-nav-link">Contact</a>
+        </nav>
+        <a href="donate.html" class="site-header-cta">Donate</a>
+        <button class="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu" type="button">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav-drawer-overlay">
+        <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+          <div class="mobile-nav-drawer-header">
+            <div class="site-brand">
+              <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+              <span class="site-brand-name">Ishasha Women's Community</span>
+            </div>
+            <button class="hamburger-menu-btn" data-close-menu aria-label="Close menu" type="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <a href="programs.html" class="mobile-nav-link">Programs</a>
+            <a href="impact.html" class="mobile-nav-link">Impact</a>
+            <a href="donate.html" class="mobile-nav-link">Donate</a>
+            <a href="get-involved.html" class="mobile-nav-link">Get Involved</a>
+            <a href="gallery.html" class="mobile-nav-link">Gallery</a>
+            <a href="newsletter.html" class="mobile-nav-link is-active">Newsletter</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+          </nav>
+          <div class="mobile-nav-drawer-footer"><a href="donate.html" class="button-primary w-full">Donate</a></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero-band">
+      <div class="site-shell page-hero-inner">
+        <p class="section-eyebrow">Updates from Ishasha</p>
+        <h1 class="page-title">Newsletter</h1>
+        <p class="page-intro">News, stories, and updates from the community — photos and videos with descriptions. Click any item to view the full image or play the video. Use next/previous to browse.</p>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-section">
+        <div class="site-shell">
+          <div class="newsletter-grid" id="newsletter-grid">
+            <!-- Sample newsletter items (replace or remove as needed) -->
+            <article class="newsletter-card"
+              data-index="0"
+              data-type="image"
+              data-src="images/logo.jpg"
+              data-title="Welcome to our newsletter"
+              data-desc="This is a sample newsletter item. Admins can upload new photos and videos with titles and descriptions. Visitors can open any item to view or play media."
+              data-date="2026-09-01">
+              <div class="newsletter-media-wrap">
+                <img src="images/logo.jpg" alt="Welcome to our newsletter" loading="lazy" />
+                <span class="newsletter-date">Sep 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Welcome to our newsletter</h3>
+                <p>This is a sample newsletter item. Admins can upload new photos and videos with titles and descriptions. Visitors can open any item to view or play media.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+
+            <article class="newsletter-card"
+              data-index="1"
+              data-type="image"
+              data-src="images/farm-group-field.jpg"
+              data-title="Farm skills update"
+              data-desc="Community members continue agricultural training and land preparation for the season."
+              data-date="2026-08-15">
+              <div class="newsletter-media-wrap">
+                <img src="images/farm-group-field.jpg" alt="Farm skills update" loading="lazy" />
+                <span class="newsletter-date">Aug 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Farm skills update</h3>
+                <p>Community members continue agricultural training and land preparation for the season.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+
+            <article class="newsletter-card"
+              data-index="2"
+              data-type="image"
+              data-src="images/mother-schoolgirls.jpg"
+              data-title="Education support for girls"
+              data-desc="Supporting vulnerable children, especially girls, to stay in school remains a core priority."
+              data-date="2026-07-20">
+              <div class="newsletter-media-wrap">
+                <img src="images/mother-schoolgirls.jpg" alt="Education support for girls" loading="lazy" />
+                <span class="newsletter-date">Jul 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Education support for girls</h3>
+                <p>Supporting vulnerable children, especially girls, to stay in school remains a core priority.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="empty-state" id="empty-state" style="display:none;">
+            <p><strong>No newsletter items yet.</strong></p>
+            <p>When an administrator uploads photos or videos, they will appear here.</p>
+          </div>
+
+          <!-- Admin-only upload section -->
+          <div class="upload-section">
+            <h2>Admin — Upload newsletter media</h2>
+            <p>Only administrators can add newsletter items (photos or videos) with a title, description, and optional date. Visitors can open any item to view the image or play the video, and move to the next or previous item.</p>
+
+            <div class="admin-gate" id="admin-gate">
+              <p style="margin-bottom:0.75rem;color:var(--ink-soft);">Enter admin password to unlock upload tools.</p>
+              <input type="password" id="admin-password" placeholder="Admin password" autocomplete="current-password" />
+              <button type="button" class="button-secondary" id="admin-login-btn">Unlock</button>
+              <p class="upload-note" style="margin-top:0.75rem;">Default password for this demo: <code>ishasha-admin</code> — change it in the script near the bottom of this page.</p>
+            </div>
+
+            <div class="admin-panel" id="admin-panel">
+              <p style="color:var(--earth);font-weight:600;margin-bottom:0.5rem;">✓ Admin unlocked</p>
+
+              <label for="upload-title">Title</label>
+              <input type="text" id="upload-title" placeholder="e.g. Community water update – September 2026" />
+
+              <label for="upload-date">Date (optional)</label>
+              <input type="date" id="upload-date" />
+
+              <label for="upload-desc">Description</label>
+              <textarea id="upload-desc" placeholder="Write a short newsletter description that will appear with the photo or video."></textarea>
+
+              <button type="button" id="upload_widget" class="cloudinary-button">
+                Upload photo or video
+              </button>
+
+              <p class="upload-note">
+                Supported: JPG, PNG, WebP, GIF, MP4, MOV, WebM (max ~100&nbsp;MB). After upload, a card is added to this page for the current session. To keep items permanently, add the HTML to the page or use a CMS/backend later.
+              </p>
+
+              <div id="upload-result" style="margin-top:1.5rem;display:none;">
+                <p style="color:var(--earth);font-weight:600;">✓ Upload successful!</p>
+                <p id="uploaded-url" style="font-size:0.9rem;word-break:break-all;"></p>
+                <div id="uploaded-preview-wrap" style="margin-top:0.75rem;"></div>
+              </div>
+
+              <p class="admin-logout" id="admin-logout">Lock admin tools again</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer-grid">
+        <div>
+          <div class="site-footer-brand">
+            <img src="images/logo.jpg" alt="" class="site-footer-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+            <div>
+              <h2 class="site-footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+              <p class="site-footer-tagline">Women And Girls Empowered Communities Transformed</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer-heading">Quick Links</h2>
+          <div class="site-footer-links">
+            <a href="about.html" class="site-footer-link">About</a>
+            <a href="programs.html" class="site-footer-link">Programs</a>
+            <a href="gallery.html" class="site-footer-link">Gallery</a>
+            <a href="newsletter.html" class="site-footer-link">Newsletter</a>
+            <a href="contact.html" class="site-footer-link">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-shell site-footer-bottom">
+        <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Newsletter media viewer">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">‹</button>
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">›</button>
+      <div class="lightbox-media" id="lightbox-media"></div>
+      <div class="lightbox-caption">
+        <p class="lightbox-date" id="lightbox-date"></p>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+      <p class="lightbox-counter" id="lightbox-counter"></p>
+    </div>
+  </div>
+
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <script>
+/**
+ * Cloudinary configuration
+ * -----------------------
+ * 1. Sign up free at https://cloudinary.com
+ * 2. Go to Settings → Upload → Add upload preset
+ * 3. Create an "Unsigned" preset (e.g. name it "ishasha_uploads")
+ * 4. Optionally set Folder = "ishasha-newsletter"
+ * 5. Replace the two values below with your own if needed:
+ */
+window.CLOUDINARY_CLOUD_NAME = "poczen7o";
+window.CLOUDINARY_UPLOAD_PRESET = "ishasha_uploads";
+
+/** Change this password for production use */
+window.ADMIN_PASSWORD = "ishasha-admin";
+</script>
+  <script>
+/* Mobile navigation toggle */
+(function () {
+  const btn = document.querySelector(".hamburger-menu-btn");
+  const overlay = document.querySelector(".mobile-nav-drawer-overlay");
+  const closeBtns = document.querySelectorAll("[data-close-menu]");
+
+  function openMenu() {
+    if (overlay) {
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      if (btn) btn.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function closeMenu() {
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (overlay && overlay.classList.contains("is-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeMenu();
+    });
+  }
+
+  closeBtns.forEach(function (el) {
+    el.addEventListener("click", closeMenu);
+  });
+
+  document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
+  });
+
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const file = href.split("/").pop();
+    if (
+      file === path ||
+      (path === "" && file === "index.html") ||
+      (path === "index.html" && file === "index.html") ||
+      (path === "" && href === "/") ||
+      (path === "index.html" && (href === "/" || href === "index.html"))
+    ) {
+      link.classList.add("is-active");
+    }
+  });
+})();
+</script>
+  <script>
+(function () {
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- Admin gate ---------- */
+  const ADMIN_KEY = "ishasha_newsletter_admin_unlocked";
+  const gate = document.getElementById("admin-gate");
+  const panel = document.getElementById("admin-panel");
+  const loginBtn = document.getElementById("admin-login-btn");
+  const passwordInput = document.getElementById("admin-password");
+  const logoutLink = document.getElementById("admin-logout");
+
+  function showAdminPanel() {
+    if (gate) gate.style.display = "none";
+    if (panel) panel.classList.add("is-visible");
+  }
+
+  function hideAdminPanel() {
+    if (gate) gate.style.display = "";
+    if (panel) panel.classList.remove("is-visible");
+    sessionStorage.removeItem(ADMIN_KEY);
+  }
+
+  if (sessionStorage.getItem(ADMIN_KEY) === "1") {
+    showAdminPanel();
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", function () {
+      const entered = (passwordInput && passwordInput.value) || "";
+      if (entered === window.ADMIN_PASSWORD) {
+        sessionStorage.setItem(ADMIN_KEY, "1");
+        showAdminPanel();
+        if (passwordInput) passwordInput.value = "";
+      } else {
+        alert("Incorrect password.");
+      }
+    });
+  }
+
+  if (passwordInput) {
+    passwordInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") loginBtn.click();
+    });
+  }
+
+  if (logoutLink) {
+    logoutLink.addEventListener("click", hideAdminPanel);
+  }
+
+  /* ---------- Helpers ---------- */
+  function formatDisplayDate(iso) {
+    if (!iso) return "";
+    try {
+      var d = new Date(iso + "T12:00:00");
+      if (isNaN(d.getTime())) return iso;
+      return d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+    } catch (e) {
+      return iso;
+    }
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str || "";
+    return div.innerHTML;
+  }
+
+  /* ---------- Cloudinary upload (admin only) ---------- */
+  var myWidget = null;
+
+  if (typeof cloudinary !== "undefined" &&
+      window.CLOUDINARY_CLOUD_NAME &&
+      window.CLOUDINARY_CLOUD_NAME !== "YOUR_CLOUD_NAME" &&
+      window.CLOUDINARY_UPLOAD_PRESET &&
+      window.CLOUDINARY_UPLOAD_PRESET !== "YOUR_UNSIGNED_PRESET") {
+
+    myWidget = cloudinary.createUploadWidget({
+      cloudName: window.CLOUDINARY_CLOUD_NAME,
+      uploadPreset: window.CLOUDINARY_UPLOAD_PRESET,
+      sources: ["local", "camera", "url"],
+      multiple: false,
+      maxFiles: 1,
+      clientAllowedFormats: ["jpg", "jpeg", "png", "webp", "gif", "mp4", "mov", "webm", "m4v"],
+      maxFileSize: 100000000,
+      resourceType: "auto",
+      folding: false,
+      styles: {
+        palette: {
+          window: "#FFFFFF",
+          windowBorder: "#d9cfc0",
+          tabIcon: "#2d5a27",
+          menuIcons: "#5c6b5c",
+          textDark: "#1f2a1f",
+          textLight: "#FFFFFF",
+          link: "#2d5a27",
+          action: "#2d5a27",
+          inactiveTabIcon: "#5c6b5c",
+          error: "#F44235",
+          inProgress: "#c4a35a",
+          complete: "#2d5a27",
+          sourceBg: "#f7f3eb"
+        }
+      }
+    }, function (error, result) {
+      if (!error && result && result.event === "success") {
+        var info = result.info;
+        var url = info.secure_url;
+        var isVideo = (info.resource_type === "video") || /\.(mp4|mov|webm|m4v)(\?|$)/i.test(url);
+        var title = (document.getElementById("upload-title") || {}).value || "Newsletter update";
+        var desc = (document.getElementById("upload-desc") || {}).value || "";
+        var dateVal = (document.getElementById("upload-date") || {}).value || "";
+
+        document.getElementById("upload-result").style.display = "block";
+        document.getElementById("uploaded-url").textContent = "Public URL: " + url;
+
+        var previewWrap = document.getElementById("uploaded-preview-wrap");
+        previewWrap.innerHTML = "";
+        if (isVideo) {
+          var v = document.createElement("video");
+          v.src = url;
+          v.controls = true;
+          v.style.maxWidth = "320px";
+          v.style.borderRadius = "var(--radius)";
+          v.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(v);
+        } else {
+          var img = document.createElement("img");
+          img.src = url;
+          img.alt = "Uploaded preview";
+          img.style.maxWidth = "280px";
+          img.style.borderRadius = "var(--radius)";
+          img.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(img);
+        }
+
+        appendNewsletterCard({
+          src: url,
+          type: isVideo ? "video" : "image",
+          title: title,
+          desc: desc,
+          date: dateVal
+        });
+
+        alert("Newsletter item uploaded!\n\nTitle: " + title + "\nURL:\n" + url + "\n\nA card was added for this session. To keep it permanently, add the HTML to the page or use a CMS/backend.");
+      }
+      if (error) {
+        console.error(error);
+        alert("Upload failed. Check your Cloudinary cloud name and unsigned upload preset.");
+      }
+    });
+
+    var uploadBtn = document.getElementById("upload_widget");
+    if (uploadBtn) {
+      uploadBtn.addEventListener("click", function () {
+        if (sessionStorage.getItem(ADMIN_KEY) !== "1") {
+          alert("Please unlock admin tools first.");
+          return;
+        }
+        if (myWidget) myWidget.open();
+      });
+    }
+  } else {
+    var uploadBtnFallback = document.getElementById("upload_widget");
+    if (uploadBtnFallback) {
+      uploadBtnFallback.addEventListener("click", function () {
+        alert("Cloudinary is not configured yet.\n\n1. Create a free account at cloudinary.com\n2. Create an Unsigned upload preset\n3. Edit CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET near the bottom of this page.");
+      });
+    }
+  }
+
+  function appendNewsletterCard(item) {
+    var grid = document.getElementById("newsletter-grid");
+    var empty = document.getElementById("empty-state");
+    if (!grid) return;
+
+    if (empty) empty.style.display = "none";
+
+    var index = grid.querySelectorAll(".newsletter-card").length;
+    var article = document.createElement("article");
+    article.className = "newsletter-card";
+    article.dataset.index = String(index);
+    article.dataset.type = item.type;
+    article.dataset.src = item.src;
+    article.dataset.title = item.title;
+    article.dataset.desc = item.desc || "";
+    article.dataset.date = item.date || "";
+
+    var wrap = document.createElement("div");
+    wrap.className = "newsletter-media-wrap";
+
+    if (item.type === "video") {
+      var video = document.createElement("video");
+      video.src = item.src;
+      video.muted = true;
+      video.preload = "metadata";
+      video.setAttribute("playsinline", "");
+      wrap.appendChild(video);
+      var badge = document.createElement("span");
+      badge.className = "newsletter-video-badge";
+      badge.innerHTML = "▶ Video";
+      wrap.appendChild(badge);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      img.loading = "lazy";
+      wrap.appendChild(img);
+    }
+
+    if (item.date) {
+      var dateBadge = document.createElement("span");
+      dateBadge.className = "newsletter-date";
+      dateBadge.textContent = formatDisplayDate(item.date);
+      wrap.appendChild(dateBadge);
+    }
+
+    var caption = document.createElement("div");
+    caption.className = "newsletter-caption";
+    caption.innerHTML =
+      "<h3>" + escapeHtml(item.title) + "</h3>" +
+      "<p>" + escapeHtml(item.desc || "") + "</p>" +
+      "<span class=\"newsletter-view-hint\">View →</span>";
+
+    article.appendChild(wrap);
+    article.appendChild(caption);
+    grid.insertBefore(article, grid.firstChild);
+
+    // Re-index and bind
+    rebuildItems();
+    article.addEventListener("click", function () {
+      openLightbox(parseInt(article.dataset.index, 10));
+    });
+  }
+
+  /* ---------- Lightbox / viewer ---------- */
+  var items = [];
+  var currentIndex = 0;
+  var lightbox = document.getElementById("lightbox");
+  var mediaEl = document.getElementById("lightbox-media");
+  var titleEl = document.getElementById("lightbox-title");
+  var descEl = document.getElementById("lightbox-desc");
+  var dateEl = document.getElementById("lightbox-date");
+  var counterEl = document.getElementById("lightbox-counter");
+
+  function rebuildItems() {
+    items = [];
+    document.querySelectorAll(".newsletter-card").forEach(function (card, i) {
+      card.dataset.index = String(i);
+      items.push({
+        type: card.dataset.type || "image",
+        src: card.dataset.src,
+        title: card.dataset.title || "",
+        desc: card.dataset.desc || "",
+        date: card.dataset.date || ""
+      });
+    });
+
+    var empty = document.getElementById("empty-state");
+    var grid = document.getElementById("newsletter-grid");
+    if (empty && grid) {
+      empty.style.display = items.length === 0 ? "block" : "none";
+    }
+  }
+
+  function openLightbox(index) {
+    if (!items.length) rebuildItems();
+    currentIndex = index;
+    showItem(currentIndex);
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+    mediaEl.innerHTML = "";
+  }
+
+  function showItem(index) {
+    if (!items.length) return;
+    if (index < 0) index = items.length - 1;
+    if (index >= items.length) index = 0;
+    currentIndex = index;
+    var item = items[index];
+
+    mediaEl.innerHTML = "";
+    if (item.type === "video") {
+      var v = document.createElement("video");
+      v.src = item.src;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.style.maxWidth = "100%";
+      v.style.maxHeight = "68vh";
+      mediaEl.appendChild(v);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      mediaEl.appendChild(img);
+    }
+
+    titleEl.textContent = item.title;
+    descEl.textContent = item.desc;
+    dateEl.textContent = item.date ? formatDisplayDate(item.date) : "";
+    counterEl.textContent = (index + 1) + " / " + items.length;
+  }
+
+  function nextItem() {
+    showItem(currentIndex + 1);
+  }
+
+  function prevItem() {
+    showItem(currentIndex - 1);
+  }
+
+  rebuildItems();
+  document.querySelectorAll(".newsletter-card").forEach(function (card) {
+    card.addEventListener("click", function () {
+      openLightbox(parseInt(card.dataset.index, 10));
+    });
+  });
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-next").addEventListener("click", function (e) {
+    e.stopPropagation();
+    nextItem();
+  });
+  document.getElementById("lightbox-prev").addEventListener("click", function (e) {
+    e.stopPropagation();
+    prevItem();
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") nextItem();
+    if (e.key === "ArrowLeft") prevItem();
+  });
+})();
+</script>
+</body>
+</html>
