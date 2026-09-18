@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery — Ishasha Women's Organisation</title>
+  <style>
+/* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
+   Faithful recreation of layout, colors, and structure from the original React build.
+*/
+
+:root {
+  --background: #f7f3eb;
+  --sand: #f0e8d8;
+  --card: #ffffff;
+  --foreground: #1f2a1f;
+  --ink: #1f2a1f;
+  --ink-soft: #3d4a3d;
+  --muted-foreground: #5c6b5c;
+  --earth: #2d5a27;
+  --gold: #c4a35a;
+  --primary: #2d5a27;
+  --border: #d9cfc0;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-strong: 0 16px 40px rgba(31, 42, 31, 0.12);
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--gold) 12%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, var(--sand) 0%, var(--background) 30%, var(--sand) 100%);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Layout shell */
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, white 16%);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.35rem;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.site-brand-mark,
+.site-footer-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.site-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--earth);
+}
+
+.site-brand-tagline {
+  max-width: 18rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.site-nav-link {
+  color: var(--ink-soft);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.site-header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.site-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Hamburger / mobile nav */
+.hamburger-menu-btn {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.hamburger-menu-btn:hover {
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.mobile-nav-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.mobile-nav-drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 88vw);
+  height: 100%;
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.mobile-nav-drawer-overlay.is-open .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  transition: background 0.18s, color 0.18s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.mobile-nav-drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Buttons */
+.button-primary,
+.button-secondary,
+.button-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button-secondary {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--card) 78%, var(--gold) 8%);
+  border: 1.5px solid color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.button-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.button-light {
+  background: var(--sand);
+  color: var(--earth);
+}
+
+.text-action {
+  color: var(--earth);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link {
+  color: var(--earth);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Hero */
+.hero-section {
+  padding: 4.25rem 0 2rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.hero-title,
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.hero-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.hero-support,
+.supporting-copy,
+.prose-panel p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-media-stack {
+  position: relative;
+}
+
+.hero-image-card,
+.large-photo-frame,
+.tall-photo-frame,
+.photo-story-card,
+.image-panel {
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, var(--gold) 20%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  background: linear-gradient(145deg, #c8b89a, #8a9a7a);
+}
+
+.placeholder-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: linear-gradient(145deg, #c8b89a 0%, #8a9a7a 50%, #6b8a5a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.floating-stat-card {
+  position: absolute;
+  bottom: 1.25rem;
+  left: -1rem;
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--gold) 38%, white 62%);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 9.5rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--earth);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+/* Facts bar */
+.facts-bar {
+  padding: 1.75rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  border-bottom: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  background: color-mix(in srgb, var(--sand) 60%, transparent);
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.fact-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.fact-value {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* Content sections */
+.content-section {
+  padding: 3.5rem 0;
+}
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  color: var(--earth);
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.mission-vision-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.info-card,
+.bullet-card,
+.program-card,
+.leader-card,
+.dark-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.info-card h3,
+.bullet-card h3,
+.program-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  margin-bottom: 0.5rem;
+}
+
+.value-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.value-chip {
+  background: color-mix(in srgb, var(--sand) 80%, var(--gold) 10%);
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, white 72%);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.snapshot-list {
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.snapshot-list li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  color: var(--ink-soft);
+}
+
+.snapshot-list li::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--earth));
+  flex-shrink: 0;
+}
+
+/* Page hero band */
+.page-hero-band {
+  padding: 2.75rem 0 1.5rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--earth) 8%, var(--sand)), transparent);
+}
+
+.page-hero-inner {
+  max-width: 48rem;
+}
+
+.page-intro {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Programs grid */
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.program-card p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.gallery-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.gallery-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+}
+
+.gallery-card img,
+.gallery-card video {
+  width: 100%;
+  aspect-ratio: 16/11;
+  object-fit: cover;
+  display: block;
+  background: #e8e0d0;
+}
+
+.gallery-card video {
+  pointer-events: none;
+}
+
+.gallery-media-wrap {
+  position: relative;
+}
+
+.gallery-video-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.gallery-caption {
+  padding: 1rem 1.15rem;
+  background: color-mix(in srgb, var(--card) 90%, var(--sand));
+}
+
+.gallery-caption h3 {
+  font-size: 1.05rem;
+  color: var(--earth);
+  margin-bottom: 0.25rem;
+}
+
+.gallery-caption p {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+/* Donate / impact cards */
+.donate-grid,
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.donate-card,
+.impact-point {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.donate-card .amount,
+.impact-point .amount {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  color: var(--earth);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+/* Leadership */
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.leader-card {
+  background: var(--foreground);
+  color: #e8efe6;
+  border: none;
+}
+
+.leader-card p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* Contact form simple */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.contact-details p {
+  margin-bottom: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--gold) 50%, transparent);
+  border-color: var(--gold);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--sand) 50%, var(--card));
+  padding: 2.75rem 0 0;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.site-footer-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  line-height: 1.3;
+}
+
+.site-footer-tagline {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+.site-footer-copy {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.site-footer-link:hover {
+  color: var(--earth);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+/* Band deep (optional dark section) */
+.band-deep {
+  background: linear-gradient(180deg, var(--earth), color-mix(in srgb, var(--earth) 80%, #000));
+  color: #eef5ea;
+  padding: 3rem 0;
+}
+
+.band-deep .section-title,
+.band-deep .section-eyebrow {
+  color: #f5e9c8;
+}
+
+/* Admin upload section */
+.upload-section {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.upload-section h2 {
+  font-family: var(--font-display);
+  color: var(--earth);
+  margin-bottom: 0.75rem;
+}
+
+.cloudinary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), #1e4a1a);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+  margin-top: 1.25rem;
+}
+
+.cloudinary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.upload-note {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin-top: 1rem;
+  max-width: 40rem;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+.admin-gate {
+  margin-top: 1.5rem;
+}
+
+.admin-gate input[type="password"] {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  width: min(260px, 100%);
+  margin-right: 0.5rem;
+}
+
+.admin-gate .button-secondary {
+  margin-top: 0.5rem;
+}
+
+.admin-panel {
+  display: none;
+  margin-top: 1.5rem;
+  text-align: left;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.admin-panel.is-visible {
+  display: block;
+}
+
+.admin-panel label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+  margin-top: 0.9rem;
+}
+
+.admin-panel input[type="text"],
+.admin-panel textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.admin-panel textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.admin-logout {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 15, 0.92);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+  padding: 1rem;
+}
+
+.lightbox-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: min(920px, 96vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lightbox-media {
+  max-width: 100%;
+  max-height: 72vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  background: #000;
+}
+
+.lightbox-media img,
+.lightbox-media video {
+  max-width: 100%;
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius);
+}
+
+.lightbox-caption {
+  text-align: center;
+  color: #e8efe6;
+  max-width: 36rem;
+}
+
+.lightbox-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #f5e9c8;
+  margin-bottom: 0.25rem;
+}
+
+.lightbox-caption p {
+  font-size: 0.95rem;
+  color: #c5d0c2;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background 0.18s;
+  z-index: 2;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox-prev {
+  left: -3.5rem;
+}
+
+.lightbox-next {
+  right: -3.5rem;
+}
+
+.lightbox-counter {
+  color: #a8b8a5;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .site-nav,
+  .site-header-cta {
+    display: none;
+  }
+
+  .hamburger-menu-btn {
+    display: inline-flex;
+  }
+
+  .hero-grid,
+  .two-column-layout,
+  .contact-grid,
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .floating-stat-card {
+    left: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .hero-section {
+    padding-top: 2.5rem;
+  }
+
+  .lightbox-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-next {
+    right: 0.5rem;
+  }
+
+  .lightbox-close {
+    top: -2.2rem;
+    right: 0.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="index.html" class="site-brand" aria-label="IWSDP home">
+          <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+          <div class="site-brand-copy">
+            <span class="site-brand-name">Ishasha Women's Community</span>
+            <span class="site-brand-tagline">Women And Girls Empowered Communities Transformed</span>
+          </div>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="index.html" class="site-nav-link">Home</a>
+          <a href="about.html" class="site-nav-link">About</a>
+          <a href="programs.html" class="site-nav-link">Programs</a>
+          <a href="impact.html" class="site-nav-link">Impact</a>
+          <a href="donate.html" class="site-nav-link">Donate</a>
+          <a href="get-involved.html" class="site-nav-link">Get Involved</a>
+          <a href="gallery.html" class="site-nav-link is-active">Gallery</a>
+          <a href="contact.html" class="site-nav-link">Contact</a>
+        </nav>
+        <a href="donate.html" class="site-header-cta">Donate</a>
+        <button class="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu" type="button">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav-drawer-overlay">
+        <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+          <div class="mobile-nav-drawer-header">
+            <div class="site-brand">
+              <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+              <span class="site-brand-name">Ishasha Women's Community</span>
+            </div>
+            <button class="hamburger-menu-btn" data-close-menu aria-label="Close menu" type="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <a href="programs.html" class="mobile-nav-link">Programs</a>
+            <a href="impact.html" class="mobile-nav-link">Impact</a>
+            <a href="donate.html" class="mobile-nav-link">Donate</a>
+            <a href="get-involved.html" class="mobile-nav-link">Get Involved</a>
+            <a href="gallery.html" class="mobile-nav-link is-active">Gallery</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+          </nav>
+          <div class="mobile-nav-drawer-footer"><a href="donate.html" class="button-primary w-full">Donate</a></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-hero-band">
+      <div class="site-shell page-hero-inner">
+        <p class="section-eyebrow">From the community</p>
+        <h1 class="page-title">Gallery</h1>
+        <p class="page-intro">Moments from daily life, skills training, agriculture, education support, water advocacy, and the work of our international ambassador Dr. Daria Mejnartowicz. Click any photo or video to view it larger and browse with next/previous.</p>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-section">
+        <div class="site-shell">
+          <div class="gallery-grid" id="gallery-grid">
+
+            <article class="gallery-card" data-index="0" data-type="image" data-src="images/logo.jpg" data-title="Community group" data-desc="Women and children of the Ishasha community gathered together.">
+              <div class="gallery-media-wrap">
+                <img src="images/logo.jpg" alt="Group of women and children in matching yellow patterned shirts" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Community group</h3>
+                <p>Women and children of the Ishasha community gathered together.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="1" data-type="image" data-src="images/farm-group-field.jpg" data-title="Farm learning" data-desc="Skills building and agricultural mentorship on the ground.">
+              <div class="gallery-media-wrap">
+                <img src="images/farm-group-field.jpg" alt="Community members standing in a cultivated field" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Farm learning</h3>
+                <p>Skills building and agricultural mentorship on the ground.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="2" data-type="image" data-src="images/coffee-cherries.jpg" data-title="Coffee production" data-desc="Agriculture remains a key pathway to income and self-reliance.">
+              <div class="gallery-media-wrap">
+                <img src="images/coffee-cherries.jpg" alt="Ripe red coffee cherries on the tree" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Coffee production</h3>
+                <p>Agriculture remains a key pathway to income and self-reliance.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="3" data-type="image" data-src="images/children-carrying-water.jpg" data-title="Water access challenge" data-desc="Safe water remains an urgent community priority.">
+              <div class="gallery-media-wrap">
+                <img src="images/children-carrying-water.jpg" alt="Children and a woman carrying water containers on their heads" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Water access challenge</h3>
+                <p>Safe water remains an urgent community priority.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="4" data-type="image" data-src="images/woman-water-jerrycan.jpg" data-title="Women carrying the burden" data-desc="Women often shoulder the daily task of water collection.">
+              <div class="gallery-media-wrap">
+                <img src="images/woman-water-jerrycan.jpg" alt="Woman carrying a yellow jerrycan of water on her head" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Women carrying the burden</h3>
+                <p>Women often shoulder the daily task of water collection.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="5" data-type="image" data-src="images/community-water-protest.jpg" data-title="Community call for water" data-desc="Residents advocating for clean and reliable water.">
+              <div class="gallery-media-wrap">
+                <img src="images/community-water-protest.jpg" alt="Community group holding signs next to a muddy water source" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Community call for water</h3>
+                <p>Residents advocating for clean and reliable water.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="6" data-type="image" data-src="images/mother-schoolgirls.jpg" data-title="Education support" data-desc="Supporting vulnerable children, especially girls, to stay in school.">
+              <div class="gallery-media-wrap">
+                <img src="images/mother-schoolgirls.jpg" alt="Mother with two schoolgirls in purple uniforms" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Education support</h3>
+                <p>Supporting vulnerable children, especially girls, to stay in school.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="7" data-type="image" data-src="images/schoolgirls-lollipops.jpg" data-title="Joy at school" data-desc="Moments of happiness for children in the community.">
+              <div class="gallery-media-wrap">
+                <img src="images/schoolgirls-lollipops.jpg" alt="Four schoolgirls in purple uniforms smiling" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Joy at school</h3>
+                <p>Moments of happiness for children in the community.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="8" data-type="image" data-src="images/woman-basin-meeting.jpg" data-title="Community meeting" data-desc="Practical support and gatherings for women and families.">
+              <div class="gallery-media-wrap">
+                <img src="images/woman-basin-meeting.jpg" alt="Woman holding a basin at an outdoor community meeting" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Community meeting</h3>
+                <p>Practical support and gatherings for women and families.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="9" data-type="image" data-src="images/man-painting-bench.jpg" data-title="Infrastructure improvement" data-desc="Community members improving shared facilities.">
+              <div class="gallery-media-wrap">
+                <img src="images/man-painting-bench.jpg" alt="Man painting a concrete outdoor bench" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Infrastructure improvement</h3>
+                <p>Community members improving shared facilities.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="10" data-type="image" data-src="images/men-digging-field.jpg" data-title="Land preparation" data-desc="Hard work on the land for food security and livelihoods.">
+              <div class="gallery-media-wrap">
+                <img src="images/men-digging-field.jpg" alt="Men digging and preparing land with hoes" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Land preparation</h3>
+                <p>Hard work on the land for food security and livelihoods.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="11" data-type="image" data-src="images/family-mud-house.jpg" data-title="Family resilience" data-desc="Daily life for many households we support.">
+              <div class="gallery-media-wrap">
+                <img src="images/family-mud-house.jpg" alt="Mother and three children outside a mud house" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Family resilience</h3>
+                <p>Daily life for many households we support.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="12" data-type="image" data-src="images/boys-drinks-shop.jpg" data-title="Young entrepreneurs" data-desc="Small business activity in the community.">
+              <div class="gallery-media-wrap">
+                <img src="images/boys-drinks-shop.jpg" alt="Three boys holding packs of bottled drinks" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Young entrepreneurs</h3>
+                <p>Small business activity in the community.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="13" data-type="image" data-src="images/daria-award-poland.jpg" data-title="Dr. Daria Mejnartowicz – Award" data-desc="Our Patron &amp; International Ambassador recognised in Poland.">
+              <div class="gallery-media-wrap">
+                <img src="images/daria-award-poland.jpg" alt="Dr. Daria Mejnartowicz receiving a Polish official award" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Dr. Daria Mejnartowicz – Award</h3>
+                <p>Our Patron &amp; International Ambassador recognised in Poland.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="14" data-type="image" data-src="images/daria-airport-poland-flag.jpg" data-title="Travelling with support" data-desc="Dr. Daria on the way with supplies for Ishasha.">
+              <div class="gallery-media-wrap">
+                <img src="images/daria-airport-poland-flag.jpg" alt="Dr. Daria with luggage and Polish flag at the airport" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>Travelling with support</h3>
+                <p>Dr. Daria on the way with supplies for Ishasha.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="15" data-type="image" data-src="images/daria-with-elder.jpg" data-title="With community elders" data-desc="Building relationships and listening to local needs.">
+              <div class="gallery-media-wrap">
+                <img src="images/daria-with-elder.jpg" alt="Dr. Daria with an elderly woman in the community" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>With community elders</h3>
+                <p>Building relationships and listening to local needs.</p>
+              </div>
+            </article>
+
+            <article class="gallery-card" data-index="16" data-type="image" data-src="images/daria-lenin-statue.jpg" data-title="International advocacy" data-desc="Partnership and awareness work beyond Uganda.">
+              <div class="gallery-media-wrap">
+                <img src="images/daria-lenin-statue.jpg" alt="Dr. Daria standing outdoors near a large statue" loading="lazy" />
+              </div>
+              <div class="gallery-caption">
+                <h3>International advocacy</h3>
+                <p>Partnership and awareness work beyond Uganda.</p>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Admin-only upload section -->
+          <div class="upload-section">
+            <h2>Admin — Upload photos &amp; videos</h2>
+            <p>Only administrators can upload media and descriptions. Visitors can view the gallery and open any item to preview or move to the next/previous item.</p>
+
+            <div class="admin-gate" id="admin-gate">
+              <p style="margin-bottom:0.75rem;color:var(--ink-soft);">Enter admin password to unlock upload tools.</p>
+              <input type="password" id="admin-password" placeholder="Admin password" autocomplete="current-password" />
+              <button type="button" class="button-secondary" id="admin-login-btn">Unlock</button>
+              <p class="upload-note" style="margin-top:0.75rem;">Default password for this demo: <code>ishasha-admin</code> — change it in the script near the bottom of this page.</p>
+            </div>
+
+            <div class="admin-panel" id="admin-panel">
+              <p style="color:var(--earth);font-weight:600;margin-bottom:0.5rem;">✓ Admin unlocked</p>
+              <label for="upload-title">Title / short description</label>
+              <input type="text" id="upload-title" placeholder="e.g. Community meeting – May 2026" />
+
+              <label for="upload-desc">Longer description (optional)</label>
+              <textarea id="upload-desc" placeholder="Add a short caption that will appear with the media."></textarea>
+
+              <button type="button" id="upload_widget" class="cloudinary-button">
+                Upload photo or video
+              </button>
+
+              <p class="upload-note">
+                Supported: JPG, PNG, WebP, GIF, MP4, MOV, WebM (max ~100&nbsp;MB). After a successful upload you will see the public URL. To show new items permanently on this page, add a new <code>&lt;article class="gallery-card"&gt;</code> (or ask a developer to wire Cloudinary listing).
+              </p>
+
+              <div id="upload-result" style="margin-top:1.5rem;display:none;">
+                <p style="color:var(--earth);font-weight:600;">✓ Upload successful!</p>
+                <p id="uploaded-url" style="font-size:0.9rem;word-break:break-all;"></p>
+                <div id="uploaded-preview-wrap" style="margin-top:0.75rem;"></div>
+              </div>
+
+              <p class="admin-logout" id="admin-logout">Lock admin tools again</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer-grid">
+        <div>
+          <div class="site-footer-brand">
+            <img src="images/logo.jpg" alt="" class="site-footer-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+            <div>
+              <h2 class="site-footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+              <p class="site-footer-tagline">Women And Girls Empowered Communities Transformed</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer-heading">Quick Links</h2>
+          <div class="site-footer-links">
+            <a href="about.html" class="site-footer-link">About</a>
+            <a href="programs.html" class="site-footer-link">Programs</a>
+            <a href="gallery.html" class="site-footer-link">Gallery</a>
+            <a href="contact.html" class="site-footer-link">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-shell site-footer-bottom">
+        <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">‹</button>
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">›</button>
+      <div class="lightbox-media" id="lightbox-media"></div>
+      <div class="lightbox-caption">
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+      <p class="lightbox-counter" id="lightbox-counter"></p>
+    </div>
+  </div>
+
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <script>
+/**
+ * Cloudinary configuration
+ * -----------------------
+ * 1. Sign up free at https://cloudinary.com
+ * 2. Go to Settings → Upload → Add upload preset
+ * 3. Create an "Unsigned" preset (e.g. name it "ishasha_uploads")
+ * 4. Optionally set Folder = "ishasha" and allow context/tags
+ * 5. Replace the two values below with your own if needed:
+ */
+window.CLOUDINARY_CLOUD_NAME = "poczen7o";
+window.CLOUDINARY_UPLOAD_PRESET = "ishasha_uploads";
+
+/** Change this password for production use */
+window.ADMIN_PASSWORD = "ishasha-admin";
+</script>
+  <script>
+/* Mobile navigation toggle */
+(function () {
+  const btn = document.querySelector(".hamburger-menu-btn");
+  const overlay = document.querySelector(".mobile-nav-drawer-overlay");
+  const closeBtns = document.querySelectorAll("[data-close-menu]");
+
+  function openMenu() {
+    if (overlay) {
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      if (btn) btn.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function closeMenu() {
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (overlay && overlay.classList.contains("is-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeMenu();
+    });
+  }
+
+  closeBtns.forEach(function (el) {
+    el.addEventListener("click", closeMenu);
+  });
+
+  document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
+  });
+
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const file = href.split("/").pop();
+    if (
+      file === path ||
+      (path === "" && file === "index.html") ||
+      (path === "index.html" && file === "index.html") ||
+      (path === "" && href === "/") ||
+      (path === "index.html" && (href === "/" || href === "index.html"))
+    ) {
+      link.classList.add("is-active");
+    }
+  });
+})();
+</script>
+  <script>
+(function () {
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- Admin gate ---------- */
+  const ADMIN_KEY = "ishasha_admin_unlocked";
+  const gate = document.getElementById("admin-gate");
+  const panel = document.getElementById("admin-panel");
+  const loginBtn = document.getElementById("admin-login-btn");
+  const passwordInput = document.getElementById("admin-password");
+  const logoutLink = document.getElementById("admin-logout");
+
+  function showAdminPanel() {
+    if (gate) gate.style.display = "none";
+    if (panel) panel.classList.add("is-visible");
+  }
+
+  function hideAdminPanel() {
+    if (gate) gate.style.display = "";
+    if (panel) panel.classList.remove("is-visible");
+    sessionStorage.removeItem(ADMIN_KEY);
+  }
+
+  if (sessionStorage.getItem(ADMIN_KEY) === "1") {
+    showAdminPanel();
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", function () {
+      const entered = (passwordInput && passwordInput.value) || "";
+      if (entered === window.ADMIN_PASSWORD) {
+        sessionStorage.setItem(ADMIN_KEY, "1");
+        showAdminPanel();
+        if (passwordInput) passwordInput.value = "";
+      } else {
+        alert("Incorrect password.");
+      }
+    });
+  }
+
+  if (passwordInput) {
+    passwordInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") loginBtn.click();
+    });
+  }
+
+  if (logoutLink) {
+    logoutLink.addEventListener("click", hideAdminPanel);
+  }
+
+  /* ---------- Cloudinary upload (admin only) ---------- */
+  var myWidget = null;
+
+  if (typeof cloudinary !== "undefined" &&
+      window.CLOUDINARY_CLOUD_NAME &&
+      window.CLOUDINARY_CLOUD_NAME !== "YOUR_CLOUD_NAME" &&
+      window.CLOUDINARY_UPLOAD_PRESET &&
+      window.CLOUDINARY_UPLOAD_PRESET !== "YOUR_UNSIGNED_PRESET") {
+
+    myWidget = cloudinary.createUploadWidget({
+      cloudName: window.CLOUDINARY_CLOUD_NAME,
+      uploadPreset: window.CLOUDINARY_UPLOAD_PRESET,
+      sources: ["local", "camera", "url"],
+      multiple: false,
+      maxFiles: 1,
+      clientAllowedFormats: ["jpg", "jpeg", "png", "webp", "gif", "mp4", "mov", "webm", "m4v"],
+      maxFileSize: 100000000,
+      resourceType: "auto",
+      folding: false,
+      styles: {
+        palette: {
+          window: "#FFFFFF",
+          windowBorder: "#d9cfc0",
+          tabIcon: "#2d5a27",
+          menuIcons: "#5c6b5c",
+          textDark: "#1f2a1f",
+          textLight: "#FFFFFF",
+          link: "#2d5a27",
+          action: "#2d5a27",
+          inactiveTabIcon: "#5c6b5c",
+          error: "#F44235",
+          inProgress: "#c4a35a",
+          complete: "#2d5a27",
+          sourceBg: "#f7f3eb"
+        }
+      }
+    }, function (error, result) {
+      if (!error && result && result.event === "success") {
+        var info = result.info;
+        var url = info.secure_url;
+        var isVideo = (info.resource_type === "video") || /\.(mp4|mov|webm|m4v)(\?|$)/i.test(url);
+        var title = (document.getElementById("upload-title") || {}).value || "Uploaded media";
+        var desc = (document.getElementById("upload-desc") || {}).value || "";
+
+        document.getElementById("upload-result").style.display = "block";
+        document.getElementById("uploaded-url").textContent = "Public URL: " + url;
+
+        var previewWrap = document.getElementById("uploaded-preview-wrap");
+        previewWrap.innerHTML = "";
+        if (isVideo) {
+          var v = document.createElement("video");
+          v.src = url;
+          v.controls = true;
+          v.style.maxWidth = "320px";
+          v.style.borderRadius = "var(--radius)";
+          v.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(v);
+        } else {
+          var img = document.createElement("img");
+          img.src = url;
+          img.alt = "Uploaded preview";
+          img.style.maxWidth = "280px";
+          img.style.borderRadius = "var(--radius)";
+          img.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(img);
+        }
+
+        // Optionally append a temporary card to the live gallery for this session
+        appendGalleryCard({
+          src: url,
+          type: isVideo ? "video" : "image",
+          title: title,
+          desc: desc
+        });
+
+        alert("Upload successful!\n\nTitle: " + title + "\nURL:\n" + url + "\n\nA temporary card was added to the gallery for this session. To keep it permanently, add the HTML to the page or use a CMS/backend.");
+      }
+      if (error) {
+        console.error(error);
+        alert("Upload failed. Check your Cloudinary cloud name and unsigned upload preset.");
+      }
+    });
+
+    var uploadBtn = document.getElementById("upload_widget");
+    if (uploadBtn) {
+      uploadBtn.addEventListener("click", function () {
+        if (sessionStorage.getItem(ADMIN_KEY) !== "1") {
+          alert("Please unlock admin tools first.");
+          return;
+        }
+        if (myWidget) myWidget.open();
+      });
+    }
+  } else {
+    var uploadBtnFallback = document.getElementById("upload_widget");
+    if (uploadBtnFallback) {
+      uploadBtnFallback.addEventListener("click", function () {
+        alert("Cloudinary is not configured yet.\n\n1. Create a free account at cloudinary.com\n2. Create an Unsigned upload preset\n3. Edit CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET near the bottom of this page.");
+      });
+    }
+  }
+
+  function appendGalleryCard(item) {
+    var grid = document.getElementById("gallery-grid");
+    if (!grid) return;
+    var index = grid.querySelectorAll(".gallery-card").length;
+    var article = document.createElement("article");
+    article.className = "gallery-card";
+    article.dataset.index = String(index);
+    article.dataset.type = item.type;
+    article.dataset.src = item.src;
+    article.dataset.title = item.title;
+    article.dataset.desc = item.desc || "";
+
+    var wrap = document.createElement("div");
+    wrap.className = "gallery-media-wrap";
+
+    if (item.type === "video") {
+      var video = document.createElement("video");
+      video.src = item.src;
+      video.muted = true;
+      video.preload = "metadata";
+      video.setAttribute("playsinline", "");
+      wrap.appendChild(video);
+      var badge = document.createElement("span");
+      badge.className = "gallery-video-badge";
+      badge.innerHTML = "▶ Video";
+      wrap.appendChild(badge);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      img.loading = "lazy";
+      wrap.appendChild(img);
+    }
+
+    var caption = document.createElement("div");
+    caption.className = "gallery-caption";
+    caption.innerHTML = "<h3>" + escapeHtml(item.title) + "</h3><p>" + escapeHtml(item.desc || "") + "</p>";
+
+    article.appendChild(wrap);
+    article.appendChild(caption);
+    grid.appendChild(article);
+
+    // Re-bind click for the new card
+    article.addEventListener("click", function () {
+      openLightbox(index);
+    });
+
+    // Refresh items list for lightbox
+    rebuildItems();
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ---------- Lightbox / viewer ---------- */
+  var items = [];
+  var currentIndex = 0;
+  var lightbox = document.getElementById("lightbox");
+  var mediaEl = document.getElementById("lightbox-media");
+  var titleEl = document.getElementById("lightbox-title");
+  var descEl = document.getElementById("lightbox-desc");
+  var counterEl = document.getElementById("lightbox-counter");
+
+  function rebuildItems() {
+    items = [];
+    document.querySelectorAll(".gallery-card").forEach(function (card, i) {
+      card.dataset.index = String(i);
+      items.push({
+        type: card.dataset.type || "image",
+        src: card.dataset.src,
+        title: card.dataset.title || "",
+        desc: card.dataset.desc || ""
+      });
+    });
+  }
+
+  function openLightbox(index) {
+    if (!items.length) rebuildItems();
+    currentIndex = index;
+    showItem(currentIndex);
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+    mediaEl.innerHTML = "";
+  }
+
+  function showItem(index) {
+    if (!items.length) return;
+    if (index < 0) index = items.length - 1;
+    if (index >= items.length) index = 0;
+    currentIndex = index;
+    var item = items[index];
+
+    mediaEl.innerHTML = "";
+    if (item.type === "video") {
+      var v = document.createElement("video");
+      v.src = item.src;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.style.maxWidth = "100%";
+      v.style.maxHeight = "72vh";
+      mediaEl.appendChild(v);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      mediaEl.appendChild(img);
+    }
+
+    titleEl.textContent = item.title;
+    descEl.textContent = item.desc;
+    counterEl.textContent = (index + 1) + " / " + items.length;
+  }
+
+  function nextItem() {
+    showItem(currentIndex + 1);
+  }
+
+  function prevItem() {
+    showItem(currentIndex - 1);
+  }
+
+  // Bind existing cards
+  rebuildItems();
+  document.querySelectorAll(".gallery-card").forEach(function (card) {
+    card.addEventListener("click", function () {
+      openLightbox(parseInt(card.dataset.index, 10));
+    });
+  });
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-next").addEventListener("click", function (e) {
+    e.stopPropagation();
+    nextItem();
+  });
+  document.getElementById("lightbox-prev").addEventListener("click", function (e) {
+    e.stopPropagation();
+    prevItem();
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") nextItem();
+    if (e.key === "ArrowLeft") prevItem();
+  });
+})();
+</script>
+</body>
+</html>
