@@ -167,14 +167,17 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
   <script>
     // Optional: same Firebase config as contact page — stores slide metadata in Firestore
-    const FIREBASE_CONFIG = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      
+    const firebaseConfig = {
+        apiKey: "AIzaSyAFDXJuv-279zcsJ-Qry41uxNyXNlC4Cpw",
+        authDomain: "viatrix-4d7ef.firebaseapp.com",
+        projectId: "viatrix-4d7ef",
+        storageBucket: "viatrix-4d7ef.firebasestorage.app",
+        messagingSenderId: "734351535565",
+        appId: "1:734351535565:web:7df7d9fdd0c1f24d45e884",
+        measurementId: "G-9JBX94MZ9E"
     };
+
     let db = null;
     try {
       if (FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
