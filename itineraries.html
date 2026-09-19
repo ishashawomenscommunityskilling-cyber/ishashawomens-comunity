@@ -35,8 +35,6 @@
     a { text-decoration: none; color: inherit; transition: var(--transition); }
     img { max-width: 100%; display: block; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-    /* HEADER */
     header {
       background: var(--white);
       box-shadow: 0 2px 20px rgba(0,0,0,0.06);
@@ -72,15 +70,11 @@
     }
     .btn-orange { background: var(--orange); color: var(--white); }
     .btn-orange:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,124,0,0.35); }
-    .btn-green { background: var(--green); color: var(--white); }
-    .btn-green:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,93,4,0.35); }
     .btn-outline {
       background: transparent; border: 2px solid var(--gray); color: var(--black-soft);
     }
     .btn-outline:hover { border-color: var(--green); color: var(--green); }
     .btn-sm { padding: 10px 20px; font-size: 0.85rem; }
-
-    /* HERO */
     .page-hero {
       background: linear-gradient(135deg, var(--green-dark), var(--green));
       color: var(--white);
@@ -112,20 +106,15 @@
       margin-bottom: 12px;
     }
     .page-hero p {
-      max-width: 560px;
+      max-width: 640px;
       margin: 0 auto;
       opacity: 0.9;
       font-weight: 300;
     }
-
-    /* FILTERS */
     .filters {
       background: var(--white);
       padding: 22px 0;
       box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-      position: static;
-      top: 72px;
-      z-index: 90;
     }
     .filter-row {
       display: flex;
@@ -152,10 +141,7 @@
       border-color: var(--green);
       color: var(--white);
     }
-    .search-wrap {
-      position: relative;
-      margin-left: 8px;
-    }
+    .search-wrap { position: relative; margin-left: 8px; }
     .search-wrap input {
       padding: 10px 16px 10px 40px;
       border: 2px solid var(--gray);
@@ -164,7 +150,6 @@
       font-size: 0.85rem;
       width: 200px;
       outline: none;
-      transition: var(--transition);
     }
     .search-wrap input:focus { border-color: var(--green); }
     .search-wrap svg {
@@ -174,8 +159,6 @@
       width: 16px; height: 16px;
       fill: var(--gray-dark);
     }
-
-    /* GRID */
     .itineraries-section { padding: 50px 0 80px; }
     .section-label {
       display: block;
@@ -191,15 +174,20 @@
       text-align: center;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 700;
-      margin-bottom: 40px;
+      margin-bottom: 12px;
+    }
+    .section-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      color: var(--gray-dark);
+      font-size: 0.95rem;
     }
     .itineraries-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 28px;
     }
-
-    /* CARD */
     .itinerary-card {
       background: var(--white);
       border-radius: var(--radius);
@@ -215,43 +203,20 @@
       box-shadow: 0 18px 45px rgba(0,0,0,0.12);
       border-color: var(--orange);
     }
-    .card-img {
-      height: 200px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
+    .card-img { height: 200px; position: relative; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
     .itinerary-card:hover .card-img img { transform: scale(1.06); }
-    .card-badge {
+    .card-badge, .card-days {
       position: absolute;
-      top: 14px; left: 14px;
-      background: var(--green);
       color: var(--white);
       padding: 5px 12px;
       border-radius: 50px;
       font-size: 0.75rem;
       font-weight: 600;
     }
-    .card-days {
-      position: absolute;
-      top: 14px; right: 14px;
-      background: var(--orange);
-      color: var(--white);
-      padding: 5px 12px;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .card-body {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+    .card-badge { top: 14px; left: 14px; background: var(--green); }
+    .card-days { top: 14px; right: 14px; background: var(--orange); }
+    .card-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
     .card-country {
       font-size: 0.78rem;
       font-weight: 600;
@@ -260,12 +225,7 @@
       letter-spacing: 0.5px;
       margin-bottom: 6px;
     }
-    .card-body h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
+    .card-body h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
     .card-meta {
       display: flex;
       flex-wrap: wrap;
@@ -274,26 +234,13 @@
       font-size: 0.82rem;
       color: var(--gray-dark);
     }
-    .card-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .card-desc {
-      font-size: 0.88rem;
-      color: var(--gray-dark);
-      margin-bottom: 16px;
-      flex: 1;
-    }
-    .card-highlights {
-      list-style: none;
-      margin-bottom: 18px;
-    }
+    .card-meta span { display: flex; align-items: center; gap: 5px; }
+    .card-desc { font-size: 0.88rem; color: var(--gray-dark); margin-bottom: 16px; flex: 1; }
+    .card-highlights { list-style: none; margin-bottom: 18px; }
     .card-highlights li {
       font-size: 0.82rem;
       color: var(--black-soft);
-      padding: 4px 0;
-      padding-left: 18px;
+      padding: 4px 0 4px 18px;
       position: relative;
     }
     .card-highlights li::before {
@@ -312,19 +259,8 @@
       border-top: 1px solid var(--gray);
       margin-top: auto;
     }
-    .card-price {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--orange);
-    }
-    .card-price small {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--gray-dark);
-      display: block;
-    }
-
-    /* MODAL */
+    .card-price { font-size: 1.15rem; font-weight: 800; color: var(--orange); }
+    .card-price small { font-size: 0.75rem; font-weight: 500; color: var(--gray-dark); display: block; }
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -334,13 +270,8 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      opacity: 0;
-      transition: opacity 0.3s;
     }
-    .modal-overlay.show {
-      display: flex;
-      opacity: 1;
-    }
+    .modal-overlay.show { display: flex; }
     .modal {
       background: var(--white);
       border-radius: var(--radius);
@@ -349,11 +280,6 @@
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
-      animation: modalIn 0.3s ease;
-    }
-    @keyframes modalIn {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
     .modal-close {
       position: absolute;
@@ -365,20 +291,12 @@
       font-size: 1.2rem;
       cursor: pointer;
       z-index: 2;
-      transition: var(--transition);
     }
     .modal-close:hover { background: var(--orange); color: var(--white); }
-    .modal-img {
-      height: 220px;
-      overflow: hidden;
-    }
+    .modal-img { height: 220px; overflow: hidden; }
     .modal-img img { width: 100%; height: 100%; object-fit: cover; }
     .modal-body { padding: 28px; }
-    .modal-body h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+    .modal-body h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
     .modal-meta {
       display: flex;
       flex-wrap: wrap;
@@ -387,38 +305,13 @@
       font-size: 0.85rem;
       color: var(--gray-dark);
     }
-    .modal-body p {
-      font-size: 0.92rem;
-      color: var(--black-soft);
-      margin-bottom: 16px;
-    }
+    .modal-body p { font-size: 0.92rem; color: var(--black-soft); margin-bottom: 16px; }
     .day-list { list-style: none; margin-bottom: 24px; }
-    .day-list li {
-      padding: 12px 0;
-      border-bottom: 1px solid var(--gray);
-      font-size: 0.88rem;
-    }
-    .day-list li strong {
-      color: var(--green);
-      display: block;
-      margin-bottom: 2px;
-    }
-    .modal-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* EMPTY */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray-dark);
-      display: none;
-    }
+    .day-list li { padding: 12px 0; border-bottom: 1px solid var(--gray); font-size: 0.88rem; }
+    .day-list li strong { color: var(--green); display: block; margin-bottom: 2px; }
+    .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-dark); display: none; }
     .empty-state.show { display: block; }
-
-    /* FOOTER */
     footer {
       background: var(--black);
       color: var(--white);
@@ -428,25 +321,21 @@
       opacity: 0.9;
     }
     footer a { color: var(--orange); }
-    footer a:hover { color: #FF9800; }
-
     @media (max-width: 768px) {
       nav { display: none; }
       .itineraries-grid { grid-template-columns: 1fr; }
       .search-wrap input { width: 100%; }
-      .filter-row { justify-content: flex-start; }
     }
   </style>
 </head>
 <body>
-
   <header>
     <div class="container header-inner">
       <a href="index.html" class="logo">
         <img src="531196AE-608A-43EF-9978-CADB0CDABB36.png" alt="Ishasha Women's Community" class="logo-img" onerror="this.style.display='none'">
         <div class="logo-text">
           <h1>Ishasha Women's Community Tours and Travel</h1>
-          <span>Adventure Awaits</span>
+          <span>Authentic East Africa · Locally Led</span>
         </div>
       </a>
       <nav>
@@ -458,15 +347,15 @@
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </nav>
-      <a href="book.html" class="btn btn-orange btn-sm">Book a Tour</a>
+      <a href="book.html" class="btn btn-orange btn-sm">Plan Your Safari</a>
     </div>
   </header>
 
   <section class="page-hero">
     <div class="container">
-      <span class="badge">East Africa Adventures</span>
-      <h2>15 Handcrafted Itineraries</h2>
-      <p>Explore Uganda, Kenya, Tanzania & Rwanda — from gorilla trekking to safari drives and cultural journeys.</p>
+      <span class="badge">Uganda · Kenya · Tanzania · Rwanda</span>
+      <h2>Signature Safari &amp; Primate Itineraries</h2>
+      <p>Private, well-paced journeys with local driver-guides, quality lodges, and community experiences that support women and families in Ishasha. Permits, park fees, and transfers are arranged for you — you travel, we handle the details.</p>
     </div>
   </section>
 
@@ -481,7 +370,7 @@
         <button class="filter-btn" data-filter="Multi">Multi-Country</button>
         <div class="search-wrap">
           <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-          <input type="text" id="searchInput" placeholder="Search tours...">
+          <input type="text" id="searchInput" placeholder="Search gorillas, safari, beach...">
         </div>
       </div>
     </div>
@@ -489,18 +378,17 @@
 
   <section class="itineraries-section">
     <div class="container">
-      <span class="section-label">Choose Your Adventure</span>
-      <h2 class="section-title">Our Signature Itineraries</h2>
-
+      <span class="section-label">Ready to Book</span>
+      <h2 class="section-title">15 Carefully Built Journeys</h2>
+      <p class="section-intro">Every itinerary is designed for comfort, wildlife, and real community connection. Prices are per person sharing, based on a private safari vehicle. Lodge upgrades, extra nights, and custom dates are available on request.</p>
       <div class="itineraries-grid" id="itinerariesGrid"></div>
       <div class="empty-state" id="emptyState">
         <h3>No itineraries match your search</h3>
-        <p>Try a different filter or keyword.</p>
+        <p>Try another country filter or keyword such as gorilla, Mara, or beach.</p>
       </div>
     </div>
   </section>
 
-  <!-- DETAIL MODAL -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
       <button class="modal-close" id="modalClose" aria-label="Close">×</button>
@@ -510,10 +398,10 @@
         <h2 id="modalTitle"></h2>
         <div class="modal-meta" id="modalMeta"></div>
         <p id="modalDesc"></p>
-        <h4 style="margin-bottom:10px;font-size:1rem;">Day-by-day overview</h4>
+        <h4 style="margin-bottom:10px;font-size:1rem;">Day-by-day itinerary</h4>
         <ul class="day-list" id="modalDays"></ul>
         <div class="modal-actions">
-          <a href="book.html" class="btn btn-orange" id="modalBook">Book This Tour</a>
+          <a href="book.html" class="btn btn-orange" id="modalBook">Request This Tour</a>
           <button class="btn btn-outline" id="modalCloseBtn">Close</button>
         </div>
       </div>
@@ -522,10 +410,10 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2026 Ishasha Women's Community Tours and Travel · 
+      <p>&copy; 2026 Ishasha Women's Community Tours and Travel ·
         <a href="https://www.google.com/maps/search/?api=1&query=Ishasha+Highway+Kihihi+Uganda" target="_blank" rel="noopener">Ishasha Highway, Kihihi, Uganda</a> ·
-        <a href="tel:+256771440064">+256 771 440 064</a> · 
-        <a href="tel:+256764420941">+256 764 420 941</a> · 
+        <a href="tel:+256771440064">+256 771 440 064</a> ·
+        <a href="tel:+256764420941">+256 764 420 941</a> ·
         <a href="mailto:ishashawomenscommunity2023@gmail.com">ishashawomenscommunity2023@gmail.com</a>
       </p>
     </div>
@@ -535,245 +423,320 @@
     const itineraries = [
       {
         id: 1,
-        title: "Classic Gorilla Trekking – Bwindi",
+        title: "Bwindi Gorilla Trekking – 4 Days",
         country: "Uganda",
         days: 4,
         price: 1750,
         image: "d3d6eadd-6ac2-44a2-bd77-046ea4060679.jpeg",
-        summary: "An intimate encounter with endangered mountain gorillas in the misty depths of Bwindi Impenetrable Forest. This carefully paced itinerary includes your gorilla permit, comfortable community-based lodging, private transfers, and a meaningful visit to a local women’s project.",
-        highlights: ["Gorilla trekking permit included", "Community cultural walk", "Scenic forest viewpoints", "Expert local guides"],
+        summary: "Meet a mountain gorilla family in Bwindi Impenetrable Forest — one of the world’s most sought-after wildlife encounters. This short, well-paced safari includes your gorilla permit, private transfers, comfortable lodge near the forest, and a visit with a local women’s project so your journey supports the community that protects the park.",
+        highlights: [
+          "Gorilla trekking permit included",
+          "Private 4x4 and professional driver-guide",
+          "Lodge stay on the forest edge",
+          "Community walk with a women’s group"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Arrive Entebbe or Kampala. Meet your guide and transfer west through rolling hills to Bwindi Impenetrable National Park. Evening briefing and overnight near the forest edge." },
-          { day: "Day 2", text: "Early start for gorilla trekking. After tracking and spending the magical hour with a gorilla family, enjoy a guided community walk and support a local women’s initiative." },
-          { day: "Day 3", text: "Optional second gorilla trek or a gentle nature walk and birding in the forest buffer zone. Relaxed afternoon at your lodge." },
-          { day: "Day 4", text: "Scenic transfer back to Entebbe or Kampala for your departure flight, with lunch stop en route." }
+          { day: "Day 1 – Entebbe / Kampala to Bwindi", text: "Meet your guide and travel west through the highlands to Bwindi Impenetrable National Park. Check in, briefing on trekking etiquette, and overnight near the forest." },
+          { day: "Day 2 – Gorilla trekking", text: "Early start with park rangers. After tracking, spend up to one hour with a gorilla family. Afternoon community walk and time to rest at your lodge." },
+          { day: "Day 3 – Forest or second trek", text: "Optional second gorilla trek (permit extra) or a gentle nature walk and birding. Relaxed afternoon with forest views." },
+          { day: "Day 4 – Return to Entebbe / Kampala", text: "Scenic transfer back for your flight, with a lunch stop on the way. Airport drop-off included." }
         ]
       },
       {
         id: 2,
-        title: "Gorilla & Chimpanzee Combo",
+        title: "Chimpanzees & Gorillas – 6 Days",
         country: "Uganda",
         days: 6,
         price: 2200,
         image: "e2cb28bb-528c-4cfe-9fba-9a3cea479bf4.jpeg",
-        summary: "The ultimate primate double-header. Track lively chimpanzees in Kibale’s lush rainforest, then travel south for a once-in-a-lifetime mountain gorilla encounter in Bwindi. Includes both permits, crater-lake views, and a Bigodi wetland walk.",
-        highlights: ["Gorilla + chimpanzee permits", "Bigodi swamp walk", "Crater lakes scenery", "Private transfers throughout"],
+        summary: "Uganda’s classic primate circuit in one journey: chimpanzees in Kibale Forest, then mountain gorillas in Bwindi. Both permits are included, plus crater-lake scenery, the Bigodi wetland walk, private transfers, and lodges chosen for comfort after long trekking days.",
+        highlights: [
+          "Chimpanzee and gorilla permits included",
+          "Bigodi wetland walk",
+          "Kibale crater-lake views",
+          "Private vehicle throughout"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Entebbe/Kampala to Kibale Forest National Park. Afternoon at leisure or optional crater-lake viewpoint visit." },
-          { day: "Day 2", text: "Morning chimpanzee tracking followed by a rewarding walk through Bigodi Wetland Sanctuary, rich in birds and monkeys." },
-          { day: "Day 3", text: "Scenic drive south to Bwindi Impenetrable Forest. Settle into your lodge with forest views." },
-          { day: "Day 4", text: "Gorilla trekking day – spend up to one hour with a mountain gorilla family in their natural habitat." },
-          { day: "Day 5", text: "Leisure day with optional second trek, nature walk, or community visit. Evening cultural performance possible." },
-          { day: "Day 6", text: "Return journey to Entebbe/Kampala for departure." }
+          { day: "Day 1 – To Kibale Forest", text: "Transfer from Entebbe or Kampala to Kibale. Optional crater-lake viewpoint in the afternoon. Overnight near the forest." },
+          { day: "Day 2 – Chimpanzee tracking", text: "Morning chimpanzee trek, then a guided walk in Bigodi Wetland Sanctuary for birds, monkeys, and village life." },
+          { day: "Day 3 – Kibale to Bwindi", text: "Scenic drive south to Bwindi Impenetrable Forest. Settle into your lodge and prepare for gorilla day." },
+          { day: "Day 4 – Gorilla trekking", text: "Track a gorilla family with experienced rangers. Evening at leisure — the highlight of many travellers’ Africa trip." },
+          { day: "Day 5 – Optional second trek or rest", text: "Second gorilla trek (permit extra), a nature walk, or a community visit. Optional cultural evening." },
+          { day: "Day 6 – Departure", text: "Return to Entebbe or Kampala for your onward flight." }
         ]
       },
       {
         id: 3,
-        title: "Queen Elizabeth Safari",
+        title: "Queen Elizabeth Wildlife Safari – 5 Days",
         country: "Uganda",
         days: 5,
         price: 1450,
         image: "5ed52d22-df39-4edf-ae19-a86e0d159817.jpeg",
-        summary: "Classic Uganda wildlife at its best. Game drives across open savannahs, a memorable boat cruise on the Kazinga Channel, and the chance to see the famous tree-climbing lions of the remote Ishasha sector.",
-        highlights: ["Kazinga Channel boat cruise", "Tree-climbing lions of Ishasha", "Diverse game drives", "Scenic crater lakes"],
+        summary: "Uganda’s most complete classic safari: game drives on the Kasenyi plains, the Kazinga Channel boat cruise, and the remote Ishasha sector — home of the famous tree-climbing lions and the community that gives our company its name. Ideal for first-time visitors who want wildlife without rushing.",
+        highlights: [
+          "Kazinga Channel boat safari",
+          "Ishasha tree-climbing lions",
+          "Morning and afternoon game drives",
+          "Stay in and support the Ishasha area"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Kampala/Entebbe to Queen Elizabeth National Park. Afternoon game drive in the Kasenyi plains." },
-          { day: "Day 2", text: "Early morning game drive followed by a leisurely boat cruise on the Kazinga Channel – one of Africa’s finest wildlife spectacles." },
-          { day: "Day 3", text: "Drive south into the Ishasha sector in search of the rare tree-climbing lions and large herds of Uganda kob." },
-          { day: "Day 4", text: "Final morning game drive, then relaxed afternoon at the lodge or optional community visit." },
-          { day: "Day 5", text: "Return to Kampala or Entebbe with a stop at the equator for photos and shopping." }
+          { day: "Day 1 – To Queen Elizabeth National Park", text: "Transfer from Kampala or Entebbe. Afternoon game drive in the Kasenyi plains for lions, Uganda kob, and elephants." },
+          { day: "Day 2 – Game drive & Kazinga cruise", text: "Early game drive, then a leisurely boat cruise on the Kazinga Channel — hippos, crocodiles, elephants, and outstanding birdlife." },
+          { day: "Day 3 – Ishasha sector", text: "Drive south into Ishasha in search of tree-climbing lions and large herds. This is our home landscape." },
+          { day: "Day 4 – Final game or community visit", text: "Morning game drive, then a relaxed afternoon at the lodge or a visit with a local women’s group." },
+          { day: "Day 5 – Return via the Equator", text: "Transfer back to Kampala or Entebbe with a photo stop at the Equator." }
         ]
       },
       {
         id: 4,
-        title: "Murchison Falls Explorer",
+        title: "Murchison Falls & the Nile – 4 Days",
         country: "Uganda",
         days: 4,
         price: 1200,
         image: "62a3a86a-f6e6-4853-a862-eb474413bcf8.jpeg",
-        summary: "Stand at the dramatic top of Murchison Falls where the Nile explodes through a narrow gorge, enjoy a classic boat safari, and search for the Big Five on expansive game drives in Uganda’s largest national park.",
-        highlights: ["Top of the Falls experience", "Nile boat safari", "Excellent Big Five potential", "Delta birdlife"],
+        summary: "Stand where the Nile explodes through a seven-metre gorge, then cruise to the base of the falls and game-drive Uganda’s largest national park. Strong chance of elephant, giraffe, buffalo, lion, and rich birdlife in the delta — a complete short safari from Kampala.",
+        highlights: [
+          "Top of the Falls hike",
+          "Nile boat safari to the gorge",
+          "Game drives in Uganda’s largest park",
+          "Optional Ziwa rhino stop"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Scenic transfer north to Murchison Falls National Park. Cross the Nile by ferry and evening game drive." },
-          { day: "Day 2", text: "Morning game drive on the northern banks followed by a boat cruise upstream to the base of the thundering Falls." },
-          { day: "Day 3", text: "Hike to the dramatic Top of the Falls viewpoint, then afternoon game drive or leisure time." },
-          { day: "Day 4", text: "Morning departure with optional stop at Ziwa Rhino Sanctuary before returning to Kampala/Entebbe." }
+          { day: "Day 1 – North to Murchison Falls", text: "Scenic transfer to the park, Nile ferry crossing, and evening game drive on the northern banks." },
+          { day: "Day 2 – Game drive & boat to the falls", text: "Morning game drive, then a boat safari upstream to the thundering base of Murchison Falls." },
+          { day: "Day 3 – Top of the Falls", text: "Hike to the dramatic viewpoint where the Nile forces through the gorge. Afternoon game drive or lodge time." },
+          { day: "Day 4 – Return (optional rhinos)", text: "Depart south with an optional stop at Ziwa Rhino Sanctuary before Kampala or Entebbe." }
         ]
       },
       {
         id: 5,
-        title: "Sipi Falls & Mount Elgon",
+        title: "Sipi Falls & Coffee Highlands – 3 Days",
         country: "Uganda",
         days: 3,
         price: 650,
         image: "4a347c43-91b4-4278-a6ce-67067617a3f3.jpeg",
-        summary: "Escape to the cool highlands of eastern Uganda. Hike to three spectacular waterfalls, explore caves, and take part in a hands-on Arabica coffee experience on the slopes of Mount Elgon.",
-        highlights: ["Three Sipi Falls hikes", "Coffee farm experience", "Cave exploration", "Cool highland climate"],
+        summary: "A refreshing highland break: three waterfalls, cave walks, and a hands-on Arabica coffee tour on the slopes of Mount Elgon. Perfect as a short add-on after safari, or a gentle introduction to eastern Uganda for couples and small groups.",
+        highlights: [
+          "Guided hike to all three Sipi Falls",
+          "Farm-to-cup coffee experience",
+          "Cool mountain climate",
+          "Optional abseiling"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Kampala to Sipi. Afternoon short walk to the main waterfall viewpoint and settle into your lodge." },
-          { day: "Day 2", text: "Full-day guided hike covering all three Sipi Falls, with optional abseiling and a visit to local caves." },
-          { day: "Day 3", text: "Morning coffee tour – pick, process and taste. Afternoon return to Kampala." }
+          { day: "Day 1 – Kampala to Sipi", text: "Transfer to the Elgon foothills. Afternoon walk to the main waterfall viewpoint and settle into your lodge." },
+          { day: "Day 2 – Full falls hike", text: "Guided hike covering all three Sipi Falls, with optional abseiling and a visit to local caves." },
+          { day: "Day 3 – Coffee tour & return", text: "Pick, process, and taste Arabica coffee with local farmers, then return to Kampala." }
         ]
       },
       {
         id: 6,
-        title: "Masai Mara Classic Safari",
+        title: "Masai Mara Classic – 4 Days",
         country: "Kenya",
         days: 4,
         price: 1600,
         image: "cd875c65-9adc-4364-ba9a-22fde0b0d121.jpeg",
-        summary: "Experience the world-famous Masai Mara – endless golden plains, exceptional big-cat sightings, and the drama of the Great Migration (July–October). Optional hot-air balloon safari available.",
-        highlights: ["Prime big-cat territory", "Optional hot-air balloon", "Maasai cultural visit", "Great Migration season"],
+        summary: "Africa’s most famous savannah: golden plains, outstanding lion and cheetah viewing, and the Great Migration river crossings in season (July–October). Shared or private game drives, a Maasai village visit, and the option of a dawn hot-air balloon over the Mara.",
+        highlights: [
+          "Prime big-cat game drives",
+          "Great Migration window (Jul–Oct)",
+          "Maasai cultural visit",
+          "Optional hot-air balloon safari"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Fly or drive from Nairobi to the Masai Mara. Afternoon game drive into the reserve." },
-          { day: "Day 2", text: "Full day of game drives exploring different sectors of the Mara in search of the Big Five and big cats." },
-          { day: "Day 3", text: "Dawn game drive (balloon option available) followed by a visit to a traditional Maasai village." },
-          { day: "Day 4", text: "Final morning game drive then return to Nairobi." }
+          { day: "Day 1 – Nairobi to the Mara", text: "Fly or drive from Nairobi. Afternoon game drive as you enter the reserve and settle into camp or lodge." },
+          { day: "Day 2 – Full day in the Mara", text: "Morning and afternoon drives across different sectors in search of the Big Five and big cats." },
+          { day: "Day 3 – Dawn drive & Maasai visit", text: "Optional balloon at sunrise, then a visit to a traditional Maasai community." },
+          { day: "Day 4 – Return to Nairobi", text: "Final morning game drive and transfer or flight back to Nairobi." }
         ]
       },
       {
         id: 7,
-        title: "Amboseli & Kilimanjaro Views",
+        title: "Amboseli Elephants & Kilimanjaro – 3 Days",
         country: "Kenya",
         days: 3,
         price: 1100,
         image: "1b51d68f-ba59-4aa8-9f08-e7aeaf5aaad2.jpeg",
-        summary: "Witness vast herds of elephants set against the breathtaking backdrop of snow-capped Mount Kilimanjaro in Amboseli National Park – one of Africa’s most iconic photographic destinations.",
-        highlights: ["Large elephant herds", "Clear Kilimanjaro views", "Swamp and dry-season game", "Observation Hill panorama"],
+        summary: "One of Africa’s great photographic parks: large elephant herds, swamp-edge wildlife, and — on clear mornings — snow-capped Mount Kilimanjaro filling the sky. A short, high-impact safari from Nairobi, excellent for first-time visitors and photographers.",
+        highlights: [
+          "Close elephant viewing",
+          "Kilimanjaro backdrop (weather permitting)",
+          "Observation Hill panorama",
+          "Easy access from Nairobi"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Nairobi to Amboseli. Afternoon game drive with Kilimanjaro as your backdrop." },
-          { day: "Day 2", text: "Full day exploring the park’s swamps, open plains and Observation Hill for panoramic views." },
-          { day: "Day 3", text: "Early morning game drive then return to Nairobi." }
+          { day: "Day 1 – Nairobi to Amboseli", text: "Transfer to Amboseli National Park. Afternoon game drive with the mountain as your backdrop when skies are clear." },
+          { day: "Day 2 – Full day in the park", text: "Explore swamps, open plains, and Observation Hill for 360-degree views of elephants and Kilimanjaro." },
+          { day: "Day 3 – Dawn drive & return", text: "Early game drive for the best light, then return to Nairobi." }
         ]
       },
       {
         id: 8,
-        title: "Samburu Special Five",
+        title: "Samburu Special Five – 4 Days",
         country: "Kenya",
         days: 4,
         price: 1350,
         image: "6f561108-ef80-484c-8c4b-eb0f71836cc0.jpeg",
-        summary: "Discover the unique wildlife of northern Kenya along the Ewaso Nyiro River. Search for the ‘Special Five’ – Grevy’s zebra, reticulated giraffe, Somali ostrich, gerenuk and Beisa oryx – plus excellent big-cat sightings.",
-        highlights: ["Special Five species", "Ewaso Nyiro riverine habitat", "Cultural Samburu visit", "Fewer crowds"],
+        summary: "Leave the crowds of the south for northern Kenya’s Ewaso Nyiro River: Grevy’s zebra, reticulated giraffe, gerenuk, Beisa oryx, and Somali ostrich — the Special Five — plus excellent leopard and lion country. A distinctive safari for travellers who want something beyond the Mara.",
+        highlights: [
+          "Special Five wildlife",
+          "Riverine game drives",
+          "Samburu cultural visit",
+          "Quieter than the southern parks"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Scenic drive or flight from Nairobi to Samburu. Afternoon game drive along the river." },
-          { day: "Day 2", text: "Full day game drives exploring different areas of the reserve." },
-          { day: "Day 3", text: "Morning game drive and afternoon visit to a traditional Samburu village." },
-          { day: "Day 4", text: "Final game drive then return to Nairobi." }
+          { day: "Day 1 – Nairobi to Samburu", text: "Drive or fly north. Afternoon game drive along the river and into the reserve." },
+          { day: "Day 2 – Full day game viewing", text: "Explore different sectors for the Special Five, elephants, and big cats." },
+          { day: "Day 3 – Wildlife & culture", text: "Morning game drive and afternoon visit to a traditional Samburu community." },
+          { day: "Day 4 – Return to Nairobi", text: "Final game drive, then transfer or flight back to Nairobi." }
         ]
       },
       {
         id: 9,
-        title: "Serengeti & Ngorongoro",
+        title: "Serengeti & Ngorongoro Crater – 5 Days",
         country: "Tanzania",
         days: 5,
         price: 2100,
         image: "1d739ee1-7bdf-42ed-9c31-cbdab509df84.jpeg",
-        summary: "Combine the endless plains of the Serengeti with the wildlife-packed Ngorongoro Crater – Tanzania’s two greatest natural treasures. Ideal during migration season or any time for outstanding year-round game viewing.",
-        highlights: ["Serengeti game drives", "Full day in Ngorongoro Crater", "Migration possibility", "Luxury lodge options"],
+        summary: "Tanzania’s two headline parks in one itinerary: endless Serengeti plains and a full day inside the Ngorongoro Crater, one of the densest concentrations of wildlife on earth. Timed for migration when possible, outstanding year-round for lion, elephant, and rhino.",
+        highlights: [
+          "Serengeti game drives",
+          "Full day in Ngorongoro Crater",
+          "Migration routing when in season",
+          "Quality lodge and camp options"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Arusha into the Serengeti. Afternoon game drive as you head to camp." },
-          { day: "Day 2", text: "Full day exploring the central or western Serengeti depending on wildlife movements." },
-          { day: "Day 3", text: "Morning game drive then transfer to the Ngorongoro Conservation Area with crater views." },
-          { day: "Day 4", text: "Descend into the Ngorongoro Crater for a full day of extraordinary wildlife viewing." },
-          { day: "Day 5", text: "Return to Arusha for departure or onward travel." }
+          { day: "Day 1 – Arusha into the Serengeti", text: "Transfer from Arusha. Afternoon game drive as you travel to your camp or lodge." },
+          { day: "Day 2 – Central or western Serengeti", text: "Full day following wildlife movements — predator action and, in season, the herds." },
+          { day: "Day 3 – Serengeti to Ngorongoro", text: "Morning game drive, then transfer to the crater rim with views into the caldera." },
+          { day: "Day 4 – Crater floor", text: "Descend for a full day among lions, elephants, buffalo, hippos, and a strong chance of black rhino." },
+          { day: "Day 5 – Return to Arusha", text: "Transfer to Arusha for your flight or a Zanzibar beach extension." }
         ]
       },
       {
         id: 10,
-        title: "Tarangire & Lake Manyara",
+        title: "Tarangire & Lake Manyara – 3 Days",
         country: "Tanzania",
         days: 3,
         price: 980,
         image: "82b33ee9-bc97-44f9-bf4b-95cdfc925bf6.jpeg",
-        summary: "A perfect short safari showcasing Tarangire’s giant baobabs and enormous elephant herds, followed by Lake Manyara’s tree-climbing lions and rich birdlife in a beautiful Rift Valley setting.",
-        highlights: ["Huge elephant populations", "Iconic baobab landscapes", "Tree-climbing lions", "Excellent birdwatching"],
+        summary: "The ideal short northern-circuit safari: Tarangire’s baobabs and huge elephant herds, then Lake Manyara’s Rift Valley escarpment, tree-climbing lions, and flamingo-lined shores. Perfect before or after Kilimanjaro, Zanzibar, or a longer Serengeti trip.",
+        highlights: [
+          "Large elephant herds in Tarangire",
+          "Iconic baobab landscapes",
+          "Lake Manyara game drive",
+          "Excellent value short safari"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Drive from Arusha to Tarangire National Park. Afternoon game drive among the baobabs." },
-          { day: "Day 2", text: "Morning in Tarangire then transfer to Lake Manyara for an afternoon game drive." },
-          { day: "Day 3", text: "Final morning in Manyara before returning to Arusha." }
+          { day: "Day 1 – Arusha to Tarangire", text: "Drive to Tarangire National Park. Afternoon game drive among baobabs and elephants." },
+          { day: "Day 2 – Tarangire to Manyara", text: "Morning in Tarangire, then transfer to Lake Manyara for an afternoon game drive." },
+          { day: "Day 3 – Manyara & return", text: "Final morning in the park, then return to Arusha." }
         ]
       },
       {
         id: 11,
-        title: "Zanzibar Beach Escape",
+        title: "Zanzibar Spice Island Escape – 5 Days",
         country: "Tanzania",
         days: 5,
         price: 890,
         image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800&q=80",
-        summary: "Unwind on the spice island after your safari. Explore historic Stone Town, visit a fragrant spice farm, and relax on powder-white beaches with dhow sunset cruises and warm Indian Ocean waters.",
-        highlights: ["Stone Town UNESCO tour", "Spice farm experience", "Pristine beach time", "Optional dhow cruise"],
+        summary: "The classic safari add-on: UNESCO Stone Town, a spice-farm tour, and unhurried days on white-sand beaches. Dhow sunsets, snorkelling, and warm Indian Ocean swimming — the perfect way to close a wildlife journey.",
+        highlights: [
+          "Guided Stone Town walking tour",
+          "Spice farm experience",
+          "Beach lodge, east or north coast",
+          "Optional dhow cruise & snorkelling"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Arrive Zanzibar and transfer to Stone Town. Guided walking tour of the historic alleys and waterfront." },
-          { day: "Day 2", text: "Morning spice farm tour, then transfer to your beach hotel on the east or north coast." },
-          { day: "Day 3–4", text: "Two full days of pure beach relaxation with optional snorkelling, diving, or village visits." },
-          { day: "Day 5", text: "Transfer to the airport for your departure flight." }
+          { day: "Day 1 – Arrive Stone Town", text: "Airport meet-and-greet and transfer to Stone Town. Guided walk through historic alleys and the waterfront." },
+          { day: "Day 2 – Spice farm to the beach", text: "Morning spice tour, then transfer to your beach hotel on the east or north coast." },
+          { day: "Days 3–4 – Beach time", text: "Two full days to swim, rest, and add snorkelling, diving, or a village visit at your own pace." },
+          { day: "Day 5 – Departure", text: "Transfer to Zanzibar Airport for your flight home or onward." }
         ]
       },
       {
         id: 12,
-        title: "Volcanoes Gorilla Trek – Rwanda",
+        title: "Rwanda Volcanoes Gorilla Trek – 3 Days",
         country: "Rwanda",
         days: 3,
         price: 1950,
         image: "73bdd254-73a1-4625-a68a-20dc6baf56ac.jpeg",
-        summary: "Track mountain gorillas on the lush slopes of the Virunga volcanoes in Rwanda’s Volcanoes National Park. Short transfers, excellent infrastructure, and the option to add golden monkey trekking.",
-        highlights: ["Gorilla permit included", "Optional golden monkeys", "Cultural village visit", "Short travel times"],
+        summary: "The most time-efficient gorilla safari in East Africa: only about 2.5 hours from Kigali to Volcanoes National Park. Your gorilla permit is included, lodges are excellent, and you can add golden monkey trekking. Ideal for travellers with limited days.",
+        highlights: [
+          "Gorilla permit included",
+          "Short Kigali–Volcanoes transfer",
+          "Optional golden monkey trek",
+          "Community or cultural visit"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Transfer from Kigali to Volcanoes National Park (approx. 2.5 hours). Afternoon at leisure or optional cultural visit." },
-          { day: "Day 2", text: "Gorilla trekking day – an unforgettable hour with a mountain gorilla family." },
-          { day: "Day 3", text: "Optional golden monkey trek or direct return to Kigali for departure." }
+          { day: "Day 1 – Kigali to Volcanoes", text: "Transfer to Volcanoes National Park. Afternoon at leisure or optional cultural village visit." },
+          { day: "Day 2 – Gorilla trekking", text: "Trek the Virunga slopes and spend up to one hour with a mountain gorilla family." },
+          { day: "Day 3 – Optional golden monkeys or Kigali", text: "Add a golden monkey trek, or return directly to Kigali for your flight." }
         ]
       },
       {
         id: 13,
-        title: "Kigali & Nyungwe Forest",
+        title: "Kigali & Nyungwe Rainforest – 4 Days",
         country: "Rwanda",
         days: 4,
         price: 1250,
         image: "f6fd3538-7725-4085-a2bd-2fcc2423b63e.jpeg",
-        summary: "Combine Rwanda’s vibrant capital and moving genocide memorial with chimpanzee tracking and the famous canopy walkway in the ancient Nyungwe rainforest – one of Africa’s oldest and most biodiverse forests.",
-        highlights: ["Kigali city & memorial", "Chimpanzee tracking", "Canopy walkway", "Ancient rainforest"],
+        summary: "Rwanda beyond gorillas: a thoughtful Kigali city tour and Genocide Memorial, then chimpanzee tracking and the canopy walkway in ancient Nyungwe Forest — one of Africa’s oldest rainforests. A strong choice for travellers who want wildlife and context.",
+        highlights: [
+          "Kigali city and Genocide Memorial",
+          "Nyungwe chimpanzee tracking",
+          "Canopy walkway",
+          "Ancient rainforest biodiversity"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Kigali city tour including the Genocide Memorial and local markets. Overnight in the capital." },
-          { day: "Day 2", text: "Scenic transfer south to Nyungwe Forest National Park. Evening at your forest lodge." },
-          { day: "Day 3", text: "Morning chimpanzee tracking followed by the thrilling canopy walkway experience." },
-          { day: "Day 4", text: "Return to Kigali for departure." }
+          { day: "Day 1 – Kigali", text: "City tour including the Genocide Memorial and local markets. Overnight in the capital." },
+          { day: "Day 2 – To Nyungwe Forest", text: "Scenic transfer south to Nyungwe Forest National Park and your forest lodge." },
+          { day: "Day 3 – Chimpanzees & canopy", text: "Morning chimpanzee tracking, then the canopy walkway above the treetops." },
+          { day: "Day 4 – Return to Kigali", text: "Transfer back to Kigali for departure." }
         ]
       },
       {
         id: 14,
-        title: "Uganda & Rwanda Primates",
+        title: "Uganda & Rwanda Gorilla Dual Trek – 7 Days",
         country: "Multi",
         days: 7,
         price: 2800,
         image: "91ea3168-44ef-4e23-87f6-16e398a2f882.jpeg",
-        summary: "The ultimate cross-border primate adventure. Track mountain gorillas in both Bwindi (Uganda) and Volcanoes (Rwanda), with seamless border support, golden monkey option, and a Kigali city finale.",
-        highlights: ["Two gorilla experiences", "Full border-crossing support", "Golden monkeys option", "Best of both parks"],
+        summary: "Two gorilla families, two countries, one seamless journey. Trek in Bwindi, Uganda, then cross into Rwanda’s Volcanoes National Park with full border support. Finish with Kigali. Built for travellers who want the deepest primate experience in the region.",
+        highlights: [
+          "Two gorilla treks (Uganda & Rwanda)",
+          "Full border-crossing support",
+          "Optional golden monkeys",
+          "Kigali city finale"
+        ],
         daysDetail: [
-          { day: "Day 1", text: "Arrive Entebbe and transfer to Bwindi Impenetrable Forest." },
-          { day: "Day 2", text: "Gorilla trekking in Bwindi with community visit in the afternoon." },
-          { day: "Day 3", text: "Cross the border into Rwanda and transfer to Volcanoes National Park." },
-          { day: "Day 4", text: "Second gorilla trek on the Rwandan side of the Virungas." },
-          { day: "Day 5", text: "Optional golden monkey trek or relaxed day with cultural activities." },
-          { day: "Day 6", text: "Transfer to Kigali for a city tour and farewell dinner." },
-          { day: "Day 7", text: "Departure from Kigali International Airport." }
+          { day: "Day 1 – Entebbe to Bwindi", text: "Arrive Uganda and transfer to Bwindi Impenetrable Forest." },
+          { day: "Day 2 – Bwindi gorilla trek", text: "Gorilla trekking in Uganda, with an afternoon community visit." },
+          { day: "Day 3 – Cross into Rwanda", text: "Border crossing with our support, then transfer to Volcanoes National Park." },
+          { day: "Day 4 – Volcanoes gorilla trek", text: "Second gorilla encounter on the Rwandan side of the Virungas." },
+          { day: "Day 5 – Golden monkeys or rest", text: "Optional golden monkey trek or a quiet cultural day." },
+          { day: "Day 6 – Kigali", text: "Transfer to Kigali for a city tour and farewell dinner." },
+          { day: "Day 7 – Departure", text: "Airport transfer from Kigali International." }
         ]
       },
       {
         id: 15,
-        title: "East Africa Grand Safari",
+        title: "East Africa Grand Circuit – 12 Days",
         country: "Multi",
         days: 12,
         price: 4200,
         image: "c6ecd7f5-82fd-441f-95d6-78e94b7ecbd3.jpeg",
-        summary: "The definitive East African circuit covering three countries. Experience Uganda’s diverse parks, the drama of the Masai Mara, and the classic combination of Serengeti and Ngorongoro – with flexible routing around the Great Migration.",
-        highlights: ["Three countries in one journey", "Big Five focus", "Migration window option", "Seamless logistics"],
+        summary: "Three countries, one private journey: Uganda’s parks and waterways, Kenya’s Masai Mara, and Tanzania’s Serengeti and Ngorongoro. Routed around the Great Migration when dates allow, with lodges, border logistics, and internal travel handled by our team. The flagship itinerary for travellers who want the full East Africa story.",
+        highlights: [
+          "Uganda, Kenya, and Tanzania",
+          "Big Five focus",
+          "Migration-season routing available",
+          "Zanzibar extension on request"
+        ],
         daysDetail: [
-          { day: "Days 1–3", text: "Uganda – Choose Murchison Falls or Queen Elizabeth for classic game drives, boat safaris and (in Ishasha) tree-climbing lions." },
-          { day: "Days 4–6", text: "Kenya – Immersive safari in the Masai Mara with excellent big-cat viewing and optional balloon flight." },
-          { day: "Days 7–10", text: "Tanzania – Explore the Serengeti plains and descend into the wildlife-rich Ngorongoro Crater." },
-          { day: "Days 11–12", text: "Return to Arusha for departure, or extend with a few days on Zanzibar’s beaches." }
+          { day: "Days 1–3 – Uganda", text: "Murchison Falls or Queen Elizabeth: game drives, boat safari, and — in Ishasha — tree-climbing lions and a community welcome." },
+          { day: "Days 4–6 – Kenya, Masai Mara", text: "Immersive Mara safari with big cats and optional dawn balloon flight." },
+          { day: "Days 7–10 – Tanzania", text: "Serengeti plains and a full day in the Ngorongoro Crater." },
+          { day: "Days 11–12 – Arusha or Zanzibar", text: "Fly from Arusha, or add beach days on Zanzibar before you go home." }
         ]
       }
     ];
@@ -790,7 +753,6 @@
         return;
       }
       emptyState.classList.remove('show');
-
       list.forEach(item => {
         const card = document.createElement('article');
         card.className = 'itinerary-card';
@@ -806,7 +768,8 @@
             <h3>${item.title}</h3>
             <div class="card-meta">
               <span>📅 ${item.days} days</span>
-              <span>👥 Small groups</span>
+              <span>🚙 Private safari</span>
+              <span>🏨 Mid-range lodges</span>
             </div>
             <p class="card-desc">${item.summary}</p>
             <ul class="card-highlights">
@@ -815,28 +778,25 @@
             <div class="card-footer">
               <div class="card-price">
                 From $${item.price.toLocaleString()}
-                <small>per person</small>
+                <small>per person sharing</small>
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-outline btn-sm view-btn" data-id="${item.id}">Details</button>
-                <a href="book.html?tour=${encodeURIComponent(item.title)}" class="btn btn-orange btn-sm">Book Now</a>
+                <button class="btn btn-outline btn-sm view-btn" data-id="${item.id}">View itinerary</button>
+                <a href="book.html?tour=${encodeURIComponent(item.title)}" class="btn btn-orange btn-sm">Book now</a>
               </div>
             </div>
           </div>
         `;
         grid.appendChild(card);
       });
-
       document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', () => openModal(parseInt(btn.dataset.id)));
+        btn.addEventListener('click', () => openModal(parseInt(btn.dataset.id, 10)));
       });
     }
 
     function filterAndSearch() {
       let list = itineraries;
-      if (activeFilter !== 'all') {
-        list = list.filter(i => i.country === activeFilter);
-      }
+      if (activeFilter !== 'all') list = list.filter(i => i.country === activeFilter);
       if (searchTerm) {
         const q = searchTerm.toLowerCase();
         list = list.filter(i =>
@@ -857,13 +817,11 @@
         filterAndSearch();
       });
     });
-
     document.getElementById('searchInput').addEventListener('input', e => {
       searchTerm = e.target.value.trim();
       filterAndSearch();
     });
 
-    // Modal
     const overlay = document.getElementById('modalOverlay');
     function openModal(id) {
       const item = itineraries.find(i => i.id === id);
@@ -874,7 +832,8 @@
       document.getElementById('modalTitle').textContent = item.title;
       document.getElementById('modalMeta').innerHTML = `
         <span>📅 ${item.days} days</span>
-        <span>💰 From $${item.price.toLocaleString()} pp</span>
+        <span>💰 From $${item.price.toLocaleString()} per person sharing</span>
+        <span>🚙 Private vehicle</span>
       `;
       document.getElementById('modalDesc').textContent = item.summary;
       document.getElementById('modalDays').innerHTML = item.daysDetail
@@ -892,7 +851,6 @@
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Init
     renderCards(itineraries);
   </script>
 </body>
