@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — Ishasha Women\'s Organisation</title>
+  <title>Contact — Ishasha Women's Organisation</title>
   <style>
 /* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
    Faithful recreation of layout, colors, and structure from the original React build.
@@ -1017,12 +1017,10 @@ a {
     el.addEventListener("click", closeMenu);
   });
 
-  // Close menu when a mobile nav link is clicked
   document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
     link.addEventListener("click", closeMenu);
   });
 
-  // Highlight current page in nav
   const path = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
     const href = link.getAttribute("href");
@@ -1039,7 +1037,6 @@ a {
     }
   });
 })();
-
 </script>
   <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 
@@ -1047,21 +1044,21 @@ a {
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
   <script>
-    // ========== CONFIGURE THESE (EmailJS + Firebase) ==========
-    // EmailJS: https://www.emailjs.com — create service + template, use public key
-    const EMAILJS_PUBLIC_KEY = "YOUR_EMAILJS_PUBLIC_KEY";
-    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-    // Firebase: console.firebase.google.com — create project, enable Firestore
+    // ========== CONFIGURED ==========
+    const EMAILJS_PUBLIC_KEY = "7iHo1AqD-OOWncYGe";
+    const EMAILJS_SERVICE_ID = "service_ovyp0ki";
+    const EMAILJS_TEMPLATE_ID = "template_wvsnidp";
+
     const FIREBASE_CONFIG = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyD_QszWS5bbi20ZESCRKfw1G1-dWK9r51s",
+      authDomain: "ishasha.firebaseapp.com",
+      databaseURL: "https://ishasha-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ishasha",
+      storageBucket: "ishasha.firebasestorage.app",
+      messagingSenderId: "100572186224",
+      appId: "1:100572186224:web:fd271eddcf44f4f03656b5",
+      measurementId: "G-HTC2DJBTSH"
     };
-    // ==========================================================
 
     let db = null;
     try {
@@ -1101,14 +1098,14 @@ a {
         let emailOk = false;
         let fireOk = false;
 
-        // EmailJS
         if (EMAILJS_PUBLIC_KEY !== "YOUR_EMAILJS_PUBLIC_KEY") {
           try {
             await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
               from_name: name,
               from_email: email,
               message: message,
-              reply_to: email
+              reply_to: email,
+              to_email: "ishashawomenscommunity2023@gmail.com"
             });
             emailOk = true;
           } catch (err) {
@@ -1116,7 +1113,6 @@ a {
           }
         }
 
-        // Firebase Firestore
         if (db) {
           try {
             await db.collection("contact_messages").add(payload);
@@ -1131,9 +1127,8 @@ a {
           status.style.color = "var(--earth, #2d5a27)";
           form.reset();
         } else {
-          status.innerHTML = "Could not send automatically. Please email <a href=\"mailto:ishashawomenscommunity2023@gmail.com\" style=\"color:var(--earth)\">ishashawomenscommunity2023@gmail.com</a> directly, or configure EmailJS and Firebase in this page.";
+          status.innerHTML = "Could not send automatically. Opening your email app so you can send to <a href=\"mailto:ishashawomenscommunity2023@gmail.com\" style=\"color:var(--earth)\">ishashawomenscommunity2023@gmail.com</a>…";
           status.style.color = "#8b2e2e";
-          // Fallback mailto
           window.location.href = "mailto:ishashawomenscommunity2023@gmail.com?subject=" +
             encodeURIComponent("Website message from " + name) +
             "&body=" + encodeURIComponent(message + "\n\nFrom: " + email);
