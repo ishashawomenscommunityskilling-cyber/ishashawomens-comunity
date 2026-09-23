@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ishasha Women's Community | Women Empowerment, Skills Training & Tourism in Kanungu, Uganda</title>
+  <meta name="description" content="Ishasha Women's Community Skilling and Development Organisation empowers women and girls in Ishasha, Kanungu District near Queen Elizabeth National Park." />
+  <meta name="theme-color" content="#254a22" />
+  <link rel="icon" href="images/logo.jpg" type="image/jpeg" />
+  <style>
+    :root {
+      --bg: #f6f1e8; --sand: #efe6d6; --card: #ffffff; --ink: #1a2618;
+      --ink-soft: #3a4a36; --muted: #6b7a65; --earth: #254a22; --earth-deep: #1a3518;
+      --gold: #b8923e; --gold-light: #d4b56a; --border: #ddd2c0; --radius: 14px;
+      --shadow: 0 10px 30px rgba(26, 38, 24, 0.08);
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif; --display: Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.65; min-height: 100vh; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1140px, calc(100% - 2rem)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 72px; }
+    .brand { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+    .brand-logo { width: 48px; height: 48px; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold-light); flex-shrink: 0; }
+    .brand-name { font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--earth); line-height: 1.25; }
+    .brand-tag { font-size: 0.7rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-desktop { display: flex; align-items: center; gap: 0.1rem; flex-wrap: wrap; }
+    .nav-desktop a { padding: 0.45rem 0.6rem; border-radius: 8px; font-size: 0.88rem; color: var(--ink-soft); }
+    .nav-desktop a:hover, .nav-desktop a.active { background: color-mix(in srgb, var(--gold) 16%, white); color: var(--earth); }
+    .btn-donate { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 1.1rem; border-radius: 999px; background: linear-gradient(135deg, var(--earth), var(--earth-deep)); color: #fff; font-weight: 600; font-size: 0.88rem; }
+    .menu-btn { display: none; width: 44px; height: 44px; border: none; background: transparent; border-radius: 10px; cursor: pointer; color: var(--ink); align-items: center; justify-content: center; }
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.25s, visibility 0.25s; }
+    .drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(300px, 85vw); height: 100%; background: #faf8f3; box-shadow: -6px 0 32px rgba(0,0,0,0.28); display: flex; flex-direction: column; transform: translateX(110%); transition: transform 0.28s; overflow-y: auto; z-index: 10000; }
+    .drawer-overlay.open .drawer { transform: translateX(0); }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-bottom: 1px solid #ddd2c0; background: #fff; }
+    .drawer-nav a { display: block; padding: 0.95rem 1rem; margin: 0.08rem 0.5rem; border-radius: 10px; color: #1a3518; font-size: 1.1rem; font-weight: 600; }
+    .drawer-foot { padding: 1rem; border-top: 1px solid #ddd2c0; background: #fff; margin-top: auto; }
+    .hero { position: relative; overflow: hidden; background: var(--earth-deep); min-height: min(68vh, 520px); height: min(68vh, 520px); }
+    .slides { position: absolute; inset: 0; }
+    .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s; background-size: cover; background-position: center; }
+    .slide.active { opacity: 1; z-index: 1; }
+    .slide::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 32%; background: linear-gradient(transparent, rgba(0,0,0,0.55)); pointer-events: none; }
+    .slider-nav { position: absolute; bottom: 1.1rem; right: 1.1rem; z-index: 3; display: flex; gap: 0.4rem; }
+    .slider-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: rgba(255,255,255,0.45); cursor: pointer; }
+    .slider-dot.active { background: var(--gold-light); transform: scale(1.2); }
+    .slider-arrows { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 100%; pointer-events: none; display: flex; justify-content: space-between; padding: 0 0.65rem; }
+    .slider-arrows button { pointer-events: auto; width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,0.22); color: #fff; cursor: pointer; font-size: 1.2rem; }
+    .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 0.9rem 1.15rem 1rem; color: #fff; font-size: 0.88rem; opacity: 0; transition: opacity 0.5s; }
+    .slide.active .slide-caption { opacity: 1; }
+    .slide-caption strong { display: block; font-size: 0.98rem; margin-bottom: 0.12rem; }
+    .slide-caption .read-more { display: inline-block; margin-top: 0.35rem; padding: 0.22rem 0.65rem; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); border-radius: 999px; color: #fff; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    .hero-intro { background: var(--card); border-bottom: 1px solid var(--border); padding: 2.5rem 0 2.25rem; }
+    .eyebrow { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .hero-title { font-family: var(--display); font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2; font-weight: 700; color: var(--earth); max-width: 18ch; margin-bottom: 0.55rem; }
+    .hero-lead { font-size: 1.08rem; color: var(--ink-soft); max-width: 36rem; margin-bottom: 0.45rem; }
+    .hero-sub { font-size: 0.98rem; color: var(--muted); max-width: 40rem; margin-bottom: 1.4rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 0.8rem 1.35rem; border-radius: 999px; background: linear-gradient(135deg, var(--gold), #a07a30); color: #1a2618; font-weight: 700; font-size: 0.95rem; }
+    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; padding: 0.8rem 1.25rem; border-radius: 999px; border: 1.5px solid var(--border); color: var(--earth); font-weight: 600; font-size: 0.95rem; }
+    .facts { background: var(--bg); border-bottom: 1px solid var(--border); padding: 1.4rem 0; }
+    .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    .fact-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; }
+    .fact-value { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.4; }
+    .section { padding: 3.5rem 0; }
+    .section-title { font-family: var(--display); font-size: clamp(1.5rem, 2.8vw, 2rem); color: var(--earth); margin-bottom: 0.8rem; line-height: 1.25; }
+    .two-col { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.25rem; align-items: start; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.35rem; box-shadow: var(--shadow); }
+    .card h3 { font-family: var(--display); font-size: 1.1rem; color: var(--earth); margin-bottom: 0.4rem; }
+    .card p { color: var(--ink-soft); font-size: 0.96rem; }
+    .values { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.9rem; }
+    .chip { background: color-mix(in srgb, var(--sand) 85%, var(--gold) 10%); border: 1px solid color-mix(in srgb, var(--gold) 30%, white); border-radius: 999px; padding: 0.3rem 0.8rem; font-size: 0.84rem; color: var(--ink-soft); }
+    .list-check { list-style: none; display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+    .list-check li { display: flex; gap: 0.6rem; align-items: flex-start; color: var(--ink-soft); }
+    .list-check li::before { content: ""; width: 0.45rem; height: 0.45rem; margin-top: 0.45rem; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--earth)); flex-shrink: 0; }
+    .cta-band { background: linear-gradient(160deg, var(--earth), var(--earth-deep)); color: #f0ebe0; padding: 3rem 0; text-align: center; }
+    .cta-band .section-title { color: #f5e9c8; }
+    .cta-band p { opacity: 0.9; max-width: 36rem; margin: 0 auto 1.4rem; }
+    .cta-band .btn-ghost { border-color: rgba(255,255,255,0.45); color: #fff; }
+    .tourism-band { background: var(--card); border-bottom: 1px solid var(--border); padding: 1.85rem 0; }
+    .tourism-band-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.15rem; }
+    .tourism-band h2 { font-family: var(--display); font-size: 1.3rem; color: var(--earth); margin-bottom: 0.3rem; }
+    .tourism-band p { color: var(--ink-soft); max-width: 36rem; font-size: 0.96rem; }
+    .album-preview { padding: 3rem 0; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .slider-wrap { position: relative; margin-top: 1.25rem; }
+    .slider-track {
+      display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      padding: 0.25rem 0.15rem 1rem; scrollbar-width: none;
+    }
+    .slider-track::-webkit-scrollbar { display: none; }
+    .album-card {
+      flex: 0 0 min(260px, 78vw); scroll-snap-align: start;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: inherit;
+    }
+    .album-card img { width: 100%; height: 160px; object-fit: cover; }
+    .album-card .body { padding: 0.85rem 1rem; }
+    .album-card .type { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--gold); }
+    .album-card h3 { font-size: 0.98rem; color: var(--earth); margin: 0.2rem 0; font-family: var(--display); }
+    .album-card .date { font-size: 0.78rem; color: var(--muted); }
+    .slider-btn {
+      position: absolute; top: 40%; transform: translateY(-50%); z-index: 2;
+      width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(37, 74, 34, 0.9); color: #fff; font-size: 1.25rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: center;
+    }
+    .slider-btn.prev { left: -0.35rem; }
+    .slider-btn.next { right: -0.35rem; }
+    .slider-btn:hover { background: var(--earth-deep); }
+    .slider-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.35rem; }
+    .slider-dots button {
+      width: 8px; height: 8px; border-radius: 50%; border: none;
+      background: rgba(37, 74, 34, 0.25); cursor: pointer; padding: 0;
+    }
+    .slider-dots button.active { background: var(--earth); transform: scale(1.25); }
+
+    .feedback-section { padding: 3.5rem 0; background: var(--card); border-bottom: 1px solid var(--border); }
+    .feedback-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; margin-top: 1.5rem; align-items: start; }
+    .fb-slider-wrap { position: relative; }
+    .fb-track {
+      display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+      padding: 0.25rem 0.1rem 1rem; scrollbar-width: none;
+    }
+    .fb-track::-webkit-scrollbar { display: none; }
+    .fb-item {
+      flex: 0 0 min(320px, 85vw); scroll-snap-align: start;
+      display: grid; grid-template-columns: 56px 1fr; gap: 0.85rem; padding: 1.1rem 1.15rem;
+      background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border);
+      min-height: 120px;
+    }
+    .fb-item img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+    .fb-item strong { display: block; color: var(--earth); font-size: 0.95rem; }
+    .fb-item .msg { color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.25rem; }
+    .fb-item .date { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+    .fb-form label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--earth); margin-bottom: 0.25rem; }
+    .fb-form input, .fb-form textarea { width: 100%; padding: 0.55rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; font: inherit; margin-bottom: 0.75rem; }
+    .fb-form textarea { min-height: 100px; resize: vertical; }
+    .fb-msg { font-size: 0.9rem; margin-top: 0.5rem; }
+    .fb-msg.ok { color: #065f46; }
+    .fb-msg.err { color: #991b1b; }
+    .site-footer { background: color-mix(in srgb, var(--sand) 55%, var(--card)); border-top: 1px solid var(--border); padding: 2.5rem 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 0.8fr; gap: 2.25rem; padding-bottom: 1.75rem; }
+    .footer-brand { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 0.9rem; }
+    .footer-logo { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold-light); flex-shrink: 0; }
+    .footer-name { font-family: var(--display); font-size: 1rem; color: var(--earth); line-height: 1.3; }
+    .footer-tag { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+    .footer-copy { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 0.35rem; }
+    .footer-heading { font-size: 0.92rem; font-weight: 700; color: var(--earth); margin-bottom: 0.65rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-links a { color: var(--ink-soft); font-size: 0.9rem; }
+    .footer-bottom { border-top: 1px solid var(--border); padding: 0.9rem 0; text-align: center; font-size: 0.82rem; color: var(--muted); }
+    .text-link { color: var(--earth); text-decoration: underline; text-underline-offset: 2px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 11000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 16px; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+    .modal img { width: 100%; height: 220px; object-fit: cover; border-radius: 16px 16px 0 0; }
+    .modal-body { padding: 1.25rem 1.4rem 1.4rem; }
+    .modal-body h3 { font-family: var(--display); font-size: 1.3rem; color: var(--earth); margin-bottom: 0.45rem; }
+    .modal-body p { color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 0.7rem; }
+    .modal-close { margin-top: 0.4rem; padding: 0.55rem 1.15rem; border-radius: 999px; border: none; background: var(--earth); color: #fff; font-weight: 600; cursor: pointer; }
+    @media (max-width: 960px) {
+      .nav-desktop, .header-inner > .btn-donate { display: none !important; }
+      .menu-btn { display: inline-flex !important; }
+      .facts-grid { grid-template-columns: 1fr 1fr; }
+      .two-col, .footer-grid, .feedback-grid { grid-template-columns: 1fr; }
+      .hero { min-height: min(52vh, 400px); height: min(52vh, 400px); }
+    }
+    @media (max-width: 560px) {
+      .facts-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-ghost { width: 100%; }
+      .hero { min-height: 40vh; height: 40vh; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a href="index.html" class="brand">
+        <img src="images/logo.jpg" alt="Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <div>
+          <span class="brand-name">Ishasha Women's Community Skilling and Development Organisation & Tourism</span>
+          <span class="brand-tag">Women And Girls Empowered · Communities Transformed</span>
+        </div>
+      </a>
+      <nav class="nav-desktop">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs</a>
+        <a href="tourism.html">Tourism</a>
+        <a href="album.html">Album</a>
+        <a href="impact.html">Impact</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="get-involved.html">Get Involved</a>
+        <a href="contact.html">Contact</a>
+        <a href="donate.html">Donate</a>
+      </nav>
+      <a href="donate.html" class="btn-donate">Donate</a>
+      <button class="menu-btn" type="button" id="menuBtn" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawer">
+    <div class="drawer">
+      <div class="drawer-head">
+        <span style="font-family:Georgia,serif;font-weight:700;color:#254a22;">Ishasha Women's Organisation</span>
+        <button type="button" id="closeMenu" style="width:44px;height:44px;border:none;background:transparent;font-size:1.5rem;cursor:pointer;">×</button>
+      </div>
+      <nav class="drawer-nav">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="programs.html">Programs</a>
+        <a href="tourism.html">Tourism</a><a href="album.html">Album</a><a href="impact.html">Impact</a>
+        <a href="donate.html">Donate</a><a href="gallery.html">Gallery</a>
+        <a href="get-involved.html">Get Involved</a><a href="contact.html">Contact</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="drawer-foot"><a href="donate.html" class="btn-donate" style="width:100%;justify-content:center;display:flex;">Donate</a></div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="slides" id="heroSlides">
+        <div class="slide active" style="background-image:url('images/women-group-yellow-shirts.jpg')" data-title="Community group" data-detail="Women and children of the Ishasha community gathered together." data-img="images/women-group-yellow-shirts.jpg">
+          <div class="slide-caption"><strong>Community group</strong> Women and children of Ishasha<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+        <div class="slide" style="background-image:url('images/farm-group-field.jpg')" data-title="Farm learning" data-detail="Skills building and agricultural mentorship." data-img="images/farm-group-field.jpg">
+          <div class="slide-caption"><strong>Farm learning</strong> Skills and agricultural mentorship<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+        <div class="slide" style="background-image:url('images/coffee-cherries.jpg')" data-title="Coffee production" data-detail="Agriculture as a pathway to income." data-img="images/coffee-cherries.jpg">
+          <div class="slide-caption"><strong>Coffee production</strong> Income through agriculture<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+        <div class="slide" style="background-image:url('images/children-carrying-water.jpg')" data-title="Water access" data-detail="Safe water remains an urgent priority." data-img="images/children-carrying-water.jpg">
+          <div class="slide-caption"><strong>Water access</strong> Safe water remains urgent<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+        <div class="slide" style="background-image:url('images/mother-schoolgirls.jpg')" data-title="Education support" data-detail="Supporting the girl child to stay in school." data-img="images/mother-schoolgirls.jpg">
+          <div class="slide-caption"><strong>Education support</strong> Helping girls stay in school<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+        <div class="slide" style="background-image:url('images/daria-with-elder.jpg')" data-title="Dr. Daria Mejnartowicz" data-detail="Patron and International Ambassador from Poland." data-img="images/daria-with-elder.jpg">
+          <div class="slide-caption"><strong>Dr. Daria Mejnartowicz</strong> Patron and International Ambassador<br><button type="button" class="read-more">Read more</button></div>
+        </div>
+      </div>
+      <div class="slider-arrows">
+        <button type="button" id="prevSlide">‹</button>
+        <button type="button" id="nextSlide">›</button>
+      </div>
+      <div class="slider-nav" id="sliderDots"></div>
+    </section>
+
+    <section class="hero-intro">
+      <div class="shell">
+        <p class="eyebrow">Kanungu District · Uganda</p>
+        <h1 class="hero-title">Empowering Women for a Greater Community</h1>
+        <p class="hero-lead">Women And Girls Empowered · Communities Transformed</p>
+        <p class="hero-sub">A community-based organisation supporting women and girls in Ishasha through skills development, livelihoods, education, conservation and welfare — on the doorstep of Queen Elizabeth National Park.</p>
+        <div class="hero-actions">
+          <a href="donate.html" class="btn-primary">Donate</a>
+          <a href="get-involved.html" class="btn-ghost">Get Involved</a>
+          <a href="programs.html" class="btn-ghost">Our Programs</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="facts">
+      <div class="shell facts-grid">
+        <div><p class="fact-label">Location</p><p class="fact-value">Kyakatarangyi Cell, Ishasha Area, Rusoroza Parish, Kihihi Sub County, Kanungu District, Uganda</p></div>
+        <div><p class="fact-label">Registered as</p><p class="fact-value">Company Limited by Guarantee under the Companies Act, 2012</p></div>
+        <div><p class="fact-label">Contact</p><p class="fact-value">+256 771 440 064 · WhatsApp +256 787 818 133</p></div>
+        <div><p class="fact-label">Email</p><p class="fact-value">ishashawomenscommunity2023@gmail.com</p></div>
+      </div>
+    </section>
+
+    <section class="tourism-band">
+      <div class="shell tourism-band-inner">
+        <div>
+          <h2>Tourism &amp; cultural experiences</h2>
+          <p>Visit Ishasha for village walks, coffee and banana experiences, traditional food, dance and drama.</p>
+        </div>
+        <a href="tourism.html" class="btn-donate">Explore tourism →</a>
+      </div>
+    </section>
+
+    <section class="album-preview">
+      <div class="shell">
+        <p class="eyebrow">Moments · Events · Photos</p>
+        <h2 class="section-title">From our album</h2>
+        <div class="slider-wrap">
+          <button type="button" class="slider-btn prev" id="albumPrev" aria-label="Previous">‹</button>
+          <button type="button" class="slider-btn next" id="albumNext" aria-label="Next">›</button>
+          <div class="slider-track" id="homeAlbumGrid">
+            <p style="color:var(--muted);padding:1rem;">Loading album…</p>
+          </div>
+          <div class="slider-dots" id="albumDots"></div>
+        </div>
+        <div style="margin-top:1.25rem;"><a href="album.html" class="btn-ghost">View full album →</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell two-col">
+        <article>
+          <p class="eyebrow">Vision and mission</p>
+          <h2 class="section-title">A stronger future shaped by women and girls</h2>
+          <div style="display:grid;gap:1rem;margin-top:1.15rem;">
+            <div class="card"><h3>Vision</h3><p>Empowering women for a greater community.</p></div>
+            <div class="card"><h3>Mission</h3><p>To provide education through skills development, conservation of the environment, and socio-economic welfare for the women of our community.</p></div>
+          </div>
+          <div class="values" style="margin-top:1.6rem;">
+            <span class="chip">Respect</span><span class="chip">Compassion</span><span class="chip">Innovation</span>
+            <span class="chip">Equality</span><span class="chip">Honesty</span><span class="chip">Integrity</span>
+            <span class="chip">Transparency</span><span class="chip">Confidentiality</span>
+          </div>
+        </article>
+        <aside>
+          <div class="card">
+            <h3>What we focus on</h3>
+            <ul class="list-check">
+              <li>Skills training and capacity building for women</li>
+              <li>Small business empowerment through agriculture and agro-tourism</li>
+              <li>Environmental conservation near Queen Elizabeth National Park</li>
+              <li>Village Savings and Loans Associations</li>
+              <li>Support for vulnerable children, especially the girl child</li>
+              <li>Cultural tourism through dance, drama and village walks</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="feedback-section" id="feedback">
+      <div class="shell">
+        <p class="eyebrow">Voices from the community</p>
+        <h2 class="section-title">What people say</h2>
+        <p style="color:var(--ink-soft);max-width:40rem;">Leave a note below — it appears after admin approval.</p>
+        <div class="feedback-grid">
+          <div class="fb-slider-wrap">
+            <button type="button" class="slider-btn prev" id="fbPrev" aria-label="Previous">‹</button>
+            <button type="button" class="slider-btn next" id="fbNext" aria-label="Next">›</button>
+            <div class="fb-track" id="fbList"><p style="color:var(--muted);padding:1rem;">Loading feedback…</p></div>
+            <div class="slider-dots" id="fbDots"></div>
+          </div>
+          <div class="card fb-form">
+            <h3 style="margin-bottom:0.85rem;">Share your feedback</h3>
+            <form id="feedbackForm">
+              <label for="fbName">Your name</label>
+              <input type="text" id="fbName" maxlength="80" required placeholder="e.g. Mary K." />
+              <label for="fbMessage">Message</label>
+              <textarea id="fbMessage" maxlength="600" required placeholder="What would you like to say?"></textarea>
+              <label for="fbPhoto">Your photo (optional)</label>
+              <input type="file" id="fbPhoto" accept="image/*" />
+              <button type="submit" class="btn-primary">Send feedback</button>
+              <p class="fb-msg" id="fbFormMsg"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="shell">
+        <p class="eyebrow" style="color:var(--gold-light);">Join the work</p>
+        <h2 class="section-title">Help us reach more women and families</h2>
+        <p>Your support funds seed capital, farm inputs, education materials and safe-water advocacy.</p>
+        <div class="hero-actions" style="justify-content:center;">
+          <a href="donate.html" class="btn-primary">Donate now</a>
+          <a href="contact.html" class="btn-ghost">Contact us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="images/logo.jpg" alt="" class="footer-logo" onerror="this.style.display='none'" />
+          <div>
+            <h2 class="footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+            <p class="footer-tag">Women And Girls Empowered · Communities Transformed</p>
+          </div>
+        </div>
+        <p class="footer-copy">Kyakatarangyi Cell, Ishasha Area, Rusoroza Parish, Kihihi Sub County, Kanungu District, Uganda</p>
+        <p class="footer-copy">
+          <a href="mailto:ishashawomenscommunity2023@gmail.com" class="text-link">ishashawomenscommunity2023@gmail.com</a>
+          · <a href="tel:+256771440064" class="text-link">+256 771 440 064</a>
+        </p>
+      </div>
+      <div>
+        <h2 class="footer-heading">Quick links</h2>
+        <div class="footer-links">
+          <a href="about.html">About</a><a href="programs.html">Programs</a><a href="tourism.html">Tourism</a>
+          <a href="album.html">Album</a><a href="donate.html">Donate</a><a href="contact.html">Contact</a>
+          <a href="admin.html">Admin</a>
+        </div>
+      </div>
+    </div>
+    <div class="shell footer-bottom">
+      <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited.</p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="slideModal">
+    <div class="modal">
+      <img id="modalImg" alt="" />
+      <div class="modal-body">
+        <h3 id="modalTitle"></h3>
+        <p id="modalText"></p>
+        <button type="button" class="modal-close" id="modalClose">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+  /* ========== ALL CONFIG + LOGIC IN ONE PLACE ========== */
+  const CONFIG = {
+    firebase: {
+      apiKey: "AIzaSyD_QszWS5bbi20ZESCRKfw1G1-dWK9r51s",
+      authDomain: "ishasha.firebaseapp.com",
+      databaseURL: "https://ishasha-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ishasha",
+      storageBucket: "ishasha.firebasestorage.app",
+      messagingSenderId: "100572186224",
+      appId: "1:100572186224:web:fd271eddcf44f4f03656b5",
+      measurementId: "G-HTC2DJBTSH"
+    },
+    cloudinary: {
+      cloudName: "poczen7o",
+      uploadPreset: "ishasha_uploads",
+      folder: "ishasha"
+    },
+    adminPassword: "ishasha-admin"
+  };
+
+  let db = null, fbReady = false, fbError = "";
+  try {
+    firebase.initializeApp(CONFIG.firebase);
+    db = firebase.firestore();
+    try { db.settings({ experimentalForceLongPolling: true }); } catch (_) {}
+    fbReady = true;
+    console.log("Firebase connected, project:", CONFIG.firebase.projectId);
+  } catch (e) {
+    fbError = e.message || String(e);
+    console.warn("Firebase fallback to localStorage", e);
+  }
+
+  async function uploadToCloudinary(file, folder) {
+    const form = new FormData();
+    form.append("file", file);
+    form.append("upload_preset", CONFIG.cloudinary.uploadPreset);
+    form.append("folder", folder || CONFIG.cloudinary.folder);
+    const res = await fetch("https://api.cloudinary.com/v1_1/" + CONFIG.cloudinary.cloudName + "/image/upload", { method: "POST", body: form });
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error?.message || "Upload failed"); }
+    const data = await res.json();
+    return { url: data.secure_url, publicId: data.public_id };
+  }
+
+  async function loadHeroSlides() {
+    if (fbReady) {
+      try {
+        const snap = await db.collection("heroSlides").get();
+        const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        list.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+        return list;
+      } catch (e) {
+        console.error("loadHeroSlides", e);
+        return [];
+      }
+    }
+    try { return JSON.parse(localStorage.getItem("ishasha_hero_slides_v2") || "[]"); } catch { return []; }
+  }
+
+  async function loadAlbumItems() {
+    if (fbReady) {
+      try {
+        const snap = await db.collection("albumItems").get();
+        const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        list.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+        console.log("albumItems from Firestore:", list.length, list);
+        return list;
+      } catch (e) {
+        console.error("loadAlbumItems error:", e);
+        return [];
+      }
+    }
+    try { return JSON.parse(localStorage.getItem("ishasha_album_v1") || "[]"); } catch { return []; }
+  }
+
+  async function submitFeedback({ name, message, photoFile }) {
+    let photoUrl = "", photoPublicId = "";
+    if (photoFile) {
+      // Feedback photos always go to Cloudinary (not Firebase Storage)
+      if (photoFile.size > 8 * 1024 * 1024) {
+        throw new Error("Photo is too large (max 8 MB). Please choose a smaller image.");
+      }
+      if (!photoFile.type || !photoFile.type.startsWith("image/")) {
+        throw new Error("Please choose an image file for your photo.");
+      }
+      const up = await uploadToCloudinary(photoFile, "ishasha/feedback");
+      photoUrl = up.url;
+      photoPublicId = up.publicId;
+    }
+    const entry = {
+      name: (name || "Anonymous").trim().slice(0, 80),
+      message: (message || "").trim().slice(0, 600),
+      photoUrl,
+      photoPublicId,
+      date: new Date().toISOString(),
+      status: "pending",
+      createdAt: fbReady ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString()
+    };
+    if (fbReady) {
+      const ref = await db.collection("feedback").add(entry);
+      entry.id = ref.id;
+    } else {
+      entry.id = "local_" + Date.now();
+      const list = JSON.parse(localStorage.getItem("ishasha_feedback_v1") || "[]");
+      list.unshift(entry);
+      localStorage.setItem("ishasha_feedback_v1", JSON.stringify(list));
+    }
+    return entry;
+  }
+
+  async function loadApprovedFeedback(limit) {
+    limit = limit || 12;
+    if (fbReady) {
+      try {
+        // Load ALL docs then filter — avoids index + status typos
+        const snap = await db.collection("feedback").get();
+        let list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        console.log("All feedback docs:", list.length, list.map(f => ({ id: f.id, status: f.status, name: f.name })));
+        const approved = list.filter(f => String(f.status || "").toLowerCase().trim() === "approved");
+        approved.sort((a, b) => {
+          const da = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.date || 0);
+          const db_ = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.date || 0);
+          return db_ - da;
+        });
+        console.log("Approved feedback:", approved.length);
+        return approved.slice(0, limit);
+      } catch (e) {
+        console.error("loadApprovedFeedback error:", e);
+        return [];
+      }
+    }
+    try {
+      return JSON.parse(localStorage.getItem("ishasha_feedback_v1") || "[]")
+        .filter(f => String(f.status || "").toLowerCase().trim() === "approved")
+        .slice(0, limit);
+    } catch { return []; }
+  }
+
+  async function loadFeedbackDebugCounts() {
+    if (!fbReady) return { total: 0, approved: 0, error: fbError || "Firebase offline" };
+    try {
+      const snap = await db.collection("feedback").get();
+      const list = snap.docs.map(d => d.data());
+      return {
+        total: list.length,
+        approved: list.filter(f => String(f.status || "").toLowerCase().trim() === "approved").length,
+        statuses: list.map(f => f.status)
+      };
+    } catch (e) {
+      return { total: 0, approved: 0, error: e.message };
+    }
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const drawer = document.getElementById("drawer");
+  document.getElementById("menuBtn").addEventListener("click", () => { drawer.classList.add("open"); document.body.style.overflow = "hidden"; });
+  document.getElementById("closeMenu").addEventListener("click", () => { drawer.classList.remove("open"); document.body.style.overflow = ""; });
+  drawer.addEventListener("click", e => { if (e.target === drawer) { drawer.classList.remove("open"); document.body.style.overflow = ""; } });
+
+  const slidesContainer = document.getElementById("heroSlides");
+  const dotsContainer = document.getElementById("sliderDots");
+  let slides = [], current = 0, timer = null, dots = [];
+
+  function buildDotsAndWire() {
+    dotsContainer.innerHTML = ""; dots = [];
+    slides = Array.from(slidesContainer.querySelectorAll(".slide"));
+    slides.forEach((_, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button"; btn.className = "slider-dot" + (i === 0 ? " active" : "");
+      btn.addEventListener("click", () => { goTo(i); startAuto(); });
+      dotsContainer.appendChild(btn); dots.push(btn);
+    });
+    if (slides.length) { slides.forEach(s => s.classList.remove("active")); slides[0].classList.add("active"); current = 0; }
+  }
+  function goTo(index) {
+    if (!slides.length) return;
+    slides[current].classList.remove("active"); if (dots[current]) dots[current].classList.remove("active");
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add("active"); if (dots[current]) dots[current].classList.add("active");
+  }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+  function startAuto() { stopAuto(); timer = setInterval(next, 5500); }
+  function stopAuto() { if (timer) clearInterval(timer); }
+
+  document.getElementById("nextSlide").addEventListener("click", () => { next(); startAuto(); });
+  document.getElementById("prevSlide").addEventListener("click", () => { prev(); startAuto(); });
+
+  async function loadAdminSlides() {
+    try {
+      const adminSlides = await loadHeroSlides();
+      if (adminSlides && adminSlides.length) {
+        slidesContainer.innerHTML = "";
+        adminSlides.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "slide" + (idx === 0 ? " active" : "");
+          div.style.backgroundImage = "url('" + item.url + "')";
+          div.setAttribute("data-title", item.title || "Community");
+          div.setAttribute("data-detail", item.detail || "");
+          div.setAttribute("data-img", item.url);
+          const short = item.detail ? item.detail.substring(0, 60) + (item.detail.length > 60 ? "…" : "") : "";
+          div.innerHTML = '<div class="slide-caption"><strong>' + (item.title || "Community") + "</strong> " + short + '<br><button type="button" class="read-more">Read more</button></div>';
+          slidesContainer.appendChild(div);
+        });
+      }
+    } catch (e) { console.warn(e); }
+    buildDotsAndWire(); startAuto();
+  }
+  loadAdminSlides();
+
+  const modal = document.getElementById("slideModal");
+  document.getElementById("modalClose").addEventListener("click", () => { modal.classList.remove("open"); startAuto(); });
+  modal.addEventListener("click", e => { if (e.target === modal) { modal.classList.remove("open"); startAuto(); } });
+  slidesContainer.addEventListener("click", e => {
+    const btn = e.target.closest(".read-more"); if (!btn) return;
+    e.stopPropagation();
+    const slide = btn.closest(".slide"); if (!slide) return;
+    document.getElementById("modalTitle").textContent = slide.getAttribute("data-title") || "";
+    document.getElementById("modalText").textContent = slide.getAttribute("data-detail") || "";
+    document.getElementById("modalImg").src = slide.getAttribute("data-img") || "";
+    modal.classList.add("open"); stopAuto();
+  });
+
+  function setupHScroll(trackId, prevId, nextId, dotsId, autoMs) {
+    const track = document.getElementById(trackId);
+    const prev = document.getElementById(prevId);
+    const next = document.getElementById(nextId);
+    const dotsEl = document.getElementById(dotsId);
+    if (!track) return;
+    function cardWidth() {
+      const card = track.querySelector(".album-card, .fb-item");
+      if (!card) return 280;
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.gap) || 16;
+      return card.offsetWidth + gap;
+    }
+    function scrollByDir(dir) {
+      track.scrollBy({ left: dir * cardWidth(), behavior: "smooth" });
+    }
+    if (prev) prev.onclick = () => scrollByDir(-1);
+    if (next) next.onclick = () => scrollByDir(1);
+
+    function updateDots() {
+      if (!dotsEl) return;
+      const cards = track.querySelectorAll(".album-card, .fb-item");
+      if (!cards.length) { dotsEl.innerHTML = ""; return; }
+      const idx = Math.round(track.scrollLeft / cardWidth());
+      dotsEl.innerHTML = Array.from(cards).map((_, i) =>
+        '<button type="button" class="' + (i === idx ? "active" : "") + '" data-i="' + i + '" aria-label="Slide ' + (i+1) + '"></button>'
+      ).join("");
+      dotsEl.querySelectorAll("button").forEach(b => {
+        b.onclick = () => track.scrollTo({ left: (+b.dataset.i) * cardWidth(), behavior: "smooth" });
+      });
+    }
+    track.addEventListener("scroll", () => { clearTimeout(track._dotT); track._dotT = setTimeout(updateDots, 80); });
+    updateDots();
+
+    if (autoMs) {
+      let t = setInterval(() => {
+        const max = track.scrollWidth - track.clientWidth - 4;
+        if (track.scrollLeft >= max) track.scrollTo({ left: 0, behavior: "smooth" });
+        else scrollByDir(1);
+      }, autoMs);
+      track.addEventListener("pointerdown", () => clearInterval(t));
+    }
+  }
+
+  async function loadHomeAlbum() {
+    const grid = document.getElementById("homeAlbumGrid");
+    try {
+      let items = await loadAlbumItems();
+      items = items.slice(0, 12);
+      console.log("Album items loaded:", items.length, items);
+      if (!items.length) {
+        grid.innerHTML = '<p style="color:var(--muted);padding:1rem;">No album items yet. Open <a href="admin.html" style="color:var(--earth);text-decoration:underline;">Admin</a> → Album, upload a photo, then refresh this page.</p>';
+        return;
+      }
+      grid.innerHTML = items.map(i =>
+        '<a href="album.html" class="album-card"><img src="' + (i.url || "") + '" alt="" loading="lazy" onerror="this.style.background=\'#ddd\'" /><div class="body"><p class="type">' +
+        (i.type || "photo") + "</p><h3>" + (i.title || "") + '</h3><p class="date">' + (i.date || "") + "</p></div></a>"
+      ).join("");
+      setupHScroll("homeAlbumGrid", "albumPrev", "albumNext", "albumDots", 4500);
+    } catch (e) {
+      console.error(e);
+      grid.innerHTML = '<p style="color:var(--muted);padding:1rem;">Unable to load album. Check browser console (F12) and Firestore rules.</p>';
+    }
+  }
+  loadHomeAlbum();
+
+  function formatFbDate(v) {
+    if (!v) return "";
+    try { if (v.toDate) return v.toDate().toLocaleDateString(); return new Date(v).toLocaleDateString(); } catch { return String(v).slice(0, 10); }
+  }
+
+  async function loadFeedback() {
+    const list = document.getElementById("fbList");
+    try {
+      const items = await loadApprovedFeedback(12);
+      console.log("Rendering feedback cards:", items.length);
+      if (!items.length) {
+        const info = await loadFeedbackDebugCounts();
+        let tip = "No approved messages yet.";
+        if (info.error) {
+          tip = "Cannot read Firestore: " + info.error + ". Check rules allow read on feedback.";
+        } else if (info.total > 0 && info.approved === 0) {
+          tip = "Found " + info.total + " feedback message(s) but none are approved yet (statuses: " +
+            (info.statuses || []).join(", ") + "). Open Admin → Feedback → click Approve, then refresh.";
+        } else if (info.total === 0) {
+          tip = "No feedback documents in Firestore collection \"feedback\" yet. Submit a message below, approve it in Admin, then refresh.";
+        }
+        list.innerHTML = '<p style="color:var(--muted);padding:1rem;">' + tip + '</p>';
+        return;
+      }
+      list.innerHTML = items.map(f =>
+        '<div class="fb-item"><img src="' + (f.photoUrl || "images/logo.jpg") + '" alt="" onerror="this.src=\'images/logo.jpg\'" /><div><strong>' +
+        escapeFb(f.name || "Anonymous") + '</strong><p class="msg">' + escapeFb(f.message || "") + '</p><p class="date">' +
+        formatFbDate(f.date || f.createdAt) + "</p></div></div>"
+      ).join("");
+      setupHScroll("fbList", "fbPrev", "fbNext", "fbDots", 5500);
+    } catch (e) {
+      console.error(e);
+      list.innerHTML = '<p style="color:#991b1b;padding:1rem;">Could not load feedback: ' + escapeFb(e.message) + '</p>';
+    }
+  }
+  function escapeFb(s) {
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  loadFeedback();
+
+  document.getElementById("feedbackForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const msg = document.getElementById("fbFormMsg");
+    const name = document.getElementById("fbName").value.trim();
+    const message = document.getElementById("fbMessage").value.trim();
+    const photo = document.getElementById("fbPhoto").files[0];
+    if (!name || !message) {
+      msg.className = "fb-msg err";
+      msg.textContent = "Name and message required.";
+      return;
+    }
+    msg.className = "fb-msg";
+    msg.textContent = photo
+      ? "Uploading your photo to Cloudinary, then sending…"
+      : "Sending…";
+    try {
+      await submitFeedback({ name, message, photoFile: photo });
+      msg.className = "fb-msg ok";
+      msg.textContent = photo
+        ? "Thank you! Photo stored on Cloudinary. Your message will appear after admin approval."
+        : "Thank you! Your message will appear after admin approval.";
+      document.getElementById("feedbackForm").reset();
+    } catch (err) {
+      msg.className = "fb-msg err";
+      msg.textContent = err.message || "Could not send. Check photo size or try without a photo.";
+    }
+  });
+  </script>
+</body>
+</html>
