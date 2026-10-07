@@ -1,1397 +1,1466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Your Tour –  Ishasha Women's Community Tours and Travel</title>
-
-  <!-- EmailJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Newsletter — Ishasha Women's Organisation</title>
   <style>
-    /* ============================================
-        – BOOKING PAGE
-       Colors: Green | Orange | Black | White
-       ============================================ */
-    :root {
-      --green: #254A22;
-      --green-dark: #1A3518;
-      --green-light: #3A4A36;
-      --orange: #B8923E;
-      --orange-dark: #8F6B2D;
-      --orange-light: #D4B56A;
-      --black: #1A2618;
-      --black-soft: #3A4A36;
-      --white: #FFFFFF;
-      --white-soft: #F6F1E8;
-      --gray: #DDD2C0;
-      --gray-dark: #6B7A65;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --transition: all 0.3s ease;
-    }
+/* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
+   Faithful recreation of layout, colors, and structure from the original React build.
+*/
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: var(--black);
-      background: var(--white-soft);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
-    img { max-width: 100%; display: block; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+:root {
+  --background: #f6f1e8;
+  --sand: #efe6d6;
+  --card: #ffffff;
+  --foreground: #1a2618;
+  --ink: #1a2618;
+  --ink-soft: #3a4a36;
+  --muted-foreground: #6b7a65;
+  --earth: #254a22;
+  --gold: #b8923e;
+  --primary: #254a22;
+  --border: #ddd2c0;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-strong: 0 16px 40px rgba(31, 42, 31, 0.12);
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
 
-    /* HEADER */
-    .booking-header {
-      background: var(--white);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 20px;
-    }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img {
-      width: 52px; height: 52px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 3px solid var(--orange);
-      background: var(--white);
-    }
-    .logo-text h1 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--black);
-      line-height: 1.2;
-    }
-    .logo-text span {
-      font-size: 0.72rem;
-      color: var(--green);
-      font-weight: 500;
-      letter-spacing: 0.4px;
-    }
-    .header-actions { display: flex; align-items: center; gap: 16px; }
-    .back-link {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--black-soft);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-link:hover { color: var(--green); }
-    .back-link svg { width: 18px; height: 18px; fill: currentColor; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    /* HERO */
-    .booking-hero {
-      background: linear-gradient(135deg, var(--green-dark), var(--green));
-      color: var(--white);
-      padding: 50px 0 60px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .booking-hero::before {
-      content: '';
-      position: absolute;
-      top: -50%; right: -20%;
-      width: 500px; height: 500px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 50%;
-    }
-    .booking-hero::after {
-      content: '';
-      position: absolute;
-      bottom: -40%; left: -10%;
-      width: 400px; height: 400px;
-      background: rgba(184, 146, 62, 0.1);
-      border-radius: 50%;
-    }
-    .booking-hero .container { position: relative; z-index: 2; }
-    .booking-hero .badge {
-      display: inline-block;
-      background: var(--orange);
-      color: var(--white);
-      padding: 6px 18px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-    }
-    .booking-hero h2 {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .booking-hero p {
-      max-width: 520px;
-      margin: 0 auto;
-      opacity: 0.9;
-      font-size: 1rem;
-      font-weight: 300;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    /* PROGRESS */
-    .progress-bar {
-      background: var(--white);
-      padding: 25px 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-      margin-bottom: 40px;
-    }
-    .steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      position: relative;
-    }
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 18px; left: 55%;
-      width: 90%; height: 3px;
-      background: var(--gray);
-      z-index: 0;
-    }
-    .step.active:not(:last-child)::after,
-    .step.completed:not(:last-child)::after { background: var(--green); }
-    .step-circle {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: var(--gray);
-      color: var(--gray-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      position: relative;
-      z-index: 1;
-      transition: var(--transition);
-    }
-    .step.active .step-circle {
-      background: var(--orange);
-      color: var(--white);
-      box-shadow: 0 4px 15px rgba(184, 146, 62, 0.35);
-    }
-    .step.completed .step-circle {
-      background: var(--green);
-      color: var(--white);
-    }
-    .step-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--gray-dark);
-      text-align: center;
-    }
-    .step.active .step-label { color: var(--orange); font-weight: 600; }
-    .step.completed .step-label { color: var(--green); }
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--gold) 12%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, var(--sand) 0%, var(--background) 30%, var(--sand) 100%);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-    /* MAIN */
-    .booking-main { padding-bottom: 80px; }
-    .booking-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 40px;
-      margin-bottom: 30px;
-      border: 1px solid var(--gray);
-    }
-    .card-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--black);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .card-title .icon {
-      width: 40px; height: 40px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
-      color: var(--white);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .card-subtitle {
-      color: var(--gray-dark);
-      font-size: 0.9rem;
-      margin-bottom: 30px;
-      padding-left: 52px;
-    }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
-    /* FORM */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-    .form-group { margin-bottom: 0; }
-    .form-group.full { grid-column: 1 / -1; }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-      color: var(--black);
-    }
-    .form-group label .required { color: var(--orange); margin-left: 2px; }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--black);
-      background: var(--white);
-      transition: var(--transition);
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.12);
-    }
-    .form-group textarea { min-height: 110px; resize: vertical; }
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E85D04' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 40px;
-      cursor: pointer;
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    /* TOUR OPTIONS */
-    .tour-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-      margin-bottom: 10px;
-    }
-    .tour-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 20px;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      background: var(--white);
-    }
-    .tour-option:hover {
-      border-color: var(--orange);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    }
-    .tour-option.selected {
-      border-color: var(--green);
-      background: rgba(37, 74, 34, 0.04);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.12);
-    }
-    .tour-option.selected::after {
-      content: '✓';
-      position: absolute;
-      top: 12px; right: 12px;
-      width: 24px; height: 24px;
-      background: var(--green);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-    .tour-option h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--black);
-      padding-right: 30px;
-    }
-    .tour-option .price {
-      color: var(--orange);
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
-    .tour-option .desc {
-      font-size: 0.82rem;
-      color: var(--gray-dark);
-      line-height: 1.5;
-    }
+/* Layout shell */
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    .date-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 22px;
-    }
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
 
-    /* PAYMENT */
-    .payment-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 14px;
-      margin-bottom: 25px;
-    }
-    .payment-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 18px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--black-soft);
-    }
-    .payment-option:hover { border-color: var(--orange); }
-    .payment-option.selected {
-      border-color: var(--green);
-      background: rgba(37, 74, 34, 0.05);
-      color: var(--green);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.1);
-    }
-    .payment-option .pay-icon {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-      display: block;
-    }
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, white 16%);
+}
 
-    /* CONTACT CHOICE */
-    .contact-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .contact-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 16px 14px;
-      cursor: pointer;
-      transition: var(--transition);
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .contact-option:hover { border-color: var(--orange); }
-    .contact-option.selected {
-      border-color: #25D366;
-      background: rgba(37, 211, 102, 0.06);
-      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.12);
-    }
-    .contact-option .c-icon {
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      background: #25D366;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .contact-option .c-icon.email { background: var(--green); }
-    .contact-option .c-text strong { display: block; font-size: 0.9rem; color: var(--black); }
-    .contact-option .c-text span { font-size: 0.8rem; color: var(--gray-dark); }
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.35rem;
+}
 
-    /* AGREEMENT HIGHLIGHT */
-    .agreement-box {
-      margin-top: 24px;
-      padding: 16px 18px;
-      background: var(--white-soft);
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-    .agreement-box.required-highlight {
-      border-color: var(--orange);
-      background: rgba(184, 146, 62, 0.06);
-    }
-    .agreement-box label {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      cursor: pointer;
-      margin-bottom: 0;
-    }
-    .agreement-box input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--green);
-      flex-shrink: 0;
-      cursor: pointer;
-    }
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
 
-    /* LAYOUT */
-    .booking-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 30px;
-      align-items: start;
-    }
-    .summary-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--gray);
-      padding: 28px;
-      position: sticky;
-      top: 100px;
-    }
-    .summary-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid var(--gray);
-      color: var(--black);
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-    }
-    .summary-row .label { color: var(--gray-dark); }
-    .summary-row .value {
-      font-weight: 600;
-      color: var(--black);
-      text-align: right;
-      max-width: 55%;
-    }
-    .summary-divider {
-      height: 1px;
-      background: var(--gray);
-      margin: 18px 0;
-    }
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    .summary-total .total-price {
-      color: var(--orange);
-      font-size: 1.4rem;
-    }
-    .summary-note {
-      font-size: 0.78rem;
-      color: var(--gray-dark);
-      margin-top: 16px;
-      padding: 12px;
-      background: var(--white-soft);
-      border-radius: 8px;
-      border-left: 3px solid var(--orange);
-    }
+.site-brand-mark,
+.site-footer-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
 
-    /* BUTTONS */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      font-family: inherit;
-    }
-    .btn-orange { background: var(--orange); color: var(--white); }
-    .btn-orange:hover {
-      background: var(--orange-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(184, 146, 62, 0.35);
-    }
-    .btn-green { background: var(--green); color: var(--white); }
-    .btn-green:hover {
-      background: var(--green-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(37, 74, 34, 0.35);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--gray);
-      color: var(--black-soft);
-    }
-    .btn-outline:hover { border-color: var(--green); color: var(--green); }
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-    .btn-full { width: 100%; }
-    .form-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 35px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
 
-    /* SUCCESS */
-    .success-panel { display: none; text-align: center; padding: 50px 30px; }
-    .success-panel.show { display: block; }
-    .success-icon {
-      width: 90px; height: 90px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      margin: 0 auto 25px;
-      box-shadow: 0 10px 30px rgba(37, 74, 34, 0.3);
-    }
-    .success-panel h2 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: var(--black);
-    }
-    .success-panel p {
-      color: var(--gray-dark);
-      max-width: 420px;
-      margin: 0 auto 25px;
-      font-size: 0.95rem;
-    }
-    .success-ref {
-      display: inline-block;
-      background: var(--white-soft);
-      border: 2px dashed var(--green);
-      padding: 12px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--green);
-      margin-bottom: 30px;
-      letter-spacing: 1px;
-    }
+.site-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--earth);
+}
 
-    .form-message {
-      display: none;
-      text-align: center;
-      padding: 14px 18px;
-      border-radius: var(--radius-sm);
-      margin-top: 20px;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    .form-message.success {
-      display: block;
-      background: rgba(37, 74, 34, 0.1);
-      color: var(--green);
-      border: 1px solid var(--green);
-    }
-    .form-message.error {
-      display: block;
-      background: rgba(230, 81, 0, 0.08);
-      color: var(--orange-dark);
-      border: 1px solid var(--orange);
-    }
+.site-brand-tagline {
+  max-width: 18rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
 
-    /* FOOTER */
-    .booking-footer {
-      background: var(--black);
-      color: var(--white);
-      padding: 30px 0;
-      text-align: center;
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
-    .booking-footer a { color: var(--orange); }
-    .booking-footer a:hover { color: var(--orange-light); }
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+}
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .booking-layout { grid-template-columns: 1fr; }
-      .summary-card { position: static; order: -1; }
-      .date-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .booking-card { padding: 25px 18px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .card-subtitle { padding-left: 0; }
-      .step-label { font-size: 0.7rem; }
-      .step-circle { width: 32px; height: 32px; font-size: 0.8rem; }
-      .tour-options { grid-template-columns: 1fr; }
-      .form-actions { flex-direction: column; }
-      .form-actions .btn { width: 100%; }
-    }
-  </style>
+.site-nav-link {
+  color: var(--ink-soft);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.site-header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.site-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Hamburger / mobile nav */
+.hamburger-menu-btn {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.hamburger-menu-btn:hover {
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.mobile-nav-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.mobile-nav-drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 88vw);
+  height: 100%;
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.mobile-nav-drawer-overlay.is-open .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  transition: background 0.18s, color 0.18s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.mobile-nav-drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Buttons */
+.button-primary,
+.button-secondary,
+.button-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button-secondary {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--card) 78%, var(--gold) 8%);
+  border: 1.5px solid color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.button-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.button-light {
+  background: var(--sand);
+  color: var(--earth);
+}
+
+.text-action {
+  color: var(--earth);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link {
+  color: var(--earth);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.content-section {
+  padding: 3.5rem 0;
+}
+
+/* Page hero band */
+.page-hero-band {
+  padding: 2.75rem 0 1.5rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--earth) 8%, var(--sand)), transparent);
+}
+
+.page-hero-inner {
+  max-width: 48rem;
+}
+
+.page-intro {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Newsletter grid */
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.newsletter-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+}
+
+.newsletter-card img,
+.newsletter-card video {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+  background: #efe6d6;
+}
+
+.newsletter-card video {
+  pointer-events: none;
+}
+
+.newsletter-media-wrap {
+  position: relative;
+}
+
+.newsletter-video-badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.newsletter-date {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  background: color-mix(in srgb, var(--earth) 90%, transparent);
+  color: #f6f1e8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.newsletter-caption {
+  padding: 1.15rem 1.25rem 1.35rem;
+  background: color-mix(in srgb, var(--card) 90%, var(--sand));
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.newsletter-caption p {
+  font-size: 0.92rem;
+  color: var(--muted-foreground);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.newsletter-view-hint {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--earth);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--sand) 50%, white);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 1.75rem;
+}
+
+.empty-state p {
+  margin-bottom: 0.5rem;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--sand) 50%, var(--card));
+  padding: 2.75rem 0 0;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.site-footer-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  line-height: 1.3;
+}
+
+.site-footer-tagline {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+.site-footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.site-footer-link:hover {
+  color: var(--earth);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+/* Admin upload section */
+.upload-section {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.upload-section h2 {
+  font-family: var(--font-display);
+  color: var(--earth);
+  margin-bottom: 0.75rem;
+}
+
+.cloudinary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), #1a3518);
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+  margin-top: 1.25rem;
+}
+
+.cloudinary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.upload-note {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin-top: 1rem;
+  max-width: 40rem;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+.admin-gate {
+  margin-top: 1.5rem;
+}
+
+.admin-gate input[type="password"] {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  width: min(260px, 100%);
+  margin-right: 0.5rem;
+}
+
+.admin-gate .button-secondary {
+  margin-top: 0.5rem;
+}
+
+.admin-panel {
+  display: none;
+  margin-top: 1.5rem;
+  text-align: left;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.admin-panel.is-visible {
+  display: block;
+}
+
+.admin-panel label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+  margin-top: 0.9rem;
+}
+
+.admin-panel input[type="text"],
+.admin-panel input[type="date"],
+.admin-panel textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.admin-panel textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.admin-logout {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 15, 0.92);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+  padding: 1rem;
+}
+
+.lightbox-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: min(920px, 96vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lightbox-media {
+  max-width: 100%;
+  max-height: 68vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  background: #000;
+}
+
+.lightbox-media img,
+.lightbox-media video {
+  max-width: 100%;
+  max-height: 68vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius);
+}
+
+.lightbox-caption {
+  text-align: center;
+  color: #e8efe6;
+  max-width: 36rem;
+}
+
+.lightbox-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #f6f1e8;
+  margin-bottom: 0.25rem;
+}
+
+.lightbox-caption p {
+  font-size: 0.95rem;
+  color: #c5d0c2;
+}
+
+.lightbox-caption .lightbox-date {
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background 0.18s;
+  z-index: 2;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox-prev {
+  left: -3.5rem;
+}
+
+.lightbox-next {
+  right: -3.5rem;
+}
+
+.lightbox-counter {
+  color: #a8b8a5;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .site-nav,
+  .site-header-cta {
+    display: none;
+  }
+
+  .hamburger-menu-btn {
+    display: inline-flex;
+  }
+
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-next {
+    right: 0.5rem;
+  }
+
+  .lightbox-close {
+    top: -2.2rem;
+    right: 0.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+
+  .admin-gate input[type="password"] {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+</style>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header class="booking-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="IMG_5819.jpeg" alt="Ishasha Women's Community Tours and Travel" class="logo-img"
-             onerror="this.style.display='none'">
-        <div class="logo-text">
-          <h1>Ishasha Women's Community Tours and Travel</h1>
-          <span>Adventure Awaits</span>
-        </div>
-      </a>
-      <div class="header-actions">
-        <a href="index.html" class="back-link">
-          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-          Back to Home
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="index.html" class="site-brand" aria-label="IWSDP home">
+          <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+          <div class="site-brand-copy">
+            <span class="site-brand-name">Ishasha Women's Community</span>
+            <span class="site-brand-tagline">Women And Girls Empowered Communities Transformed</span>
+          </div>
         </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="index.html" class="site-nav-link">Home</a>
+          <a href="about.html" class="site-nav-link">About</a>
+          <a href="programs.html" class="site-nav-link">Programs</a>
+          <a href="impact.html" class="site-nav-link">Impact</a>
+          <a href="donate.html" class="site-nav-link">Donate</a>
+          <a href="get-involved.html" class="site-nav-link">Get Involved</a>
+          <a href="gallery.html" class="site-nav-link">Gallery</a>
+          <a href="newsletter.html" class="site-nav-link >Newsletter</a>
+          <a href="contact.html" class="site-nav-link">Contact</a>
+        </nav>
+        <a href="donate.html" class="site-header-cta">Donate</a>
+        <button class="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu" type="button">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="booking-hero">
-    <div class="container">
-      <span class="badge">Secure Booking</span>
-      <h2>Book Your Adventure</h2>
-      <p>Complete the form below to reserve your tour. Our team will confirm your booking within 24 hours.</p>
-    </div>
-  </section>
-
-  <!-- PROGRESS -->
-  <div class="progress-bar">
-    <div class="container">
-      <div class="steps">
-        <div class="step active" data-step="1">
-          <div class="step-circle">1</div>
-          <div class="step-label">Tour & Dates</div>
-        </div>
-        <div class="step" data-step="2">
-          <div class="step-circle">2</div>
-          <div class="step-label">Your Details</div>
-        </div>
-        <div class="step" data-step="3">
-          <div class="step-circle">3</div>
-          <div class="step-label">Payment</div>
-        </div>
-        <div class="step" data-step="4">
-          <div class="step-circle">4</div>
-          <div class="step-label">Confirm</div>
+      <div class="mobile-nav-drawer-overlay">
+        <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+          <div class="mobile-nav-drawer-header">
+            <div class="site-brand">
+              <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+              <span class="site-brand-name">Ishasha Women's Community</span>
+            </div>
+            <button class="hamburger-menu-btn" data-close-menu aria-label="Close menu" type="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="about.html" class="mobile-nav-link">About</a>
+            <a href="programs.html" class="mobile-nav-link">Programs</a>
+            <a href="impact.html" class="mobile-nav-link">Impact</a>
+            <a href="donate.html" class="mobile-nav-link">Donate</a>
+            <a href="get-involved.html" class="mobile-nav-link">Get Involved</a>
+            <a href="gallery.html" class="mobile-nav-link">Gallery</a>
+            <a href="newsletter.html" class="mobile-nav-link ">Newsletter</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+          </nav>
+          <div class="mobile-nav-drawer-footer"><a href="donate.html" class="button-primary w-full">Donate</a></div>
         </div>
       </div>
+    </header>
+
+    <section class="page-hero-band">
+      <div class="site-shell page-hero-inner">
+        <p class="section-eyebrow">Updates from Ishasha</p>
+        <h1 class="page-title">Newsletter</h1>
+        <p class="page-intro">News, stories, and updates from the community — photos and videos with descriptions. Click any item to view the full image or play the video. Use next/previous to browse.</p>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-section">
+        <div class="site-shell">
+          <div class="newsletter-grid" id="newsletter-grid">
+            <!-- Sample newsletter items (replace or remove as needed) -->
+            <article class="newsletter-card"
+              data-index="0"
+              data-type="image"
+              data-src="images/logo.jpg"
+              data-title="Welcome to our newsletter"
+              data-desc="This is a sample newsletter item. Admins can upload new photos and videos with titles and descriptions. Visitors can open any item to view or play media."
+              data-date="2026-09-01">
+              <div class="newsletter-media-wrap">
+                <img src="images/logo.jpg" alt="Welcome to our newsletter" loading="lazy" />
+                <span class="newsletter-date">Sep 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Welcome to our newsletter</h3>
+                <p>This is a sample newsletter item. Admins can upload new photos and videos with titles and descriptions. Visitors can open any item to view or play media.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+
+            <article class="newsletter-card"
+              data-index="1"
+              data-type="image"
+              data-src="images/farm-group-field.jpg"
+              data-title="Farm skills update"
+              data-desc="Community members continue agricultural training and land preparation for the season."
+              data-date="2026-08-15">
+              <div class="newsletter-media-wrap">
+                <img src="images/farm-group-field.jpg" alt="Farm skills update" loading="lazy" />
+                <span class="newsletter-date">Aug 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Farm skills update</h3>
+                <p>Community members continue agricultural training and land preparation for the season.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+
+            <article class="newsletter-card"
+              data-index="2"
+              data-type="image"
+              data-src="images/mother-schoolgirls.jpg"
+              data-title="Education support for girls"
+              data-desc="Supporting vulnerable children, especially girls, to stay in school remains a core priority."
+              data-date="2026-07-20">
+              <div class="newsletter-media-wrap">
+                <img src="images/mother-schoolgirls.jpg" alt="Education support for girls" loading="lazy" />
+                <span class="newsletter-date">Jul 2026</span>
+              </div>
+              <div class="newsletter-caption">
+                <h3>Education support for girls</h3>
+                <p>Supporting vulnerable children, especially girls, to stay in school remains a core priority.</p>
+                <span class="newsletter-view-hint">View →</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="empty-state" id="empty-state" style="display:none;">
+            <p><strong>No newsletter items yet.</strong></p>
+            <p>When an administrator uploads photos or videos, they will appear here.</p>
+          </div>
+
+          <!-- Admin-only upload section -->
+          <div class="upload-section">
+            <h2>Admin — Upload newsletter media</h2>
+            <p>Only administrators can add newsletter items (photos or videos) with a title, description, and optional date. Visitors can open any item to view the image or play the video, and move to the next or previous item.</p>
+
+            <div class="admin-gate" id="admin-gate">
+              <p style="margin-bottom:0.75rem;color:var(--ink-soft);">Enter admin password to unlock upload tools.</p>
+              <input type="password" id="admin-password" placeholder="Admin password" autocomplete="current-password" />
+              <button type="button" class="button-secondary" id="admin-login-btn">Unlock</button>
+              <p class="upload-note" style="margin-top:0.75rem;">Default password for this demo: <code>ishasha-admin</code> — change it in the script near the bottom of this page.</p>
+            </div>
+
+            <div class="admin-panel" id="admin-panel">
+              <p style="color:var(--earth);font-weight:600;margin-bottom:0.5rem;">✓ Admin unlocked</p>
+
+              <label for="upload-title">Title</label>
+              <input type="text" id="upload-title" placeholder="e.g. Community water update – September 2026" />
+
+              <label for="upload-date">Date (optional)</label>
+              <input type="date" id="upload-date" />
+
+              <label for="upload-desc">Description</label>
+              <textarea id="upload-desc" placeholder="Write a short newsletter description that will appear with the photo or video."></textarea>
+
+              <button type="button" id="upload_widget" class="cloudinary-button">
+                Upload photo or video
+              </button>
+
+              <p class="upload-note">
+                Supported: JPG, PNG, WebP, GIF, MP4, MOV, WebM (max ~100&nbsp;MB). After upload, a card is added to this page for the current session. To keep items permanently, add the HTML to the page or use a CMS/backend later.
+              </p>
+
+              <div id="upload-result" style="margin-top:1.5rem;display:none;">
+                <p style="color:var(--earth);font-weight:600;">✓ Upload successful!</p>
+                <p id="uploaded-url" style="font-size:0.9rem;word-break:break-all;"></p>
+                <div id="uploaded-preview-wrap" style="margin-top:0.75rem;"></div>
+              </div>
+
+              <p class="admin-logout" id="admin-logout">Lock admin tools again</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer-grid">
+        <div>
+          <div class="site-footer-brand">
+            <img src="images/logo.jpg" alt="" class="site-footer-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+            <div>
+              <h2 class="site-footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+              <p class="site-footer-tagline">Women And Girls Empowered Communities Transformed</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer-heading">Quick Links</h2>
+          <div class="site-footer-links">
+            <a href="about.html" class="site-footer-link">About</a>
+            <a href="programs.html" class="site-footer-link">Programs</a>
+            <a href="gallery.html" class="site-footer-link">Gallery</a>
+            <a href="newsletter.html" class="site-footer-link">Newsletter</a>
+            <a href="contact.html" class="site-footer-link">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-shell site-footer-bottom">
+        <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Newsletter media viewer">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">‹</button>
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">›</button>
+      <div class="lightbox-media" id="lightbox-media"></div>
+      <div class="lightbox-caption">
+        <p class="lightbox-date" id="lightbox-date"></p>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+      <p class="lightbox-counter" id="lightbox-counter"></p>
     </div>
   </div>
 
-  <!-- MAIN -->
-  <main class="booking-main">
-    <div class="container">
-      <div class="booking-layout">
-
-        <!-- FORM SIDE -->
-        <div class="form-side">
-
-          <!-- STEP 1 -->
-          <div class="booking-card step-panel" id="step1">
-            <h3 class="card-title"><span class="icon">🌍</span> Select Your Tour</h3>
-            <p class="card-subtitle">Choose the experience that matches your adventure style.</p>
-
-            <div class="tour-options" id="tourOptions">
-              <div class="tour-option" data-tour="SightSeeing" data-price="250">
-                <h4>SightSeeing</h4>
-                <div class="price">From $200 – $13000</div>
-                <div class="desc">Landscapes & cultural highlights with expert local guides.</div>
-              </div>
-              <div class="tour-option" data-tour="Discover Wildlife" data-price="1750">
-                <h4>Discover Wildlife</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Safari drives and close encounters with iconic wildlife.</div>
-              </div>
-              <div class="tour-option" data-tour="Explore Trekking" data-price="1750">
-                <h4>Explore Trekking</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Mountain treks through lush forests and scenic trails.</div>
-              </div>
-              <div class="tour-option" data-tour="Gorilla Trekking" data-price="1750">
-                <h4>Gorilla Trekking</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Unforgettable mountain gorilla encounters in the wild.</div>
-              </div>
-              <div class="tour-option" data-tour="Water Falls" data-price="575">
-                <h4>Water Falls</h4>
-                <div class="price">From $500 – $1650</div>
-                <div class="desc">Sipi Falls and hidden cascades across Uganda.</div>
-              </div>
-              <div class="tour-option" data-tour="City Tour Kampala" data-price="250">
-                <h4>City Tour Kampala</h4>
-                <div class="price">From $200 – $13000</div>
-                <div class="desc">Markets, museums and vibrant city culture.</div>
-              </div>
-              <div class="tour-option" data-tour="Game Parks" data-price="1250">
-                <h4>Game Parks</h4>
-                <div class="price">From $1000 – $15000</div>
-                <div class="desc">Game drives across East Africa’s best parks.</div>
-              </div>
-              <div class="tour-option" data-tour="Lakeside Camping" data-price="475">
-                <h4>Lakeside Camping</h4>
-                <div class="price">From $350 – $16000</div>
-                <div class="desc">Camping under the stars by Lake Victoria.</div>
-              </div>
-            </div>
-
-            <div class="date-row" style="margin-top:30px;">
-              <div class="form-group">
-                <label>Start Date <span class="required">*</span></label>
-                <input type="date" id="startDate" required>
-              </div>
-              <div class="form-group">
-                <label>End Date <span class="required">*</span></label>
-                <input type="date" id="endDate" required>
-              </div>
-              <div class="form-group">
-                <label>Number of Guests <span class="required">*</span></label>
-                <select id="guests" required>
-                  <option value="1">1 Guest</option>
-                  <option value="2" selected>2 Guests</option>
-                  <option value="3">3 Guests</option>
-                  <option value="4">4 Guests</option>
-                  <option value="5">5 Guests</option>
-                  <option value="6">6 Guests</option>
-                  <option value="7">7 Guests</option>
-                  <option value="8">8+ Guests</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <div></div>
-              <button type="button" class="btn btn-orange" id="toStep2">Continue →</button>
-            </div>
-          </div>
-
-          <!-- STEP 2 -->
-          <div class="booking-card step-panel" id="step2" style="display:none;">
-            <h3 class="card-title"><span class="icon">👤</span> Your Details</h3>
-            <p class="card-subtitle">Please provide accurate contact information for booking confirmation.</p>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label>First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" placeholder="John" required>
-              </div>
-              <div class="form-group">
-                <label>Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" placeholder="Doe" required>
-              </div>
-              <div class="form-group">
-                <label>Email Address <span class="required">*</span></label>
-                <input type="email" id="email" placeholder="john@example.com" required>
-              </div>
-              <div class="form-group">
-                <label>Phone / WhatsApp <span class="required">*</span></label>
-                <input type="tel" id="phone" placeholder="+256 700 000 000" required>
-              </div>
-              <div class="form-group">
-                <label>Country</label>
-                <input type="text" id="country" placeholder="Uganda">
-              </div>
-              <div class="form-group">
-                <label>Preferred Language</label>
-                <select id="language">
-                  <option value="English">English</option>
-                  <option value="French">French</option>
-                  <option value="German">German</option>
-                  <option value="Spanish">Spanish</option>
-                  <option value="Swahili">Swahili</option>
-                </select>
-              </div>
-              <div class="form-group full">
-                <label>Special Requests / Notes</label>
-                <textarea id="notes" placeholder="Dietary needs, accessibility, room preferences, celebrations..."></textarea>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo1">← Back</button>
-              <button type="button" class="btn btn-orange" id="toStep3">Continue →</button>
-            </div>
-          </div>
-
-          <!-- STEP 3 -->
-          <div class="booking-card step-panel" id="step3" style="display:none;">
-            <h3 class="card-title"><span class="icon">💳</span> Payment Method</h3>
-            <p class="card-subtitle">Select how you would like to pay. A 30% deposit confirms your booking.</p>
-
-            <div class="payment-options" id="paymentOptions">
-              <div class="payment-option" data-method="Mobile Money">
-                <span class="pay-icon">📱</span> Mobile Money
-              </div>
-              <div class="payment-option" data-method="Bank Transfer">
-                <span class="pay-icon">🏦</span> Bank Transfer
-              </div>
-              <div class="payment-option" data-method="Visa / Mastercard">
-                <span class="pay-icon">💳</span> Card Payment
-              </div>
-              <div class="payment-option" data-method="PayPal">
-                <span class="pay-icon">🅿️</span> PayPal
-              </div>
-              <div class="payment-option" data-method="Cash on Arrival">
-                <span class="pay-icon">💵</span> Cash on Arrival
-              </div>
-            </div>
-
-
-            <h4 style="font-size:1rem;font-weight:700;margin:28px 0 12px;color:var(--black);">How should we receive your booking? <span class="required" style="color:var(--orange);">*</span></h4>
-            <p style="font-size:0.85rem;color:var(--gray-dark);margin-bottom:14px;">Choose WhatsApp or Email. Your booking details will be sent only through the method you select.</p>
-
-            <div class="contact-options" id="contactOptions">
-              <div class="contact-option" data-type="whatsapp" data-number="256771440064" data-label="WhatsApp Uganda">
-                <div class="c-icon">💬</div>
-                <div class="c-text">
-                  <strong>WhatsApp – Uganda</strong>
-                  <span>+256 771 440 064</span>
-                </div>
-              </div>
-              <div class="contact-option" data-type="whatsapp" data-number="256764420941" data-label="WhatsApp International">
-                <div class="c-icon">💬</div>
-                <div class="c-text">
-                  <strong>WhatsApp – International</strong>
-                  <span>+256 764 420 941</span>
-                </div>
-              </div>
-              <div class="contact-option" data-type="email" data-number="ishashawomenscommunity2023@gmail.com" data-label="Email">
-                <div class="c-icon email">✉️</div>
-                <div class="c-text">
-                  <strong>Email Notification</strong>
-                  <span>ishashawomenscommunity2023@gmail.com</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- AGREEMENT – MUST BE CHECKED -->
-            <div class="agreement-box" id="agreementBox">
-              <label>
-                <input type="checkbox" id="agreeTerms">
-                <span>
-                  I agree to the <a href="#terms" style="color:var(--green);font-weight:600;">Terms of Service</a> and
-                  <a href="#privacy" style="color:var(--green);font-weight:600;">Privacy Policy</a>
-                  <span class="required">*</span>
-                </span>
-              </label>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo2">← Back</button>
-              <button type="button" class="btn btn-orange" id="toStep4">Review Booking →</button>
-            </div>
-          </div>
-
-          <!-- STEP 4 -->
-          <div class="booking-card step-panel" id="step4" style="display:none;">
-            <h3 class="card-title"><span class="icon">✅</span> Confirm Your Booking</h3>
-            <p class="card-subtitle">Please review all details carefully before submitting. Your booking will be sent via the method you chose.</p>
-
-            <div id="confirmDetails" style="background:var(--white-soft);border-radius:12px;padding:24px;margin-bottom:25px;"></div>
-            <div class="form-message" id="formMessage"></div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo3">← Back</button>
-              <button type="button" class="btn btn-green" id="submitBooking">Confirm & Submit Booking</button>
-            </div>
-          </div>
-
-          <!-- SUCCESS -->
-          <div class="booking-card success-panel" id="successPanel">
-            <div class="success-icon">✓</div>
-            <h2>Booking Submitted!</h2>
-            <p id="successMessage">Thank you for choosing Ishasha Women's Community Tours and Travel. We have received your booking request and will contact you within 24 hours to confirm.</p>
-            <div class="success-ref" id="bookingRef">VT-000000</div>
-            <div id="whatsappAction" style="margin:20px 0;"></div>
-            <br>
-            <a href="index.html" class="btn btn-orange">Return to Home</a>
-          </div>
-
-        </div>
-
-        <!-- SUMMARY SIDEBAR -->
-        <aside class="summary-card" id="summaryCard">
-          <h3>Booking Summary</h3>
-          <div class="summary-row">
-            <span class="label">Tour</span>
-            <span class="value" id="sumTour">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Dates</span>
-            <span class="value" id="sumDates">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Guests</span>
-            <span class="value" id="sumGuests">2</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Payment</span>
-            <span class="value" id="sumPayment">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Send Via</span>
-            <span class="value" id="sumContact">—</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-row">
-            <span class="label">Est. Total</span>
-            <span class="value" id="sumSubtotal">$0</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Deposit (30%)</span>
-            <span class="value" id="sumDeposit">$0</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-total">
-            <span>Due Now</span>
-            <span class="total-price" id="sumTotal">$0</span>
-          </div>
-          <div class="summary-note">
-            A 30% deposit is required to secure your booking. The balance is due 14 days before departure.
-          </div>
-        </aside>
-
-      </div>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="booking-footer">
-    <div class="container">
-      <p>&copy; 2026 Ishasha Women's Community Tours and Travel · <a href="https://www.google.com/maps/search/?api=1&query=Ishasha+Highway+Kihihi+Uganda" target="_blank" rel="noopener">Ishasha Highway, Kihihi, Uganda</a> ·
-        <a href="tel:+256771440064">+256 771 440 064</a> ·
-        <a href="mailto:ishashawomenscommunity2023@gmail.com">ishashawomenscommunity2023@gmail.com</a>
-      </p>
-    </div>
-  </footer>
-
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
   <script>
-    /* ============================================
-       BOOKING SCRIPT
-       WhatsApp / Email based on user choice
-       Agreement required before submit
-       ============================================ */
+/**
+ * Cloudinary configuration
+ * -----------------------
+ * 1. Sign up free at https://cloudinary.com
+ * 2. Go to Settings → Upload → Add upload preset
+ * 3. Create an "Unsigned" preset (e.g. name it "ishasha_uploads")
+ * 4. Optionally set Folder = "ishasha-newsletter"
+ * 5. Replace the two values below with your own if needed:
+ */
+window.CLOUDINARY_CLOUD_NAME = "poczen7o";
+window.CLOUDINARY_UPLOAD_PRESET = "ishasha_uploads";
 
-    // ========== CONFIG – REPLACE WITH YOUR KEYS ==========
-       const EMAILJS_PUBLIC_KEY  = '5EMsZj2V9HkoHQagD';
-    const EMAILJS_SERVICE_ID  = 'service_992z93h';
-    const EMAILJS_TEMPLATE_ID = 'template_ujlcl24';
+/** Change this password for production use */
+window.ADMIN_PASSWORD = "ishasha-admin";
+</script>
+  <script>
+/* Mobile navigation toggle */
+(function () {
+  const btn = document.querySelector(".hamburger-menu-btn");
+  const overlay = document.querySelector(".mobile-nav-drawer-overlay");
+  const closeBtns = document.querySelectorAll("[data-close-menu]");
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAFDXJuv-279zcsJ-Qry41uxNyXNlC4Cpw",
-        authDomain: "viatrix-4d7ef.firebaseapp.com",
-        projectId: "viatrix-4d7ef",
-        storageBucket: "viatrix-4d7ef.firebasestorage.app",
-        messagingSenderId: "734351535565",
-        appId: "1:734351535565:web:7df7d9fdd0c1f24d45e884",
-        measurementId: "G-9JBX94MZ9E"
-    };
+  function openMenu() {
+    if (overlay) {
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      if (btn) btn.setAttribute("aria-expanded", "true");
+    }
+  }
 
+  function closeMenu() {
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  }
 
-    // Only initialize if keys are replaced (prevents console errors with placeholders)
-    let db = null;
-    try {
-      if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-      }
-    } catch (e) { console.warn('Firebase not configured'); }
-
-    try {
-      if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-      }
-    } catch (e) { console.warn('EmailJS not configured'); }
-
-    // ========== STATE ==========
-    const state = {
-      tour: null, price: 0, startDate: '', endDate: '', guests: 2,
-      firstName: '', lastName: '', email: '', phone: '',
-      country: '', language: 'English', notes: '', payment: null,
-      contactType: null, contactNumber: null, contactLabel: null,
-      currentStep: 1
-    };
-
-    const stepPanels = {
-      1: document.getElementById('step1'),
-      2: document.getElementById('step2'),
-      3: document.getElementById('step3'),
-      4: document.getElementById('step4')
-    };
-    const stepIndicators = document.querySelectorAll('.step');
-
-    // Tour selection
-    document.querySelectorAll('.tour-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.tour-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.tour = card.dataset.tour;
-        state.price = parseFloat(card.dataset.price) || 0;
-        updateSummary();
-      });
-    });
-
-    // Payment selection
-    document.querySelectorAll('.payment-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.payment-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.payment = card.dataset.method;
-        updateSummary();
-      });
-    });
-
-    // Contact / WhatsApp / Email destination selection
-    document.querySelectorAll('.contact-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.contact-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.contactType = card.dataset.type;
-        state.contactNumber = card.dataset.number;
-        state.contactLabel = card.dataset.label;
-        updateSummary();
-      });
-    });
-
-    // Live updates
-    document.getElementById('guests').addEventListener('change', e => {
-      state.guests = parseInt(e.target.value) || 1;
-      updateSummary();
-    });
-    document.getElementById('startDate').addEventListener('change', e => {
-      state.startDate = e.target.value;
-      document.getElementById('endDate').min = e.target.value;
-      updateSummary();
-    });
-    document.getElementById('endDate').addEventListener('change', e => {
-      state.endDate = e.target.value;
-      updateSummary();
-    });
-
-    // Highlight agreement box when unchecked
-    document.getElementById('agreeTerms').addEventListener('change', function () {
-      const box = document.getElementById('agreementBox');
-      if (this.checked) {
-        box.classList.remove('required-highlight');
-      }
-    });
-
-    function updateSummary() {
-      document.getElementById('sumTour').textContent = state.tour || '—';
-      document.getElementById('sumGuests').textContent = state.guests + (state.guests === 1 ? ' Guest' : ' Guests');
-      if (state.startDate && state.endDate) {
-        document.getElementById('sumDates').textContent = formatDate(state.startDate) + ' → ' + formatDate(state.endDate);
-      } else if (state.startDate) {
-        document.getElementById('sumDates').textContent = formatDate(state.startDate) + ' → …';
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (overlay && overlay.classList.contains("is-open")) {
+        closeMenu();
       } else {
-        document.getElementById('sumDates').textContent = '—';
+        openMenu();
       }
-      document.getElementById('sumPayment').textContent = state.payment || '—';
-      document.getElementById('sumContact').textContent = state.contactLabel || '—';
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      document.getElementById('sumSubtotal').textContent = '$' + total.toLocaleString();
-      document.getElementById('sumDeposit').textContent = '$' + deposit.toLocaleString();
-      document.getElementById('sumTotal').textContent = '$' + deposit.toLocaleString();
-    }
-
-    function formatDate(iso) {
-      if (!iso) return '';
-      const d = new Date(iso + 'T00:00:00');
-      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-    }
-
-    function goToStep(n) {
-      Object.values(stepPanels).forEach(p => p.style.display = 'none');
-      document.getElementById('successPanel').classList.remove('show');
-      if (stepPanels[n]) stepPanels[n].style.display = 'block';
-      stepIndicators.forEach(s => {
-        const stepNum = parseInt(s.dataset.step);
-        s.classList.remove('active', 'completed');
-        if (stepNum === n) s.classList.add('active');
-        else if (stepNum < n) s.classList.add('completed');
-      });
-      state.currentStep = n;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.getElementById('toStep2').addEventListener('click', () => {
-      if (!state.tour) { alert('Please select a tour.'); return; }
-      if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
-        alert('Please select start and end dates.'); return;
-      }
-      if (document.getElementById('endDate').value < document.getElementById('startDate').value) {
-        alert('End date must be after start date.'); return;
-      }
-      state.startDate = document.getElementById('startDate').value;
-      state.endDate = document.getElementById('endDate').value;
-      state.guests = parseInt(document.getElementById('guests').value) || 2;
-      updateSummary();
-      goToStep(2);
     });
+  }
 
-    document.getElementById('backTo1').addEventListener('click', () => goToStep(1));
-
-    document.getElementById('toStep3').addEventListener('click', () => {
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      if (!firstName || !lastName || !email || !phone) {
-        alert('Please fill in all required fields (Name, Email, Phone).'); return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Please enter a valid email address.'); return;
-      }
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.email = email;
-      state.phone = phone;
-      state.country = document.getElementById('country').value.trim();
-      state.language = document.getElementById('language').value;
-      state.notes = document.getElementById('notes').value.trim();
-      goToStep(3);
+  if (overlay) {
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeMenu();
     });
+  }
 
-    document.getElementById('backTo2').addEventListener('click', () => goToStep(2));
+  closeBtns.forEach(function (el) {
+    el.addEventListener("click", closeMenu);
+  });
 
-    document.getElementById('toStep4').addEventListener('click', () => {
-      if (!state.payment) { alert('Please select a payment method.'); return; }
-      if (!state.contactType) { alert('Please choose how we should receive your booking (WhatsApp or Email).'); return; }
-      if (!document.getElementById('agreeTerms').checked) {
-        document.getElementById('agreementBox').classList.add('required-highlight');
-        alert('Please agree to the Terms of Service and Privacy Policy before continuing.');
-        document.getElementById('agreeTerms').focus();
-        return;
-      }
-      buildConfirmDetails();
-      goToStep(4);
-    });
+  document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
+  });
 
-    document.getElementById('backTo3').addEventListener('click', () => goToStep(3));
-
-    function buildConfirmDetails() {
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      document.getElementById('confirmDetails').innerHTML = `
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.92rem;">
-          <div><strong style="color:var(--gray-dark);">Tour</strong><br>${state.tour}</div>
-          <div><strong style="color:var(--gray-dark);">Guests</strong><br>${state.guests}</div>
-          <div><strong style="color:var(--gray-dark);">Start Date</strong><br>${formatDate(state.startDate)}</div>
-          <div><strong style="color:var(--gray-dark);">End Date</strong><br>${formatDate(state.endDate)}</div>
-          <div><strong style="color:var(--gray-dark);">Name</strong><br>${state.firstName} ${state.lastName}</div>
-          <div><strong style="color:var(--gray-dark);">Email</strong><br>${state.email}</div>
-          <div><strong style="color:var(--gray-dark);">Phone</strong><br>${state.phone}</div>
-          <div><strong style="color:var(--gray-dark);">Payment</strong><br>${state.payment}</div>
-          <div><strong style="color:var(--gray-dark);">Send Booking Via</strong><br>${state.contactLabel || '—'} (${state.contactNumber || ''})</div>
-          <div><strong style="color:var(--gray-dark);">Est. Total</strong><br>$${total.toLocaleString()}</div>
-          <div><strong style="color:var(--orange);">Deposit Due</strong><br><span style="font-size:1.2rem;font-weight:700;color:var(--orange);">$${deposit.toLocaleString()}</span></div>
-        </div>
-        ${state.notes ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--gray);"><strong style="color:var(--gray-dark);">Notes</strong><br>${state.notes}</div>` : ''}
-      `;
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const file = href.split("/").pop();
+    if (
+      file === path ||
+      (path === "" && file === "index.html") ||
+      (path === "index.html" && file === "index.html") ||
+      (path === "" && href === "/") ||
+      (path === "index.html" && (href === "/" || href === "index.html"))
+    ) {
+      link.classList.add("is-active");
     }
+  });
+})();
+</script>
+  <script>
+(function () {
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-    document.getElementById('submitBooking').addEventListener('click', async () => {
-      // Double-check agreement on final submit
-      if (!document.getElementById('agreeTerms').checked) {
-        alert('You must agree to the Terms of Service and Privacy Policy before submitting.');
-        goToStep(3);
-        document.getElementById('agreementBox').classList.add('required-highlight');
-        return;
+  /* ---------- Admin gate ---------- */
+  const ADMIN_KEY = "ishasha_newsletter_admin_unlocked";
+  const gate = document.getElementById("admin-gate");
+  const panel = document.getElementById("admin-panel");
+  const loginBtn = document.getElementById("admin-login-btn");
+  const passwordInput = document.getElementById("admin-password");
+  const logoutLink = document.getElementById("admin-logout");
+
+  function showAdminPanel() {
+    if (gate) gate.style.display = "none";
+    if (panel) panel.classList.add("is-visible");
+  }
+
+  function hideAdminPanel() {
+    if (gate) gate.style.display = "";
+    if (panel) panel.classList.remove("is-visible");
+    sessionStorage.removeItem(ADMIN_KEY);
+  }
+
+  if (sessionStorage.getItem(ADMIN_KEY) === "1") {
+    showAdminPanel();
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", function () {
+      const entered = (passwordInput && passwordInput.value) || "";
+      if (entered === window.ADMIN_PASSWORD) {
+        sessionStorage.setItem(ADMIN_KEY, "1");
+        showAdminPanel();
+        if (passwordInput) passwordInput.value = "";
+      } else {
+        alert("Incorrect password.");
       }
-      if (!state.contactType) {
-        alert('Please choose how we should receive your booking (WhatsApp or Email).');
-        goToStep(3);
-        return;
-      }
+    });
+  }
 
-      const btn = document.getElementById('submitBooking');
-      const msg = document.getElementById('formMessage');
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-      msg.className = 'form-message';
-      msg.textContent = '';
+  if (passwordInput) {
+    passwordInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") loginBtn.click();
+    });
+  }
 
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      const ref = 'VT-' + Date.now().toString(36).toUpperCase();
+  if (logoutLink) {
+    logoutLink.addEventListener("click", hideAdminPanel);
+  }
 
-      const bookingData = {
-        reference: ref,
-        tour: state.tour,
-        pricePerPerson: state.price,
-        guests: state.guests,
-        total, deposit,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        firstName: state.firstName,
-        lastName: state.lastName,
-        email: state.email,
-        phone: state.phone,
-        country: state.country || '',
-        language: state.language,
-        notes: state.notes || '',
-        paymentMethod: state.payment,
-        notifyVia: state.contactType,
-        notifyTo: state.contactNumber,
-        notifyLabel: state.contactLabel,
-        status: 'pending',
-        createdAt: new Date().toISOString()
-      };
+  /* ---------- Helpers ---------- */
+  function formatDisplayDate(iso) {
+    if (!iso) return "";
+    try {
+      var d = new Date(iso + "T12:00:00");
+      if (isNaN(d.getTime())) return iso;
+      return d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+    } catch (e) {
+      return iso;
+    }
+  }
 
-      try {
-        // Optional: save to Firebase if configured
-        if (db) {
-          bookingData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-          await db.collection('bookings').add(bookingData);
+  function escapeHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str || "";
+    return div.innerHTML;
+  }
+
+  /* ---------- Cloudinary upload (admin only) ---------- */
+  var myWidget = null;
+
+  if (typeof cloudinary !== "undefined" &&
+      window.CLOUDINARY_CLOUD_NAME &&
+      window.CLOUDINARY_CLOUD_NAME !== "YOUR_CLOUD_NAME" &&
+      window.CLOUDINARY_UPLOAD_PRESET &&
+      window.CLOUDINARY_UPLOAD_PRESET !== "YOUR_UNSIGNED_PRESET") {
+
+    myWidget = cloudinary.createUploadWidget({
+      cloudName: window.CLOUDINARY_CLOUD_NAME,
+      uploadPreset: window.CLOUDINARY_UPLOAD_PRESET,
+      sources: ["local", "camera", "url"],
+      multiple: false,
+      maxFiles: 1,
+      clientAllowedFormats: ["jpg", "jpeg", "png", "webp", "gif", "mp4", "mov", "webm", "m4v"],
+      maxFileSize: 100000000,
+      resourceType: "auto",
+      folding: false,
+      styles: {
+        palette: {
+          window: "#FFFFFF",
+          windowBorder: "#ddd2c0",
+          tabIcon: "#254a22",
+          menuIcons: "#6b7a65",
+          textDark: "#1a2618",
+          textLight: "#FFFFFF",
+          link: "#254a22",
+          action: "#254a22",
+          inactiveTabIcon: "#6b7a65",
+          error: "#F44235",
+          inProgress: "#b8923e",
+          complete: "#254a22",
+          sourceBg: "#f6f1e8"
         }
+      }
+    }, function (error, result) {
+      if (!error && result && result.event === "success") {
+        var info = result.info;
+        var url = info.secure_url;
+        var isVideo = (info.resource_type === "video") || /\.(mp4|mov|webm|m4v)(\?|$)/i.test(url);
+        var title = (document.getElementById("upload-title") || {}).value || "Newsletter update";
+        var desc = (document.getElementById("upload-desc") || {}).value || "";
+        var dateVal = (document.getElementById("upload-date") || {}).value || "";
 
-        // Build the booking message used for both WhatsApp and Email
-        const msgText = `Hello Ishasha Women's Community Tours!
+        document.getElementById("upload-result").style.display = "block";
+        document.getElementById("uploaded-url").textContent = "Public URL: " + url;
 
-*New Booking Request*
-
-*Ref:* ${ref}
-*Tour:* ${state.tour}
-*Guests:* ${state.guests}
-*Dates:* ${formatDate(state.startDate)} to ${formatDate(state.endDate)}
-*Name:* ${state.firstName} ${state.lastName}
-*Phone:* ${state.phone}
-*Email:* ${state.email}
-*Country:* ${state.country || 'N/A'}
-*Payment:* ${state.payment}
-*Deposit:* $${deposit}
-*Notes:* ${state.notes || 'None'}`;
-
-        const encodedMsg = encodeURIComponent(msgText);
-
-        // ========== SEND ACCORDING TO USER CHOICE ==========
-        if (state.contactType === 'whatsapp' && state.contactNumber) {
-          // Primary action: open WhatsApp with pre-filled booking details
-          const waUrl = `https://wa.me/${state.contactNumber}?text=${encodedMsg}`;
-
-          // Show success panel first
-          document.getElementById('bookingRef').textContent = ref;
-          document.getElementById('successMessage').textContent =
-            'Thank you! Your booking request is ready. Click the button below (or it will open automatically) to send it via WhatsApp.';
-          Object.values(stepPanels).forEach(p => p.style.display = 'none');
-          document.getElementById('successPanel').classList.add('show');
-          document.getElementById('summaryCard').style.display = 'none';
-          stepIndicators.forEach(s => { s.classList.remove('active'); s.classList.add('completed'); });
-
-          const waBox = document.getElementById('whatsappAction');
-          waBox.innerHTML = `
-            <p style="margin-bottom:12px;color:#666;font-size:0.9rem;">
-              Send your booking details to <strong>${state.contactLabel}</strong> on WhatsApp:
-            </p>
-            <a href="${waUrl}" target="_blank" class="btn btn-green" style="background:#25D366;">
-              💬 Send Booking on WhatsApp – ${state.contactLabel}
-            </a>`;
-
-          // Auto-open WhatsApp after short delay
-          setTimeout(() => { window.open(waUrl, '_blank'); }, 600);
-
-        } else if (state.contactType === 'email') {
-          // Primary action: send via EmailJS
-          if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              booking_ref: ref,
-              tour: state.tour,
-              guests: state.guests,
-              start_date: formatDate(state.startDate),
-              end_date: formatDate(state.endDate),
-              from_name: state.firstName + ' ' + state.lastName,
-              from_email: state.email,
-              phone: state.phone,
-              country: state.country || 'N/A',
-              payment_method: state.payment,
-              total: '$' + total.toLocaleString(),
-              deposit: '$' + deposit.toLocaleString(),
-              notes: state.notes || 'None',
-              message: `New booking request from ${state.firstName} ${state.lastName} for ${state.tour}.`
-            });
-          }
-
-          document.getElementById('bookingRef').textContent = ref;
-          document.getElementById('successMessage').textContent =
-            'Thank you! Your booking request has been sent by email. We will contact you within 24 hours to confirm.';
-          Object.values(stepPanels).forEach(p => p.style.display = 'none');
-          document.getElementById('successPanel').classList.add('show');
-          document.getElementById('summaryCard').style.display = 'none';
-          stepIndicators.forEach(s => { s.classList.remove('active'); s.classList.add('completed'); });
-
-          const waBox = document.getElementById('whatsappAction');
-          waBox.innerHTML = `
-            <p style="margin-bottom:12px;color:#666;font-size:0.9rem;">
-              Booking details have been sent by email. You can also reach us on WhatsApp if needed:
-            </p>
-            <a href="https://wa.me/256771440064?text=${encodedMsg}" target="_blank" class="btn btn-green" style="background:#25D366;">
-              💬 Chat on WhatsApp
-            </a>`;
+        var previewWrap = document.getElementById("uploaded-preview-wrap");
+        previewWrap.innerHTML = "";
+        if (isVideo) {
+          var v = document.createElement("video");
+          v.src = url;
+          v.controls = true;
+          v.style.maxWidth = "320px";
+          v.style.borderRadius = "var(--radius)";
+          v.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(v);
         } else {
-          throw new Error('No valid contact method selected');
+          var img = document.createElement("img");
+          img.src = url;
+          img.alt = "Uploaded preview";
+          img.style.maxWidth = "280px";
+          img.style.borderRadius = "var(--radius)";
+          img.style.boxShadow = "var(--shadow-soft)";
+          previewWrap.appendChild(img);
         }
 
-      } catch (error) {
-        console.error('Booking error:', error);
-        msg.textContent = 'Something went wrong. Please try again or contact us directly on WhatsApp.';
-        msg.className = 'form-message error';
-        btn.disabled = false;
-        btn.textContent = 'Confirm & Submit Booking';
+        appendNewsletterCard({
+          src: url,
+          type: isVideo ? "video" : "image",
+          title: title,
+          desc: desc,
+          date: dateVal
+        });
+
+        alert("Newsletter item uploaded!\n\nTitle: " + title + "\nURL:\n" + url + "\n\nA card was added for this session. To keep it permanently, add the HTML to the page or use a CMS/backend.");
+      }
+      if (error) {
+        console.error(error);
+        alert("Upload failed. Check your Cloudinary cloud name and unsigned upload preset.");
       }
     });
 
-    // Init
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('startDate').min = today;
-    document.getElementById('endDate').min = today;
-    updateSummary();
-  </script>
+    var uploadBtn = document.getElementById("upload_widget");
+    if (uploadBtn) {
+      uploadBtn.addEventListener("click", function () {
+        if (sessionStorage.getItem(ADMIN_KEY) !== "1") {
+          alert("Please unlock admin tools first.");
+          return;
+        }
+        if (myWidget) myWidget.open();
+      });
+    }
+  } else {
+    var uploadBtnFallback = document.getElementById("upload_widget");
+    if (uploadBtnFallback) {
+      uploadBtnFallback.addEventListener("click", function () {
+        alert("Cloudinary is not configured yet.\n\n1. Create a free account at cloudinary.com\n2. Create an Unsigned upload preset\n3. Edit CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET near the bottom of this page.");
+      });
+    }
+  }
+
+  function appendNewsletterCard(item) {
+    var grid = document.getElementById("newsletter-grid");
+    var empty = document.getElementById("empty-state");
+    if (!grid) return;
+
+    if (empty) empty.style.display = "none";
+
+    var index = grid.querySelectorAll(".newsletter-card").length;
+    var article = document.createElement("article");
+    article.className = "newsletter-card";
+    article.dataset.index = String(index);
+    article.dataset.type = item.type;
+    article.dataset.src = item.src;
+    article.dataset.title = item.title;
+    article.dataset.desc = item.desc || "";
+    article.dataset.date = item.date || "";
+
+    var wrap = document.createElement("div");
+    wrap.className = "newsletter-media-wrap";
+
+    if (item.type === "video") {
+      var video = document.createElement("video");
+      video.src = item.src;
+      video.muted = true;
+      video.preload = "metadata";
+      video.setAttribute("playsinline", "");
+      wrap.appendChild(video);
+      var badge = document.createElement("span");
+      badge.className = "newsletter-video-badge";
+      badge.innerHTML = "▶ Video";
+      wrap.appendChild(badge);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      img.loading = "lazy";
+      wrap.appendChild(img);
+    }
+
+    if (item.date) {
+      var dateBadge = document.createElement("span");
+      dateBadge.className = "newsletter-date";
+      dateBadge.textContent = formatDisplayDate(item.date);
+      wrap.appendChild(dateBadge);
+    }
+
+    var caption = document.createElement("div");
+    caption.className = "newsletter-caption";
+    caption.innerHTML =
+      "<h3>" + escapeHtml(item.title) + "</h3>" +
+      "<p>" + escapeHtml(item.desc || "") + "</p>" +
+      "<span class=\"newsletter-view-hint\">View →</span>";
+
+    article.appendChild(wrap);
+    article.appendChild(caption);
+    grid.insertBefore(article, grid.firstChild);
+
+    // Re-index and bind
+    rebuildItems();
+    article.addEventListener("click", function () {
+      openLightbox(parseInt(article.dataset.index, 10));
+    });
+  }
+
+  /* ---------- Lightbox / viewer ---------- */
+  var items = [];
+  var currentIndex = 0;
+  var lightbox = document.getElementById("lightbox");
+  var mediaEl = document.getElementById("lightbox-media");
+  var titleEl = document.getElementById("lightbox-title");
+  var descEl = document.getElementById("lightbox-desc");
+  var dateEl = document.getElementById("lightbox-date");
+  var counterEl = document.getElementById("lightbox-counter");
+
+  function rebuildItems() {
+    items = [];
+    document.querySelectorAll(".newsletter-card").forEach(function (card, i) {
+      card.dataset.index = String(i);
+      items.push({
+        type: card.dataset.type || "image",
+        src: card.dataset.src,
+        title: card.dataset.title || "",
+        desc: card.dataset.desc || "",
+        date: card.dataset.date || ""
+      });
+    });
+
+    var empty = document.getElementById("empty-state");
+    var grid = document.getElementById("newsletter-grid");
+    if (empty && grid) {
+      empty.style.display = items.length === 0 ? "block" : "none";
+    }
+  }
+
+  function openLightbox(index) {
+    if (!items.length) rebuildItems();
+    currentIndex = index;
+    showItem(currentIndex);
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+    mediaEl.innerHTML = "";
+  }
+
+  function showItem(index) {
+    if (!items.length) return;
+    if (index < 0) index = items.length - 1;
+    if (index >= items.length) index = 0;
+    currentIndex = index;
+    var item = items[index];
+
+    mediaEl.innerHTML = "";
+    if (item.type === "video") {
+      var v = document.createElement("video");
+      v.src = item.src;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.style.maxWidth = "100%";
+      v.style.maxHeight = "68vh";
+      mediaEl.appendChild(v);
+    } else {
+      var img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.title;
+      mediaEl.appendChild(img);
+    }
+
+    titleEl.textContent = item.title;
+    descEl.textContent = item.desc;
+    dateEl.textContent = item.date ? formatDisplayDate(item.date) : "";
+    counterEl.textContent = (index + 1) + " / " + items.length;
+  }
+
+  function nextItem() {
+    showItem(currentIndex + 1);
+  }
+
+  function prevItem() {
+    showItem(currentIndex - 1);
+  }
+
+  rebuildItems();
+  document.querySelectorAll(".newsletter-card").forEach(function (card) {
+    card.addEventListener("click", function () {
+      openLightbox(parseInt(card.dataset.index, 10));
+    });
+  });
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-next").addEventListener("click", function (e) {
+    e.stopPropagation();
+    nextItem();
+  });
+  document.getElementById("lightbox-prev").addEventListener("click", function (e) {
+    e.stopPropagation();
+    prevItem();
+  });
+
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") nextItem();
+    if (e.key === "ArrowLeft") prevItem();
+  });
+})();
+</script>
 </body>
 </html>
