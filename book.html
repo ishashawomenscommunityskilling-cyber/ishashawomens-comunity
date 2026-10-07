@@ -1,1397 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Your Tour –  Ishasha Women's Community Tours and Travel</title>
-
-  <!-- EmailJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Ishasha Women's Community Skilling and Development Organisation</title>
   <style>
-    /* ============================================
-        – BOOKING PAGE
-       Colors: Green | Orange | Black | White
-       ============================================ */
-    :root {
-      --green: #254A22;
-      --green-dark: #1A3518;
-      --green-light: #3A4A36;
-      --orange: #B8923E;
-      --orange-dark: #8F6B2D;
-      --orange-light: #D4B56A;
-      --black: #1A2618;
-      --black-soft: #3A4A36;
-      --white: #FFFFFF;
-      --white-soft: #F6F1E8;
-      --gray: #DDD2C0;
-      --gray-dark: #6B7A65;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --transition: all 0.3s ease;
-    }
+/* Ishasha Growth Hub - Static conversion (HTML/CSS/JS)
+   Faithful recreation of layout, colors, and structure from the original React build.
+*/
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: var(--black);
-      background: var(--white-soft);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
-    img { max-width: 100%; display: block; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+:root {
+  --background: #f6f1e8;
+  --sand: #efe6d6;
+  --card: #ffffff;
+  --foreground: #1a2618;
+  --ink: #1a2618;
+  --ink-soft: #3a4a36;
+  --muted-foreground: #6b7a65;
+  --earth: #254a22;
+  --gold: #b8923e;
+  --primary: #254a22;
+  --border: #ddd2c0;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 8px 24px rgba(31, 42, 31, 0.08);
+  --shadow-strong: 0 16px 40px rgba(31, 42, 31, 0.12);
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
 
-    /* HEADER */
-    .booking-header {
-      background: var(--white);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 20px;
-    }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-img {
-      width: 52px; height: 52px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 3px solid var(--orange);
-      background: var(--white);
-    }
-    .logo-text h1 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--black);
-      line-height: 1.2;
-    }
-    .logo-text span {
-      font-size: 0.72rem;
-      color: var(--green);
-      font-weight: 500;
-      letter-spacing: 0.4px;
-    }
-    .header-actions { display: flex; align-items: center; gap: 16px; }
-    .back-link {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--black-soft);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-link:hover { color: var(--green); }
-    .back-link svg { width: 18px; height: 18px; fill: currentColor; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    /* HERO */
-    .booking-hero {
-      background: linear-gradient(135deg, var(--green-dark), var(--green));
-      color: var(--white);
-      padding: 50px 0 60px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .booking-hero::before {
-      content: '';
-      position: absolute;
-      top: -50%; right: -20%;
-      width: 500px; height: 500px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 50%;
-    }
-    .booking-hero::after {
-      content: '';
-      position: absolute;
-      bottom: -40%; left: -10%;
-      width: 400px; height: 400px;
-      background: rgba(184, 146, 62, 0.1);
-      border-radius: 50%;
-    }
-    .booking-hero .container { position: relative; z-index: 2; }
-    .booking-hero .badge {
-      display: inline-block;
-      background: var(--orange);
-      color: var(--white);
-      padding: 6px 18px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-    }
-    .booking-hero h2 {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .booking-hero p {
-      max-width: 520px;
-      margin: 0 auto;
-      opacity: 0.9;
-      font-size: 1rem;
-      font-weight: 300;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    /* PROGRESS */
-    .progress-bar {
-      background: var(--white);
-      padding: 25px 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-      margin-bottom: 40px;
-    }
-    .steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      position: relative;
-    }
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 18px; left: 55%;
-      width: 90%; height: 3px;
-      background: var(--gray);
-      z-index: 0;
-    }
-    .step.active:not(:last-child)::after,
-    .step.completed:not(:last-child)::after { background: var(--green); }
-    .step-circle {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: var(--gray);
-      color: var(--gray-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      position: relative;
-      z-index: 1;
-      transition: var(--transition);
-    }
-    .step.active .step-circle {
-      background: var(--orange);
-      color: var(--white);
-      box-shadow: 0 4px 15px rgba(184, 146, 62, 0.35);
-    }
-    .step.completed .step-circle {
-      background: var(--green);
-      color: var(--white);
-    }
-    .step-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--gray-dark);
-      text-align: center;
-    }
-    .step.active .step-label { color: var(--orange); font-weight: 600; }
-    .step.completed .step-label { color: var(--green); }
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse at top, color-mix(in srgb, var(--gold) 12%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, var(--sand) 0%, var(--background) 30%, var(--sand) 100%);
+  color: var(--foreground);
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-    /* MAIN */
-    .booking-main { padding-bottom: 80px; }
-    .booking-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 40px;
-      margin-bottom: 30px;
-      border: 1px solid var(--gray);
-    }
-    .card-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--black);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .card-title .icon {
-      width: 40px; height: 40px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
-      color: var(--white);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .card-subtitle {
-      color: var(--gray-dark);
-      font-size: 0.9rem;
-      margin-bottom: 30px;
-      padding-left: 52px;
-    }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
-    /* FORM */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-    .form-group { margin-bottom: 0; }
-    .form-group.full { grid-column: 1 / -1; }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-      color: var(--black);
-    }
-    .form-group label .required { color: var(--orange); margin-left: 2px; }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--black);
-      background: var(--white);
-      transition: var(--transition);
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.12);
-    }
-    .form-group textarea { min-height: 110px; resize: vertical; }
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23E85D04' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 40px;
-      cursor: pointer;
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    /* TOUR OPTIONS */
-    .tour-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-      margin-bottom: 10px;
-    }
-    .tour-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 20px;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      background: var(--white);
-    }
-    .tour-option:hover {
-      border-color: var(--orange);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    }
-    .tour-option.selected {
-      border-color: var(--green);
-      background: rgba(37, 74, 34, 0.04);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.12);
-    }
-    .tour-option.selected::after {
-      content: '✓';
-      position: absolute;
-      top: 12px; right: 12px;
-      width: 24px; height: 24px;
-      background: var(--green);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-    .tour-option h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--black);
-      padding-right: 30px;
-    }
-    .tour-option .price {
-      color: var(--orange);
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
-    .tour-option .desc {
-      font-size: 0.82rem;
-      color: var(--gray-dark);
-      line-height: 1.5;
-    }
+/* Layout shell */
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    .date-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 22px;
-    }
+.site-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
 
-    /* PAYMENT */
-    .payment-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 14px;
-      margin-bottom: 25px;
-    }
-    .payment-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 18px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--black-soft);
-    }
-    .payment-option:hover { border-color: var(--orange); }
-    .payment-option.selected {
-      border-color: var(--green);
-      background: rgba(37, 74, 34, 0.05);
-      color: var(--green);
-      box-shadow: 0 0 0 3px rgba(37, 74, 34, 0.1);
-    }
-    .payment-option .pay-icon {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-      display: block;
-    }
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, white 16%);
+}
 
-    /* CONTACT CHOICE */
-    .contact-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .contact-option {
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      padding: 16px 14px;
-      cursor: pointer;
-      transition: var(--transition);
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .contact-option:hover { border-color: var(--orange); }
-    .contact-option.selected {
-      border-color: #25D366;
-      background: rgba(37, 211, 102, 0.06);
-      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.12);
-    }
-    .contact-option .c-icon {
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      background: #25D366;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .contact-option .c-icon.email { background: var(--green); }
-    .contact-option .c-text strong { display: block; font-size: 0.9rem; color: var(--black); }
-    .contact-option .c-text span { font-size: 0.8rem; color: var(--gray-dark); }
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5.35rem;
+}
 
-    /* AGREEMENT HIGHLIGHT */
-    .agreement-box {
-      margin-top: 24px;
-      padding: 16px 18px;
-      background: var(--white-soft);
-      border: 2px solid var(--gray);
-      border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-    .agreement-box.required-highlight {
-      border-color: var(--orange);
-      background: rgba(184, 146, 62, 0.06);
-    }
-    .agreement-box label {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      cursor: pointer;
-      margin-bottom: 0;
-    }
-    .agreement-box input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-top: 2px;
-      accent-color: var(--green);
-      flex-shrink: 0;
-      cursor: pointer;
-    }
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
 
-    /* LAYOUT */
-    .booking-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 30px;
-      align-items: start;
-    }
-    .summary-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--gray);
-      padding: 28px;
-      position: sticky;
-      top: 100px;
-    }
-    .summary-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid var(--gray);
-      color: var(--black);
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-    }
-    .summary-row .label { color: var(--gray-dark); }
-    .summary-row .value {
-      font-weight: 600;
-      color: var(--black);
-      text-align: right;
-      max-width: 55%;
-    }
-    .summary-divider {
-      height: 1px;
-      background: var(--gray);
-      margin: 18px 0;
-    }
-    .summary-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    .summary-total .total-price {
-      color: var(--orange);
-      font-size: 1.4rem;
-    }
-    .summary-note {
-      font-size: 0.78rem;
-      color: var(--gray-dark);
-      margin-top: 16px;
-      padding: 12px;
-      background: var(--white-soft);
-      border-radius: 8px;
-      border-left: 3px solid var(--orange);
-    }
+.site-brand-mark,
+.site-footer-mark {
+  width: 3.35rem;
+  height: 3.35rem;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
 
-    /* BUTTONS */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      font-family: inherit;
-    }
-    .btn-orange { background: var(--orange); color: var(--white); }
-    .btn-orange:hover {
-      background: var(--orange-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(184, 146, 62, 0.35);
-    }
-    .btn-green { background: var(--green); color: var(--white); }
-    .btn-green:hover {
-      background: var(--green-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(37, 74, 34, 0.35);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--gray);
-      color: var(--black-soft);
-    }
-    .btn-outline:hover { border-color: var(--green); color: var(--green); }
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-    .btn-full { width: 100%; }
-    .form-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 35px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
 
-    /* SUCCESS */
-    .success-panel { display: none; text-align: center; padding: 50px 30px; }
-    .success-panel.show { display: block; }
-    .success-icon {
-      width: 90px; height: 90px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      margin: 0 auto 25px;
-      box-shadow: 0 10px 30px rgba(37, 74, 34, 0.3);
-    }
-    .success-panel h2 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: var(--black);
-    }
-    .success-panel p {
-      color: var(--gray-dark);
-      max-width: 420px;
-      margin: 0 auto 25px;
-      font-size: 0.95rem;
-    }
-    .success-ref {
-      display: inline-block;
-      background: var(--white-soft);
-      border: 2px dashed var(--green);
-      padding: 12px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--green);
-      margin-bottom: 30px;
-      letter-spacing: 1px;
-    }
+.site-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--earth);
+}
 
-    .form-message {
-      display: none;
-      text-align: center;
-      padding: 14px 18px;
-      border-radius: var(--radius-sm);
-      margin-top: 20px;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    .form-message.success {
-      display: block;
-      background: rgba(37, 74, 34, 0.1);
-      color: var(--green);
-      border: 1px solid var(--green);
-    }
-    .form-message.error {
-      display: block;
-      background: rgba(230, 81, 0, 0.08);
-      color: var(--orange-dark);
-      border: 1px solid var(--orange);
-    }
+.site-brand-tagline {
+  max-width: 18rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
 
-    /* FOOTER */
-    .booking-footer {
-      background: var(--black);
-      color: var(--white);
-      padding: 30px 0;
-      text-align: center;
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
-    .booking-footer a { color: var(--orange); }
-    .booking-footer a:hover { color: var(--orange-light); }
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+}
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .booking-layout { grid-template-columns: 1fr; }
-      .summary-card { position: static; order: -1; }
-      .date-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .booking-card { padding: 25px 18px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .card-subtitle { padding-left: 0; }
-      .step-label { font-size: 0.7rem; }
-      .step-circle { width: 32px; height: 32px; font-size: 0.8rem; }
-      .tour-options { grid-template-columns: 1fr; }
-      .form-actions { flex-direction: column; }
-      .form-actions .btn { width: 100%; }
-    }
-  </style>
+.site-nav-link {
+  color: var(--ink-soft);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.site-nav-link:hover,
+.site-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.site-header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.site-header-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Hamburger / mobile nav */
+.hamburger-menu-btn {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s;
+}
+
+.hamburger-menu-btn:hover {
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+}
+
+.mobile-nav-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+
+.mobile-nav-drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 88vw);
+  height: 100%;
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.mobile-nav-drawer-overlay.is-open .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  transition: background 0.18s, color 0.18s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--gold) 14%, white 86%);
+}
+
+.mobile-nav-drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Buttons */
+.button-primary,
+.button-secondary,
+.button-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--earth), var(--primary));
+  box-shadow: var(--shadow-soft);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.button-secondary {
+  color: var(--earth);
+  background: color-mix(in srgb, var(--card) 78%, var(--gold) 8%);
+  border: 1.5px solid color-mix(in srgb, var(--gold) 40%, var(--border));
+}
+
+.button-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.button-light {
+  background: var(--sand);
+  color: var(--earth);
+}
+
+.text-action {
+  color: var(--earth);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-link {
+  color: var(--earth);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Hero */
+.hero-section {
+  padding: 4.25rem 0 2rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.hero-title,
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.hero-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.hero-support,
+.supporting-copy,
+.prose-panel p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-media-stack {
+  position: relative;
+}
+
+.hero-image-card,
+.large-photo-frame,
+.tall-photo-frame,
+.photo-story-card,
+.image-panel {
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, var(--gold) 20%);
+  box-shadow: var(--shadow-soft);
+  background: var(--card);
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  background: linear-gradient(145deg, #c8bfa8, #6b7a65);
+}
+
+.placeholder-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: linear-gradient(145deg, #c8bfa8 0%, #6b7a65 50%, #4f6849 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.floating-stat-card {
+  position: absolute;
+  bottom: 1.25rem;
+  left: -1rem;
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--gold) 38%, white 62%);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 9.5rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--earth);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+/* Facts bar */
+.facts-bar {
+  padding: 1.75rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  border-bottom: 1px solid color-mix(in srgb, var(--gold) 34%, white 66%);
+  background: color-mix(in srgb, var(--sand) 60%, transparent);
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.fact-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.fact-value {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* Content sections */
+.content-section {
+  padding: 3.5rem 0;
+}
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  color: var(--earth);
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.mission-vision-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.info-card,
+.bullet-card,
+.program-card,
+.leader-card,
+.dark-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.info-card h3,
+.bullet-card h3,
+.program-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  margin-bottom: 0.5rem;
+}
+
+.value-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.value-chip {
+  background: color-mix(in srgb, var(--sand) 80%, var(--gold) 10%);
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, white 72%);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.snapshot-list {
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.snapshot-list li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  color: var(--ink-soft);
+}
+
+.snapshot-list li::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--earth));
+  flex-shrink: 0;
+}
+
+/* Page hero band */
+.page-hero-band {
+  padding: 2.75rem 0 1.5rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--earth) 8%, var(--sand)), transparent);
+}
+
+.page-hero-inner {
+  max-width: 48rem;
+}
+
+.page-intro {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Programs grid */
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.program-card p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.35rem;
+  margin-top: 1.75rem;
+}
+
+.gallery-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.gallery-card .placeholder-img {
+  aspect-ratio: 16/11;
+}
+
+.gallery-caption {
+  padding: 1rem 1.15rem;
+  background: color-mix(in srgb, var(--card) 90%, var(--sand));
+}
+
+.gallery-caption h3 {
+  font-size: 1.05rem;
+  color: var(--earth);
+  margin-bottom: 0.25rem;
+}
+
+.gallery-caption p {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+/* Donate / impact cards */
+.donate-grid,
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.donate-card,
+.impact-point {
+  background: color-mix(in srgb, var(--sand) 70%, white);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.donate-card .amount,
+.impact-point .amount {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  color: var(--earth);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+/* Leadership */
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.leader-card {
+  background: var(--foreground);
+  color: #e8efe6;
+  border: none;
+}
+
+.leader-card p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* Contact form simple */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.contact-details p {
+  margin-bottom: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font: inherit;
+  color: var(--foreground);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--gold) 50%, transparent);
+  border-color: var(--gold);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--sand) 50%, var(--card));
+  padding: 2.75rem 0 0;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer-brand {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.site-footer-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--earth);
+  line-height: 1.3;
+}
+
+.site-footer-tagline {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+.site-footer-copy {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--earth);
+  margin-bottom: 0.85rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-link {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+
+.site-footer-link:hover {
+  color: var(--earth);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 1.1rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+/* Band deep (optional dark section) */
+.band-deep {
+  background: linear-gradient(180deg, var(--earth), color-mix(in srgb, var(--earth) 80%, #000));
+  color: #eef5ea;
+  padding: 3rem 0;
+}
+
+.band-deep .section-title,
+.band-deep .section-eyebrow {
+  color: #f6f1e8;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .site-nav,
+  .site-header-cta {
+    display: none;
+  }
+
+  .hamburger-menu-btn {
+    display: inline-flex;
+  }
+
+  .hero-grid,
+  .two-column-layout,
+  .contact-grid,
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .floating-stat-card {
+    left: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .hero-section {
+    padding-top: 2.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-primary,
+  .button-secondary {
+    width: 100%;
+  }
+}
+
+</style>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header class="booking-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="IMG_5819.jpeg" alt="Ishasha Women's Community Tours and Travel" class="logo-img"
-             onerror="this.style.display='none'">
-        <div class="logo-text">
-          <h1>Ishasha Women's Community Tours and Travel</h1>
-          <span>Adventure Awaits</span>
-        </div>
-      </a>
-      <div class="header-actions">
-        <a href="index.html" class="back-link">
-          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-          Back to Home
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="index.html" class="site-brand" aria-label="IWSDP home">
+          <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+          <div class="site-brand-copy">
+            <span class="site-brand-name">Ishasha Women's Community</span>
+            <span class="site-brand-tagline">Women And Girls Empowered Communities Transformed</span>
+          </div>
         </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="index.html" class="site-nav-link">Home</a>
+          <a href="about.html" class="site-nav-link is-active">About</a>
+          <a href="programs.html" class="site-nav-link">Programs</a>
+          <a href="impact.html" class="site-nav-link">Impact</a>
+          <a href="donate.html" class="site-nav-link">Donate</a>
+          <a href="get-involved.html" class="site-nav-link">Get Involved</a>
+          <a href="gallery.html" class="site-nav-link">Gallery</a>
+          <a href="contact.html" class="site-nav-link">Contact</a>
+        </nav>
+        <a href="donate.html" class="site-header-cta">Donate</a>
+        <button class="hamburger-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu" type="button">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="booking-hero">
-    <div class="container">
-      <span class="badge">Secure Booking</span>
-      <h2>Book Your Adventure</h2>
-      <p>Complete the form below to reserve your tour. Our team will confirm your booking within 24 hours.</p>
-    </div>
-  </section>
-
-  <!-- PROGRESS -->
-  <div class="progress-bar">
-    <div class="container">
-      <div class="steps">
-        <div class="step active" data-step="1">
-          <div class="step-circle">1</div>
-          <div class="step-label">Tour & Dates</div>
-        </div>
-        <div class="step" data-step="2">
-          <div class="step-circle">2</div>
-          <div class="step-label">Your Details</div>
-        </div>
-        <div class="step" data-step="3">
-          <div class="step-circle">3</div>
-          <div class="step-label">Payment</div>
-        </div>
-        <div class="step" data-step="4">
-          <div class="step-circle">4</div>
-          <div class="step-label">Confirm</div>
+      <div class="mobile-nav-drawer-overlay">
+        <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+          <div class="mobile-nav-drawer-header">
+            <div class="site-brand">
+              <img src="images/logo.jpg" alt="Ishasha Women's Community logo" class="site-brand-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+              <span class="site-brand-name">Ishasha Women's Community</span>
+            </div>
+            <button class="hamburger-menu-btn" data-close-menu aria-label="Close menu" type="button">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <nav class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="about.html" class="mobile-nav-link is-active">About</a>
+            <a href="programs.html" class="mobile-nav-link">Programs</a>
+            <a href="impact.html" class="mobile-nav-link">Impact</a>
+            <a href="donate.html" class="mobile-nav-link">Donate</a>
+            <a href="get-involved.html" class="mobile-nav-link">Get Involved</a>
+            <a href="gallery.html" class="mobile-nav-link">Gallery</a>
+            <a href="contact.html" class="mobile-nav-link">Contact</a>
+          </nav>
+          <div class="mobile-nav-drawer-footer"><a href="donate.html" class="button-primary w-full">Donate</a></div>
         </div>
       </div>
-    </div>
+    </header>
+
+    <section class="page-hero-band">
+      <div class="site-shell page-hero-inner">
+        <p class="section-eyebrow">About IWSDP</p>
+        <h1 class="page-title">Who we are</h1>
+        <p class="page-intro">Ishasha Women's Community Skilling and Development Organisation Limited is a registered community-based organisation in Kanungu District, Uganda.</p>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-section">
+        <div class="site-shell two-column-layout">
+          <article class="prose-panel">
+            <p>IWSDP is registered in Uganda as a Company Limited by Guarantee under the Companies Act, 2012, with a Provisional TIN issued by the Uganda Revenue Authority (TIN: 1056200690).</p>
+            <p>We work in Kyakatarangyi Cell, Ishasha Area, Rusoroza Parish, Kihihi Sub County, Kanungu District — on the doorstep of Queen Elizabeth National Park.</p>
+            <h2 class="section-title" style="margin-top:2rem;">Our objectives</h2>
+            <ul class="snapshot-list">
+              <li>To provide skills training and capacity building for women in Ishasha</li>
+              <li>To promote economic empowerment through income-generating activities</li>
+              <li>To support social transformation through community engagement and advocacy</li>
+              <li>To pursue agriculture and forestry programs addressing food production, food security, and self-reliance</li>
+              <li>To lobby and advocate for collaboration on safe water, hygiene, and sanitation</li>
+              <li>To promote environmental protection through awareness and sustainable use of resources</li>
+              <li>To fight illiteracy and unemployment by supporting women and young girls</li>
+              <li>To support child education for vulnerable children, with particular focus on the girl child</li>
+              <li>To promote VSLAs, cooperatives, and sustainable livelihood strategies</li>
+              <li>To provide physical and psychological support to vulnerable women, children, and at-risk elderly persons</li>
+            </ul>
+          </article>
+          <aside>
+            <div class="info-card">
+              <h3>Legal status</h3>
+              <p>Registered Company Limited by Guarantee, Republic of Uganda.</p>
+              <p style="margin-top:0.75rem;"><strong>Postal address:</strong> 680051, Kihihi, Uganda</p>
+            </div>
+            <div class="info-card" style="margin-top:1.25rem;">
+              <h3>Leadership &amp; governance</h3>
+              <div style="margin-top:1rem;display:grid;gap:1.25rem;">
+                <div style="background:#faf7f0;border-radius:12px;overflow:hidden;border:1px solid var(--border,#ddd2c0);">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+                    <img src="images/daria-with-elder.jpg" alt="Dr. Daria Mejnartowicz" style="width:100%;height:160px;object-fit:cover;" loading="lazy" />
+                    <img src="images/daria-lenin-statue.jpg" alt="Dr. Daria Mejnartowicz travelling" style="width:100%;height:160px;object-fit:cover;" loading="lazy" />
+                  </div>
+                  <div style="padding:1.1rem 1.25rem;">
+                    <p style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold,#b8923e);font-weight:600;margin-bottom:0.35rem;">Patron / International Ambassador</p>
+                    <h4 style="font-family:Georgia,serif;font-size:1.25rem;color:var(--earth,#254a22);margin-bottom:0.2rem;">Dr. Daria Mejnartowicz</h4>
+                    <p style="color:#a06a2a;font-weight:600;font-size:0.95rem;margin-bottom:0.5rem;">Poland</p>
+                    <p style="color:var(--ink-soft,#3a4a36);font-size:0.95rem;line-height:1.5;">Dr. Daria Mejnartowicz represents the organisation internationally from Poland, helping connect Ishasha with wider networks of support, partnership and visibility.</p>
+                  </div>
+                </div>
+                <div style="background:#faf7f0;border-radius:12px;padding:1.1rem 1.25rem;border:1px solid var(--border,#ddd2c0);">
+                  <p style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold,#b8923e);font-weight:600;margin-bottom:0.35rem;">Founder &amp; CEO / Founding Directors</p>
+                  <h4 style="font-family:Georgia,serif;font-size:1.2rem;color:var(--earth,#254a22);margin-bottom:0.2rem;">Tumwesigye Fred and Atuheire Unity</h4>
+                  <p style="color:#a06a2a;font-weight:600;font-size:0.95rem;margin-bottom:0.5rem;">Ishasha, Uganda</p>
+                  <p style="color:var(--ink-soft,#3a4a36);font-size:0.95rem;line-height:1.5;">Tumwesigye Fred serves as Founder and CEO, working alongside his wife Atuheire Unity, a founding director, to guide the organisation’s community-rooted mission.</p>
+                </div>
+                <div style="background:var(--foreground,#1a2618);color:#e8efe6;border-radius:12px;padding:1rem 1.15rem;">
+                  <p style="font-size:0.9rem;margin-bottom:0.4rem;"><strong>Busigye Feresta Nyiramahoro</strong> — Company Secretary</p>
+                  <p style="font-size:0.9rem;opacity:0.9;">Founding subscribers also include Tumubwine Sadres, Tumushabe Gauda, Nzibangye Alivera and Tushabe Loy Tiryebwa.</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer-grid">
+        <div>
+          <div class="site-footer-brand">
+            <img src="images/logo.jpg" alt="" class="site-footer-mark" style="width:3.35rem;height:3.35rem;object-fit:cover;border-radius:999px;border:2px solid color-mix(in srgb, var(--gold) 34%, white 66%);box-shadow:var(--shadow-soft);" />
+            <div>
+              <h2 class="site-footer-name">Ishasha Women's Community Skilling and Development Organisation</h2>
+              <p class="site-footer-tagline">Women And Girls Empowered Communities Transformed</p>
+            </div>
+          </div>
+          <p class="site-footer-copy">Kyakatarangyi Cell, Ishasha Area, Kanungu District, Uganda</p>
+          <p class="site-footer-copy">
+            <a href="mailto:ishashawomenscommunity2023@gmail.com" class="text-link">ishashawomenscommunity2023@gmail.com</a> |
+            <a href="tel:+256771440064" class="text-link">+256 771 440 064</a>
+          </p>
+        </div>
+        <div>
+          <h2 class="site-footer-heading">Quick Links</h2>
+          <div class="site-footer-links">
+            <a href="about.html" class="site-footer-link">About</a>
+            <a href="programs.html" class="site-footer-link">Programs</a>
+            <a href="impact.html" class="site-footer-link">Impact</a>
+            <a href="donate.html" class="site-footer-link">Donate</a>
+            <a href="get-involved.html" class="site-footer-link">Get Involved</a>
+            <a href="gallery.html" class="site-footer-link">Gallery</a>
+            <a href="contact.html" class="site-footer-link">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="site-shell site-footer-bottom">
+        <p>© <span id="year"></span> Ishasha Women's Community Skilling and Development Organisation Limited. All rights reserved.</p>
+      </div>
+    </footer>
   </div>
-
-  <!-- MAIN -->
-  <main class="booking-main">
-    <div class="container">
-      <div class="booking-layout">
-
-        <!-- FORM SIDE -->
-        <div class="form-side">
-
-          <!-- STEP 1 -->
-          <div class="booking-card step-panel" id="step1">
-            <h3 class="card-title"><span class="icon">🌍</span> Select Your Tour</h3>
-            <p class="card-subtitle">Choose the experience that matches your adventure style.</p>
-
-            <div class="tour-options" id="tourOptions">
-              <div class="tour-option" data-tour="SightSeeing" data-price="250">
-                <h4>SightSeeing</h4>
-                <div class="price">From $200 – $13000</div>
-                <div class="desc">Landscapes & cultural highlights with expert local guides.</div>
-              </div>
-              <div class="tour-option" data-tour="Discover Wildlife" data-price="1750">
-                <h4>Discover Wildlife</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Safari drives and close encounters with iconic wildlife.</div>
-              </div>
-              <div class="tour-option" data-tour="Explore Trekking" data-price="1750">
-                <h4>Explore Trekking</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Mountain treks through lush forests and scenic trails.</div>
-              </div>
-              <div class="tour-option" data-tour="Gorilla Trekking" data-price="1750">
-                <h4>Gorilla Trekking</h4>
-                <div class="price">From $1000 – $12500</div>
-                <div class="desc">Unforgettable mountain gorilla encounters in the wild.</div>
-              </div>
-              <div class="tour-option" data-tour="Water Falls" data-price="575">
-                <h4>Water Falls</h4>
-                <div class="price">From $500 – $1650</div>
-                <div class="desc">Sipi Falls and hidden cascades across Uganda.</div>
-              </div>
-              <div class="tour-option" data-tour="City Tour Kampala" data-price="250">
-                <h4>City Tour Kampala</h4>
-                <div class="price">From $200 – $13000</div>
-                <div class="desc">Markets, museums and vibrant city culture.</div>
-              </div>
-              <div class="tour-option" data-tour="Game Parks" data-price="1250">
-                <h4>Game Parks</h4>
-                <div class="price">From $1000 – $15000</div>
-                <div class="desc">Game drives across East Africa’s best parks.</div>
-              </div>
-              <div class="tour-option" data-tour="Lakeside Camping" data-price="475">
-                <h4>Lakeside Camping</h4>
-                <div class="price">From $350 – $16000</div>
-                <div class="desc">Camping under the stars by Lake Victoria.</div>
-              </div>
-            </div>
-
-            <div class="date-row" style="margin-top:30px;">
-              <div class="form-group">
-                <label>Start Date <span class="required">*</span></label>
-                <input type="date" id="startDate" required>
-              </div>
-              <div class="form-group">
-                <label>End Date <span class="required">*</span></label>
-                <input type="date" id="endDate" required>
-              </div>
-              <div class="form-group">
-                <label>Number of Guests <span class="required">*</span></label>
-                <select id="guests" required>
-                  <option value="1">1 Guest</option>
-                  <option value="2" selected>2 Guests</option>
-                  <option value="3">3 Guests</option>
-                  <option value="4">4 Guests</option>
-                  <option value="5">5 Guests</option>
-                  <option value="6">6 Guests</option>
-                  <option value="7">7 Guests</option>
-                  <option value="8">8+ Guests</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <div></div>
-              <button type="button" class="btn btn-orange" id="toStep2">Continue →</button>
-            </div>
-          </div>
-
-          <!-- STEP 2 -->
-          <div class="booking-card step-panel" id="step2" style="display:none;">
-            <h3 class="card-title"><span class="icon">👤</span> Your Details</h3>
-            <p class="card-subtitle">Please provide accurate contact information for booking confirmation.</p>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label>First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" placeholder="John" required>
-              </div>
-              <div class="form-group">
-                <label>Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" placeholder="Doe" required>
-              </div>
-              <div class="form-group">
-                <label>Email Address <span class="required">*</span></label>
-                <input type="email" id="email" placeholder="john@example.com" required>
-              </div>
-              <div class="form-group">
-                <label>Phone / WhatsApp <span class="required">*</span></label>
-                <input type="tel" id="phone" placeholder="+256 700 000 000" required>
-              </div>
-              <div class="form-group">
-                <label>Country</label>
-                <input type="text" id="country" placeholder="Uganda">
-              </div>
-              <div class="form-group">
-                <label>Preferred Language</label>
-                <select id="language">
-                  <option value="English">English</option>
-                  <option value="French">French</option>
-                  <option value="German">German</option>
-                  <option value="Spanish">Spanish</option>
-                  <option value="Swahili">Swahili</option>
-                </select>
-              </div>
-              <div class="form-group full">
-                <label>Special Requests / Notes</label>
-                <textarea id="notes" placeholder="Dietary needs, accessibility, room preferences, celebrations..."></textarea>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo1">← Back</button>
-              <button type="button" class="btn btn-orange" id="toStep3">Continue →</button>
-            </div>
-          </div>
-
-          <!-- STEP 3 -->
-          <div class="booking-card step-panel" id="step3" style="display:none;">
-            <h3 class="card-title"><span class="icon">💳</span> Payment Method</h3>
-            <p class="card-subtitle">Select how you would like to pay. A 30% deposit confirms your booking.</p>
-
-            <div class="payment-options" id="paymentOptions">
-              <div class="payment-option" data-method="Mobile Money">
-                <span class="pay-icon">📱</span> Mobile Money
-              </div>
-              <div class="payment-option" data-method="Bank Transfer">
-                <span class="pay-icon">🏦</span> Bank Transfer
-              </div>
-              <div class="payment-option" data-method="Visa / Mastercard">
-                <span class="pay-icon">💳</span> Card Payment
-              </div>
-              <div class="payment-option" data-method="PayPal">
-                <span class="pay-icon">🅿️</span> PayPal
-              </div>
-              <div class="payment-option" data-method="Cash on Arrival">
-                <span class="pay-icon">💵</span> Cash on Arrival
-              </div>
-            </div>
-
-
-            <h4 style="font-size:1rem;font-weight:700;margin:28px 0 12px;color:var(--black);">How should we receive your booking? <span class="required" style="color:var(--orange);">*</span></h4>
-            <p style="font-size:0.85rem;color:var(--gray-dark);margin-bottom:14px;">Choose WhatsApp or Email. Your booking details will be sent only through the method you select.</p>
-
-            <div class="contact-options" id="contactOptions">
-              <div class="contact-option" data-type="whatsapp" data-number="256771440064" data-label="WhatsApp Uganda">
-                <div class="c-icon">💬</div>
-                <div class="c-text">
-                  <strong>WhatsApp – Uganda</strong>
-                  <span>+256 771 440 064</span>
-                </div>
-              </div>
-              <div class="contact-option" data-type="whatsapp" data-number="256764420941" data-label="WhatsApp International">
-                <div class="c-icon">💬</div>
-                <div class="c-text">
-                  <strong>WhatsApp – International</strong>
-                  <span>+256 764 420 941</span>
-                </div>
-              </div>
-              <div class="contact-option" data-type="email" data-number="ishashawomenscommunity2023@gmail.com" data-label="Email">
-                <div class="c-icon email">✉️</div>
-                <div class="c-text">
-                  <strong>Email Notification</strong>
-                  <span>ishashawomenscommunity2023@gmail.com</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- AGREEMENT – MUST BE CHECKED -->
-            <div class="agreement-box" id="agreementBox">
-              <label>
-                <input type="checkbox" id="agreeTerms">
-                <span>
-                  I agree to the <a href="#terms" style="color:var(--green);font-weight:600;">Terms of Service</a> and
-                  <a href="#privacy" style="color:var(--green);font-weight:600;">Privacy Policy</a>
-                  <span class="required">*</span>
-                </span>
-              </label>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo2">← Back</button>
-              <button type="button" class="btn btn-orange" id="toStep4">Review Booking →</button>
-            </div>
-          </div>
-
-          <!-- STEP 4 -->
-          <div class="booking-card step-panel" id="step4" style="display:none;">
-            <h3 class="card-title"><span class="icon">✅</span> Confirm Your Booking</h3>
-            <p class="card-subtitle">Please review all details carefully before submitting. Your booking will be sent via the method you chose.</p>
-
-            <div id="confirmDetails" style="background:var(--white-soft);border-radius:12px;padding:24px;margin-bottom:25px;"></div>
-            <div class="form-message" id="formMessage"></div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-outline" id="backTo3">← Back</button>
-              <button type="button" class="btn btn-green" id="submitBooking">Confirm & Submit Booking</button>
-            </div>
-          </div>
-
-          <!-- SUCCESS -->
-          <div class="booking-card success-panel" id="successPanel">
-            <div class="success-icon">✓</div>
-            <h2>Booking Submitted!</h2>
-            <p id="successMessage">Thank you for choosing Ishasha Women's Community Tours and Travel. We have received your booking request and will contact you within 24 hours to confirm.</p>
-            <div class="success-ref" id="bookingRef">VT-000000</div>
-            <div id="whatsappAction" style="margin:20px 0;"></div>
-            <br>
-            <a href="index.html" class="btn btn-orange">Return to Home</a>
-          </div>
-
-        </div>
-
-        <!-- SUMMARY SIDEBAR -->
-        <aside class="summary-card" id="summaryCard">
-          <h3>Booking Summary</h3>
-          <div class="summary-row">
-            <span class="label">Tour</span>
-            <span class="value" id="sumTour">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Dates</span>
-            <span class="value" id="sumDates">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Guests</span>
-            <span class="value" id="sumGuests">2</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Payment</span>
-            <span class="value" id="sumPayment">—</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Send Via</span>
-            <span class="value" id="sumContact">—</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-row">
-            <span class="label">Est. Total</span>
-            <span class="value" id="sumSubtotal">$0</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Deposit (30%)</span>
-            <span class="value" id="sumDeposit">$0</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-total">
-            <span>Due Now</span>
-            <span class="total-price" id="sumTotal">$0</span>
-          </div>
-          <div class="summary-note">
-            A 30% deposit is required to secure your booking. The balance is due 14 days before departure.
-          </div>
-        </aside>
-
-      </div>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="booking-footer">
-    <div class="container">
-      <p>&copy; 2026 Ishasha Women's Community Tours and Travel · <a href="https://www.google.com/maps/search/?api=1&query=Ishasha+Highway+Kihihi+Uganda" target="_blank" rel="noopener">Ishasha Highway, Kihihi, Uganda</a> ·
-        <a href="tel:+256771440064">+256 771 440 064</a> ·
-        <a href="mailto:ishashawomenscommunity2023@gmail.com">ishashawomenscommunity2023@gmail.com</a>
-      </p>
-    </div>
-  </footer>
-
   <script>
-    /* ============================================
-       BOOKING SCRIPT
-       WhatsApp / Email based on user choice
-       Agreement required before submit
-       ============================================ */
+/* Mobile navigation toggle */
+(function () {
+  const btn = document.querySelector(".hamburger-menu-btn");
+  const overlay = document.querySelector(".mobile-nav-drawer-overlay");
+  const closeBtns = document.querySelectorAll("[data-close-menu]");
 
-    // ========== CONFIG – REPLACE WITH YOUR KEYS ==========
-       const EMAILJS_PUBLIC_KEY  = '5EMsZj2V9HkoHQagD';
-    const EMAILJS_SERVICE_ID  = 'service_992z93h';
-    const EMAILJS_TEMPLATE_ID = 'template_ujlcl24';
+  function openMenu() {
+    if (overlay) {
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      if (btn) btn.setAttribute("aria-expanded", "true");
+    }
+  }
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAFDXJuv-279zcsJ-Qry41uxNyXNlC4Cpw",
-        authDomain: "viatrix-4d7ef.firebaseapp.com",
-        projectId: "viatrix-4d7ef",
-        storageBucket: "viatrix-4d7ef.firebasestorage.app",
-        messagingSenderId: "734351535565",
-        appId: "1:734351535565:web:7df7d9fdd0c1f24d45e884",
-        measurementId: "G-9JBX94MZ9E"
-    };
+  function closeMenu() {
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  }
 
-
-    // Only initialize if keys are replaced (prevents console errors with placeholders)
-    let db = null;
-    try {
-      if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-      }
-    } catch (e) { console.warn('Firebase not configured'); }
-
-    try {
-      if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-      }
-    } catch (e) { console.warn('EmailJS not configured'); }
-
-    // ========== STATE ==========
-    const state = {
-      tour: null, price: 0, startDate: '', endDate: '', guests: 2,
-      firstName: '', lastName: '', email: '', phone: '',
-      country: '', language: 'English', notes: '', payment: null,
-      contactType: null, contactNumber: null, contactLabel: null,
-      currentStep: 1
-    };
-
-    const stepPanels = {
-      1: document.getElementById('step1'),
-      2: document.getElementById('step2'),
-      3: document.getElementById('step3'),
-      4: document.getElementById('step4')
-    };
-    const stepIndicators = document.querySelectorAll('.step');
-
-    // Tour selection
-    document.querySelectorAll('.tour-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.tour-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.tour = card.dataset.tour;
-        state.price = parseFloat(card.dataset.price) || 0;
-        updateSummary();
-      });
-    });
-
-    // Payment selection
-    document.querySelectorAll('.payment-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.payment-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.payment = card.dataset.method;
-        updateSummary();
-      });
-    });
-
-    // Contact / WhatsApp / Email destination selection
-    document.querySelectorAll('.contact-option').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.contact-option').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        state.contactType = card.dataset.type;
-        state.contactNumber = card.dataset.number;
-        state.contactLabel = card.dataset.label;
-        updateSummary();
-      });
-    });
-
-    // Live updates
-    document.getElementById('guests').addEventListener('change', e => {
-      state.guests = parseInt(e.target.value) || 1;
-      updateSummary();
-    });
-    document.getElementById('startDate').addEventListener('change', e => {
-      state.startDate = e.target.value;
-      document.getElementById('endDate').min = e.target.value;
-      updateSummary();
-    });
-    document.getElementById('endDate').addEventListener('change', e => {
-      state.endDate = e.target.value;
-      updateSummary();
-    });
-
-    // Highlight agreement box when unchecked
-    document.getElementById('agreeTerms').addEventListener('change', function () {
-      const box = document.getElementById('agreementBox');
-      if (this.checked) {
-        box.classList.remove('required-highlight');
-      }
-    });
-
-    function updateSummary() {
-      document.getElementById('sumTour').textContent = state.tour || '—';
-      document.getElementById('sumGuests').textContent = state.guests + (state.guests === 1 ? ' Guest' : ' Guests');
-      if (state.startDate && state.endDate) {
-        document.getElementById('sumDates').textContent = formatDate(state.startDate) + ' → ' + formatDate(state.endDate);
-      } else if (state.startDate) {
-        document.getElementById('sumDates').textContent = formatDate(state.startDate) + ' → …';
+  if (btn) {
+    btn.addEventListener("click", function () {
+      if (overlay && overlay.classList.contains("is-open")) {
+        closeMenu();
       } else {
-        document.getElementById('sumDates').textContent = '—';
-      }
-      document.getElementById('sumPayment').textContent = state.payment || '—';
-      document.getElementById('sumContact').textContent = state.contactLabel || '—';
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      document.getElementById('sumSubtotal').textContent = '$' + total.toLocaleString();
-      document.getElementById('sumDeposit').textContent = '$' + deposit.toLocaleString();
-      document.getElementById('sumTotal').textContent = '$' + deposit.toLocaleString();
-    }
-
-    function formatDate(iso) {
-      if (!iso) return '';
-      const d = new Date(iso + 'T00:00:00');
-      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-    }
-
-    function goToStep(n) {
-      Object.values(stepPanels).forEach(p => p.style.display = 'none');
-      document.getElementById('successPanel').classList.remove('show');
-      if (stepPanels[n]) stepPanels[n].style.display = 'block';
-      stepIndicators.forEach(s => {
-        const stepNum = parseInt(s.dataset.step);
-        s.classList.remove('active', 'completed');
-        if (stepNum === n) s.classList.add('active');
-        else if (stepNum < n) s.classList.add('completed');
-      });
-      state.currentStep = n;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.getElementById('toStep2').addEventListener('click', () => {
-      if (!state.tour) { alert('Please select a tour.'); return; }
-      if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
-        alert('Please select start and end dates.'); return;
-      }
-      if (document.getElementById('endDate').value < document.getElementById('startDate').value) {
-        alert('End date must be after start date.'); return;
-      }
-      state.startDate = document.getElementById('startDate').value;
-      state.endDate = document.getElementById('endDate').value;
-      state.guests = parseInt(document.getElementById('guests').value) || 2;
-      updateSummary();
-      goToStep(2);
-    });
-
-    document.getElementById('backTo1').addEventListener('click', () => goToStep(1));
-
-    document.getElementById('toStep3').addEventListener('click', () => {
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      if (!firstName || !lastName || !email || !phone) {
-        alert('Please fill in all required fields (Name, Email, Phone).'); return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Please enter a valid email address.'); return;
-      }
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.email = email;
-      state.phone = phone;
-      state.country = document.getElementById('country').value.trim();
-      state.language = document.getElementById('language').value;
-      state.notes = document.getElementById('notes').value.trim();
-      goToStep(3);
-    });
-
-    document.getElementById('backTo2').addEventListener('click', () => goToStep(2));
-
-    document.getElementById('toStep4').addEventListener('click', () => {
-      if (!state.payment) { alert('Please select a payment method.'); return; }
-      if (!state.contactType) { alert('Please choose how we should receive your booking (WhatsApp or Email).'); return; }
-      if (!document.getElementById('agreeTerms').checked) {
-        document.getElementById('agreementBox').classList.add('required-highlight');
-        alert('Please agree to the Terms of Service and Privacy Policy before continuing.');
-        document.getElementById('agreeTerms').focus();
-        return;
-      }
-      buildConfirmDetails();
-      goToStep(4);
-    });
-
-    document.getElementById('backTo3').addEventListener('click', () => goToStep(3));
-
-    function buildConfirmDetails() {
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      document.getElementById('confirmDetails').innerHTML = `
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:0.92rem;">
-          <div><strong style="color:var(--gray-dark);">Tour</strong><br>${state.tour}</div>
-          <div><strong style="color:var(--gray-dark);">Guests</strong><br>${state.guests}</div>
-          <div><strong style="color:var(--gray-dark);">Start Date</strong><br>${formatDate(state.startDate)}</div>
-          <div><strong style="color:var(--gray-dark);">End Date</strong><br>${formatDate(state.endDate)}</div>
-          <div><strong style="color:var(--gray-dark);">Name</strong><br>${state.firstName} ${state.lastName}</div>
-          <div><strong style="color:var(--gray-dark);">Email</strong><br>${state.email}</div>
-          <div><strong style="color:var(--gray-dark);">Phone</strong><br>${state.phone}</div>
-          <div><strong style="color:var(--gray-dark);">Payment</strong><br>${state.payment}</div>
-          <div><strong style="color:var(--gray-dark);">Send Booking Via</strong><br>${state.contactLabel || '—'} (${state.contactNumber || ''})</div>
-          <div><strong style="color:var(--gray-dark);">Est. Total</strong><br>$${total.toLocaleString()}</div>
-          <div><strong style="color:var(--orange);">Deposit Due</strong><br><span style="font-size:1.2rem;font-weight:700;color:var(--orange);">$${deposit.toLocaleString()}</span></div>
-        </div>
-        ${state.notes ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--gray);"><strong style="color:var(--gray-dark);">Notes</strong><br>${state.notes}</div>` : ''}
-      `;
-    }
-
-    document.getElementById('submitBooking').addEventListener('click', async () => {
-      // Double-check agreement on final submit
-      if (!document.getElementById('agreeTerms').checked) {
-        alert('You must agree to the Terms of Service and Privacy Policy before submitting.');
-        goToStep(3);
-        document.getElementById('agreementBox').classList.add('required-highlight');
-        return;
-      }
-      if (!state.contactType) {
-        alert('Please choose how we should receive your booking (WhatsApp or Email).');
-        goToStep(3);
-        return;
-      }
-
-      const btn = document.getElementById('submitBooking');
-      const msg = document.getElementById('formMessage');
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-      msg.className = 'form-message';
-      msg.textContent = '';
-
-      const total = state.price * state.guests;
-      const deposit = Math.round(total * 0.3);
-      const ref = 'VT-' + Date.now().toString(36).toUpperCase();
-
-      const bookingData = {
-        reference: ref,
-        tour: state.tour,
-        pricePerPerson: state.price,
-        guests: state.guests,
-        total, deposit,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        firstName: state.firstName,
-        lastName: state.lastName,
-        email: state.email,
-        phone: state.phone,
-        country: state.country || '',
-        language: state.language,
-        notes: state.notes || '',
-        paymentMethod: state.payment,
-        notifyVia: state.contactType,
-        notifyTo: state.contactNumber,
-        notifyLabel: state.contactLabel,
-        status: 'pending',
-        createdAt: new Date().toISOString()
-      };
-
-      try {
-        // Optional: save to Firebase if configured
-        if (db) {
-          bookingData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-          await db.collection('bookings').add(bookingData);
-        }
-
-        // Build the booking message used for both WhatsApp and Email
-        const msgText = `Hello Ishasha Women's Community Tours!
-
-*New Booking Request*
-
-*Ref:* ${ref}
-*Tour:* ${state.tour}
-*Guests:* ${state.guests}
-*Dates:* ${formatDate(state.startDate)} to ${formatDate(state.endDate)}
-*Name:* ${state.firstName} ${state.lastName}
-*Phone:* ${state.phone}
-*Email:* ${state.email}
-*Country:* ${state.country || 'N/A'}
-*Payment:* ${state.payment}
-*Deposit:* $${deposit}
-*Notes:* ${state.notes || 'None'}`;
-
-        const encodedMsg = encodeURIComponent(msgText);
-
-        // ========== SEND ACCORDING TO USER CHOICE ==========
-        if (state.contactType === 'whatsapp' && state.contactNumber) {
-          // Primary action: open WhatsApp with pre-filled booking details
-          const waUrl = `https://wa.me/${state.contactNumber}?text=${encodedMsg}`;
-
-          // Show success panel first
-          document.getElementById('bookingRef').textContent = ref;
-          document.getElementById('successMessage').textContent =
-            'Thank you! Your booking request is ready. Click the button below (or it will open automatically) to send it via WhatsApp.';
-          Object.values(stepPanels).forEach(p => p.style.display = 'none');
-          document.getElementById('successPanel').classList.add('show');
-          document.getElementById('summaryCard').style.display = 'none';
-          stepIndicators.forEach(s => { s.classList.remove('active'); s.classList.add('completed'); });
-
-          const waBox = document.getElementById('whatsappAction');
-          waBox.innerHTML = `
-            <p style="margin-bottom:12px;color:#666;font-size:0.9rem;">
-              Send your booking details to <strong>${state.contactLabel}</strong> on WhatsApp:
-            </p>
-            <a href="${waUrl}" target="_blank" class="btn btn-green" style="background:#25D366;">
-              💬 Send Booking on WhatsApp – ${state.contactLabel}
-            </a>`;
-
-          // Auto-open WhatsApp after short delay
-          setTimeout(() => { window.open(waUrl, '_blank'); }, 600);
-
-        } else if (state.contactType === 'email') {
-          // Primary action: send via EmailJS
-          if (EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              booking_ref: ref,
-              tour: state.tour,
-              guests: state.guests,
-              start_date: formatDate(state.startDate),
-              end_date: formatDate(state.endDate),
-              from_name: state.firstName + ' ' + state.lastName,
-              from_email: state.email,
-              phone: state.phone,
-              country: state.country || 'N/A',
-              payment_method: state.payment,
-              total: '$' + total.toLocaleString(),
-              deposit: '$' + deposit.toLocaleString(),
-              notes: state.notes || 'None',
-              message: `New booking request from ${state.firstName} ${state.lastName} for ${state.tour}.`
-            });
-          }
-
-          document.getElementById('bookingRef').textContent = ref;
-          document.getElementById('successMessage').textContent =
-            'Thank you! Your booking request has been sent by email. We will contact you within 24 hours to confirm.';
-          Object.values(stepPanels).forEach(p => p.style.display = 'none');
-          document.getElementById('successPanel').classList.add('show');
-          document.getElementById('summaryCard').style.display = 'none';
-          stepIndicators.forEach(s => { s.classList.remove('active'); s.classList.add('completed'); });
-
-          const waBox = document.getElementById('whatsappAction');
-          waBox.innerHTML = `
-            <p style="margin-bottom:12px;color:#666;font-size:0.9rem;">
-              Booking details have been sent by email. You can also reach us on WhatsApp if needed:
-            </p>
-            <a href="https://wa.me/256771440064?text=${encodedMsg}" target="_blank" class="btn btn-green" style="background:#25D366;">
-              💬 Chat on WhatsApp
-            </a>`;
-        } else {
-          throw new Error('No valid contact method selected');
-        }
-
-      } catch (error) {
-        console.error('Booking error:', error);
-        msg.textContent = 'Something went wrong. Please try again or contact us directly on WhatsApp.';
-        msg.className = 'form-message error';
-        btn.disabled = false;
-        btn.textContent = 'Confirm & Submit Booking';
+        openMenu();
       }
     });
+  }
 
-    // Init
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('startDate').min = today;
-    document.getElementById('endDate').min = today;
-    updateSummary();
-  </script>
+  if (overlay) {
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeMenu();
+    });
+  }
+
+  closeBtns.forEach(function (el) {
+    el.addEventListener("click", closeMenu);
+  });
+
+  // Close menu when a mobile nav link is clicked
+  document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
+  });
+
+  // Highlight current page in nav
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  document.querySelectorAll(".site-nav-link, .mobile-nav-link").forEach(function (link) {
+    const href = link.getAttribute("href");
+    if (!href) return;
+    const file = href.split("/").pop();
+    if (
+      file === path ||
+      (path === "" && file === "index.html") ||
+      (path === "index.html" && file === "index.html") ||
+      (path === "" && href === "/") ||
+      (path === "index.html" && (href === "/" || href === "index.html"))
+    ) {
+      link.classList.add("is-active");
+    }
+  });
+})();
+
+</script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
