@@ -167,6 +167,83 @@
       text-align: center; font-size: 0.85rem; color: var(--muted);
     }
 
+
+    .donation-form {
+      margin-top: 1.25rem;
+      display: grid;
+      gap: 1rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-weight: 600;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 18%, transparent);
+    }
+    .donation-submit {
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--earth), var(--earth-deep));
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .donation-submit:hover { transform: translateY(-1px); opacity: 0.94; }
+    .form-note {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .success-message {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      background: #e9f6ea;
+      color: #245c2a;
+      border: 1px solid #b9dfbd;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: auto; }
+    }
+
     @media (max-width: 960px) {
       .nav-desktop, .header-inner > .btn-donate { display: none; }
       .menu-btn { display: inline-flex; }
@@ -289,6 +366,71 @@
         </p>
       </div>
 
+
+      <div class="card">
+        <h2>Make a Donation</h2>
+        <p style="color:var(--ink-soft);margin-bottom:0.5rem;">
+          Choose the area you would like to support and provide your contact details.
+          After submitting, your donation information will be sent to our WhatsApp team.
+        </p>
+
+        <form class="donation-form" id="donationForm">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="donationArea">What would you like to support? *</label>
+              <select id="donationArea" name="donationArea" required>
+                <option value="">Select an area</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Sponsor Women">Sponsor Women</option>
+                <option value="Education for Students">Education for Students</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="donorName">Full Name *</label>
+              <input type="text" id="donorName" name="donorName"
+                     placeholder="Enter your full name" autocomplete="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="country">Country *</label>
+              <input type="text" id="country" name="country"
+                     placeholder="Enter your country" autocomplete="country-name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone"
+                     placeholder="+256..." autocomplete="tel" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email"
+                     placeholder="you@example.com" autocomplete="email" required>
+            </div>
+
+            <div class="form-group full">
+              <label for="amount">Donation Amount *</label>
+              <input type="number" id="amount" name="amount"
+                     min="1" step="0.01" placeholder="Enter donation amount" required>
+            </div>
+          </div>
+
+          <p class="form-note">
+            Please make sure your phone number and email address are correct before submitting.
+          </p>
+
+          <button type="submit" class="donation-submit">
+            Send Donation Details via WhatsApp
+          </button>
+
+          <div class="success-message" id="donationSuccess" role="status">
+            Your donation details have been prepared for WhatsApp. Please press Send in WhatsApp to complete the message.
+          </div>
+        </form>
+      </div>
+
       <div class="card">
         <h2>What your gift supports</h2>
         <div class="donate-grid">
@@ -360,6 +502,39 @@
       drawer.classList.remove("open");
       document.body.style.overflow = "";
     });
+
+    const donationForm = document.getElementById("donationForm");
+    const donationSuccess = document.getElementById("donationSuccess");
+
+    donationForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const donationArea = document.getElementById("donationArea").value;
+      const donorName = document.getElementById("donorName").value.trim();
+      const country = document.getElementById("country").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const amount = document.getElementById("amount").value.trim();
+
+      const message =
+`NEW DONATION INQUIRY
+
+Donation Area: ${donationArea}
+Donor Name: ${donorName}
+Country: ${country}
+Phone Number: ${phone}
+Email Address: ${email}
+Donation Amount: ${amount}
+
+Please follow up with the donor regarding the donation.`;
+
+      const whatsappNumber = "256764420941";
+      const whatsappUrl = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+
+      donationSuccess.style.display = "block";
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    });
+
     drawer.addEventListener("click", function (e) {
       if (e.target === drawer) {
         drawer.classList.remove("open");
